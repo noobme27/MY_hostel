@@ -1,0 +1,73 @@
+.map_container {
+  margin: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; // Prevent overflow from the main container
+}
+
+.scroll-container {
+  transform-origin: top left; // Ensure scaling starts from the top-left
+  overflow: auto; // Allow scrolling
+  width: fit-content; // Let the content define the width
+  height: fit-content; // Let the content define the height
+  padding: 0; // Remove left padding
+
+  // Remove the maximum width/height constraints for scaling
+  max-width: none;
+  max-height: none;
+}
+
+.room-layout {
+  display: flex;
+  flex-direction: column; // Ensure rows stack vertically
+}
+
+.row {
+  display: flex; // Each row will lay out items in a row
+}
+
+.room,
+.hallway,
+.empty {
+  width: 5vw; // Width relative to viewport width
+  height: 5vw; // Height relative to viewport width
+  max-width: 30px; // Cap width
+  max-height: 30px; // Cap height
+  //border: 1px solid black; // Add border for clarity
+}
+
+.room {
+  background-color: lightgreen; // Room color
+}
+
+.hallway {
+  background-color: lightgray; // Hallway color
+}
+
+.empty {
+  background-color: transparent; // Empty cell color
+}
+.zoom-buttons {
+  position: absolute; // Change to absolute positioning
+  top: 20px; // Positioning from the top
+  left: 50%; // Center horizontally
+  transform: translateX(-50%); // Center adjustment
+  z-index: 1000; // Ensure it stays on top
+  display: flex; // Arrange buttons in a row
+  gap: 10px; // Space between buttons
+}
+
+.zoom-button {
+  padding: 10px 15px; // Padding for better touch area
+  background-color: #007bff; // Button color
+  color: white; // Text color
+  border: none; // No border
+  border-radius: 5px; // Rounded corners
+  cursor: pointer; // Change cursor on hover
+  transition: background-color 0.3s; // Smooth background color transition
+
+  &:hover {
+    background-color: #0056b3; // Darker shade on hover
+  }
+}
