@@ -1,6 +1,9 @@
 @import "./responsive.scss";
 .layout {
   height: 100vh;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
   @include sm {
     background-color: red;
   }

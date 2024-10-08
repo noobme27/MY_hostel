@@ -1,8 +1,11 @@
+import Hostel from "../components/Hostel";
 import "./layout.scss";
 function App() {
   return (
     <>
-      <div className="layout">Hello</div>
+      <div className="layout">
+        <Hostel />
+      </div>
     </>
   );
 }

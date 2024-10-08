@@ -1,0 +1,29 @@
+.room-layout {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+
+  .row {
+    display: flex;
+  }
+
+  .room {
+    width: 60px;
+    height: 60px;
+    background-color: lightgreen;
+    border: 1px solid black;
+  }
+
+  .hallway {
+    width: 60px;
+    height: 60px;
+    background-color: lightgray;
+    border: 1px solid black;
+  }
+
+  .empty {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+  }
+}
