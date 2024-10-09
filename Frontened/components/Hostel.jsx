@@ -48,7 +48,6 @@ const Hostel = () => {
   const getUserByRoom = (roomNumber) => {
     return users.find((user) => user.room === roomNumber);
   };
-
   return (
     <div className="map_container">
       {/* Zoom buttons positioned at the top */}
@@ -64,8 +63,8 @@ const Hostel = () => {
         className="scroll-container"
         style={{
           transform: `scale(${zoomLevel})`,
-          transformOrigin: "top left", // Ensure scaling starts from the top-left
-          width: "fit-content", // Let the content define the width
+          transformOrigin: "top left",
+          width: "fit-content",
         }}
       >
         <div className="room-layout">
@@ -77,11 +76,45 @@ const Hostel = () => {
                 return (
                   <div
                     key={colIndex}
-                    className={`cell ${cell === "H" ? "hallway" : "room"}`}
+                    className={`cell ${
+                      cell === "H"
+                        ? "hallway"
+                        : cell === "E"
+                        ? "empty"
+                        : cell === "T"
+                        ? "toilet"
+                        : cell === "S"
+                        ? "stairs"
+                        : cell === "EN"
+                        ? "entrance"
+                        : cell === "W"
+                        ? "water"
+                        : cell === "CR"
+                        ? "common-room"
+                        : "room" // Default class for other rooms
+                    }`}
                     onMouseEnter={() => handleMouseEnter(cell)}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {cell !== "H" && <div className="room">Room {cell}</div>}
+                    {/* Check for room types and render accordingly */}
+                    {cell === "H" && <div className="hallway">Hallway</div>}
+                    {cell === "T" && <div className="toilet">Toilet</div>}
+                    {cell === "S" && <div className="stairs">Stairs</div>}
+                    {cell === "EN" && <div className="entrance">Entrance</div>}
+                    {cell === "W" && <div className="water">Water</div>}
+                    {cell === "CR" && (
+                      <div className="common-room">Common Room</div>
+                    )}
+                    {cell !== "H" &&
+                      cell !== "E" &&
+                      cell !== "T" &&
+                      cell !== "S" &&
+                      cell !== "EN" &&
+                      cell !== "W" &&
+                      cell !== "CR" && (
+                        <button className="room-button room">{cell}</button>
+                      )}
+
                     {/* Show info box when room is hovered */}
                     {hoveredRoom === cell && roomUser && (
                       <div className="info-box">
