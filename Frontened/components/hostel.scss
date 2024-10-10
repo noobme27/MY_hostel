@@ -1,73 +1,151 @@
 .map_container {
-  margin: 100px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; // Prevent overflow from the main container
-}
+  position: relative;
 
-.scroll-container {
-  transform-origin: top left; // Ensure scaling starts from the top-left
-  overflow: auto; // Allow scrolling
-  width: fit-content; // Let the content define the width
-  height: fit-content; // Let the content define the height
-  padding: 0; // Remove left padding
+  .zoom-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
 
-  // Remove the maximum width/height constraints for scaling
-  max-width: none;
-  max-height: none;
-}
+    .zoom-button {
+      padding: 10px 15px; // Padding for better touch area
+      background-color: #007bff; // Button color
+      color: white; // Text color
+      border: none; // No border
+      border-radius: 5px; // Rounded corners
+      cursor: pointer; // Change cursor on hover
+      transition: background-color 0.3s; // Smooth background color transition
 
-.room-layout {
-  display: flex;
-  flex-direction: column; // Ensure rows stack vertically
-}
+      &:hover {
+        background-color: #0056b3; // Darker shade on hover
+      }
+    }
+  }
 
-.row {
-  display: flex; // Each row will lay out items in a row
-}
+  .scroll-container {
+    overflow: scroll;
+  }
 
-.room,
-.hallway,
-.empty {
-  width: 5vw; // Width relative to viewport width
-  height: 5vw; // Height relative to viewport width
-  max-width: 30px; // Cap width
-  max-height: 30px; // Cap height
-  //border: 1px solid black; // Add border for clarity
-}
+  .room-layout {
+    display: flex;
+    flex-direction: column;
 
-.room {
-  background-color: lightgreen; // Room color
-}
+    .row {
+      display: flex;
 
-.hallway {
-  background-color: lightgray; // Hallway color
-}
+      .cell {
+        width: 24px;
+        height: 24px;
+        padding: 2px;
+        position: relative;
 
-.empty {
-  background-color: transparent; // Empty cell color
-}
-.zoom-buttons {
-  position: absolute; // Change to absolute positioning
-  top: 20px; // Positioning from the top
-  left: 50%; // Center horizontally
-  transform: translateX(-50%); // Center adjustment
-  z-index: 1000; // Ensure it stays on top
-  display: flex; // Arrange buttons in a row
-  gap: 10px; // Space between buttons
-}
+        &.room {
+          border-radius: 5px; // Rounded corners
+          cursor: pointer; // Change cursor on hover
+          transition: background-color 0.3s;
 
-.zoom-button {
-  padding: 10px 15px; // Padding for better touch area
-  background-color: #007bff; // Button color
-  color: white; // Text color
-  border: none; // No border
-  border-radius: 5px; // Rounded corners
-  cursor: pointer; // Change cursor on hover
-  transition: background-color 0.3s; // Smooth background color transition
+          .room-button {
+            display: block; // Make it a block element
+            width: 100%; // Full width
+            height: 100%; // Full height
+            background-color: #1ec120; // Initial button color
+            color: white; // Text color
+            border: none; // No border
+            border-radius: 5px; // Rounded corners
+            font-size: 7px; // Font size
+            font-weight: bold; // Bold text
+            //text-align: center; // Center text
+            line-height: 5px; // Vertically center text
+            transition: background-color 0.3s, transform 0.2s; // Transition for background color and transform
 
-  &:hover {
-    background-color: #0056b3; // Darker shade on hover
+            &:hover {
+              background-color: #0056b3; // Darker color on hover
+              transform: scale(1.05); // Slightly enlarge on hover
+            }
+
+            &:active {
+              transform: scale(0.95); // Slightly shrink on click
+            }
+          }
+        }
+
+        &.hallway {
+          background-color: #f0e68c;
+          font-size: 9px;
+        }
+
+        &.toilet {
+          background-color: #ffcccb;
+          font-size: 9px;
+        }
+
+        &.stairs {
+          background-color: #add8e6;
+          font-size: 9px;
+        }
+
+        &.entrance {
+          background-color: #90ee90;
+          font-size: 9px;
+        }
+
+        &.water {
+          background-color: #ffffe0;
+          font-size: 9px;
+        }
+
+        &.common-room {
+          background-color: #d3d3d3;
+          font-size: 9px;
+        }
+
+        &.empty {
+          background-color: #fff; // Background color for empty cells
+        }
+
+        .info-box {
+          position: absolute;
+          top: 24px; /* Adjust as necessary */
+          left: 24px;
+          width: 200px;
+          background-color: white;
+          border: 1px solid #ccc;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          z-index: 10;
+          overflow: auto;
+
+          .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+
+          .user-info {
+            h3 {
+              margin: 5px 0;
+              font-size: 16px;
+            }
+            p {
+              margin: 0;
+              font-size: 14px;
+            }
+
+            .social-links {
+              margin-top: 5px;
+
+              a {
+                margin-right: 10px;
+                text-decoration: none;
+                color: #0077b5; /* LinkedIn blue */
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
