@@ -1,7 +1,54 @@
 import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 //import jwt from "jsonwebtoken";
+
 export const register = async (req, res) => {
+  const {
+    username,
+    email,
+    password,
+    room,
+    name,
+    instituteId,
+    hobbies,
+    whatsapp,
+    instagram,
+    linkedin,
+  } = req.body;
+
+  try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
+
+    // Create a new user and save to the DB
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        email,
+        password: hashedPassword,
+        room: room ? parseInt(room) : null, // Convert room to integer if provided, else null
+        name,
+        instituteId,
+        hobbies,
+        whatsapp,
+        instagram,
+        linkedin,
+      },
+    });
+
+    console.log(newUser);
+
+    res
+      .status(201)
+      .json({ message: "User created Successfully", user: newUser });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to create a user" });
+  }
+};
+
+/* export const register = async (req, res) => {
   // console.log(req.body);
   const { username, email, password } = req.body;
   try {
@@ -23,7 +70,7 @@ export const register = async (req, res) => {
     console.log(err);
     res.status(500).json({ message: "falied to create a user" });
   }
-};
+}; */
 export const login = (req, res) => {
   console.log("it works");
   /* const { username, password } = req.body;

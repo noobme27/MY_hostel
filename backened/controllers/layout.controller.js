@@ -1,5 +1,5 @@
 // Mock user data (replace with actual data from your DB)
-const users = [
+/* const users = [
   {
     room: 1101,
     name: "John Doe",
@@ -100,7 +100,11 @@ const users = [
     instagram: "https://instagram.com/hannahadams",
     linkedin: "https://linkedin.com/in/hannahadams",
   },
-];
+]; */
+
+import { PrismaClient } from "@prisma/client"; // Import Prisma Client
+
+const prisma = new PrismaClient();
 
 // Function to generate room layout
 const generateRoomLayout = () => {
@@ -237,19 +241,24 @@ const generateRoomLayout = () => {
 };
 
 // Function to get room layout and associated users
-export const getRoomLayout = (req, res) => {
+export const getRoomLayout = async (req, res) => {
   try {
     const layout = generateRoomLayout(); // Generate the layout
+
+    // Fetch users from the database
+    const users = await prisma.user.findMany(); // Fetch users from MongoDB
 
     // Include user data and associate users with their rooms in the layout
     const response = {
       layout, // Room layout matrix
-      users, // User data (you can replace this with DB data fetching)
+      users, // User data from MongoDB
     };
 
     res.status(200).json(response); // Send layout and users data
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to generate room layout" });
+  } finally {
+    await prisma.$disconnect(); // Disconnect Prisma Client
   }
 };
