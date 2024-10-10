@@ -5,6 +5,7 @@ import authRoute from "./routes/auth.route.js";
 const app = express();
 
 app.use(cors()); // Enable CORS
+app.use(express.json());
 
 app.use("/api/room-layout", layoutRoute);
 app.use("/api/auth", authRoute);

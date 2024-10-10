@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 //import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
+  // console.log(req.body);
   const { username, email, password } = req.body;
   try {
     //HASH THE PASSWORD
@@ -23,7 +24,8 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "falied to create a user" });
   }
 };
-export const login = async (req, res) => {
+export const login = (req, res) => {
+  console.log("it works");
   /* const { username, password } = req.body;
   try {
     // check if the user exists

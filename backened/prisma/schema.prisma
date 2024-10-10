@@ -12,6 +12,15 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
-  avatar    String?
+  avatar    String? // profile picture
   createdAt DateTime @default(now())
+
+  // New fields based on the provided data
+  room        Int?
+  name        String?
+  instituteId String?
+  hobbies     String?
+  whatsapp    String?
+  instagram   String?
+  linkedin    String?
 }
