@@ -51,7 +51,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: #fcf5f3;
+
     height: 100%;
 
     @include md {
@@ -84,7 +84,8 @@ nav {
 
       .profile {
         padding: 12px 24px;
-        background-color: #fece51;
+        background-color: #345fec;
+        color: white;
         cursor: pointer;
         border: none;
         position: relative;
@@ -107,12 +108,6 @@ nav {
 
     .register {
       background-color: #fece51;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: auto; /* Adjusts the width, or you can set a specific width */
-      height: auto;
-      // min-height: 100vh;
     }
 
     .menuIcon {

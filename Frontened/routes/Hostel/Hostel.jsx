@@ -97,7 +97,9 @@ const Hostel = () => {
                     onMouseLeave={handleMouseLeave}
                   >
                     {/* Check for room types and render accordingly */}
-                    {cell === "H" && <div className="hallway">Hallway</div>}
+                    {cell === "H" && (
+                      <div className=" btn btn-primary hallway ">Hallway</div>
+                    )}
                     {cell === "T" && <div className="toilet">Toilet</div>}
                     {cell === "S" && <div className="stairs">Stairs</div>}
                     {cell === "EN" && <div className="entrance">Entrance</div>}
