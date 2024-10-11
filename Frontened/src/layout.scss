@@ -1,15 +1,15 @@
-@import "./responsive.scss";
+// @import "./responsive.scss";
 
-.layout {
-  height: 100vh;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto; // Allows both vertical and horizontal scrolling
+// .layout {
+//   height: 100vh;
+//   max-width: 1000px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   overflow: auto; // Allows both vertical and horizontal scrolling
 
-  position: relative;
+//   position: relative;
 
-  @include sm {
-    background-color: red;
-  }
-}
+//   @include sm {
+//     background-color: red;
+//   }
+// }

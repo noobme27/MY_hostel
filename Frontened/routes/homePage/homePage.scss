@@ -1,11 +1,13 @@
-@import "/Users/apoorvnathtripathi/Desktop/MY hostel/Frontened/src/responsive.scss";
+@import "./../../src/responsive.scss";
 
 .homePage {
   display: flex;
-  height: 100%;
+  flex-direction: row;
+  height: 100vh;  // Full height view
 
   .textContainer {
     flex: 3;
+    padding: 20px;
 
     .wrapper {
       padding-right: 100px;
@@ -29,6 +31,7 @@
 
       .title {
         font-size: 64px;
+        font-weight: bold;
 
         @include lg {
           font-size: 48px;
@@ -38,24 +41,35 @@
       .boxes {
         display: flex;
         justify-content: space-between;
-
+        .box{
+          background-color: #B3B4BD;
+          border-radius: 15px; 
+          padding: 20px; 
+          padding-left: 20px;  
+          padding-right: 20px;
+          margin-left: 15px;   // Left margin
+          margin-right: 15px;  // Right margin
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          transition: transform 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
+          &:hover {
+            transform: translateY(-10px);  // Move box 10px up on hover
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);  // Make shadow stronger
+          }
+        }
         @include sm {
           display: none;
+          
         }
 
         h1 {
           font-size: 36px;
-
+          color: #000000;
           @include lg {
             font-size: 32px;
           }
         }
-
-        h2 {
-          font-size: 20px;
-          font-weight: 300;
-        }
       }
+      
     }
   }
 
@@ -65,6 +79,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;  // Center image vertically and horizontally
 
     @include md {
       display: none;
@@ -79,5 +94,15 @@
         width: 105%;
       }
     }
+  }
+
+  .lockroom {
+    background-color: #6b63ff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 15px;
   }
 }

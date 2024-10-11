@@ -1,17 +1,17 @@
-@import "/Users/apoorvnathtripathi/Desktop/MY hostel/Frontened/src/responsive.scss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-.layout {
-  height: 100vh;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto; // Allows both vertical and horizontal scrolling
+// @import "./../../src/responsive.scss";
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+// .layout {
+//   height: 100vh;
+//   max-width: 1000px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   overflow: auto; // Allows both vertical and horizontal scrolling
 
-  position: relative;
+//   position: relative;
 
-  @include sm {
-    background-color: red;
-  }
-}
+//   @include sm {
+//     background-color: red;
+//   }
+// }
