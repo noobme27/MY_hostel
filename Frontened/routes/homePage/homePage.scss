@@ -1,16 +1,18 @@
 @import "./../../src/responsive.scss";
-
+$bgColor: #B3B4BD;
+$textHoverColor: white;
+$debug: false;
 .homePage {
   display: flex;
   flex-direction: row;
-  height: 100vh;  // Full height view
+  height: 100vh; // Full height view
 
   .textContainer {
     flex: 3;
     padding: 20px;
 
     .wrapper {
-      padding-right: 100px;
+      padding-right: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -30,7 +32,7 @@
       }
 
       .title {
-        font-size: 64px;
+        font-size: 60px;
         font-weight: bold;
 
         @include lg {
@@ -40,54 +42,104 @@
 
       .boxes {
         display: flex;
-        justify-content: space-between;
-        .box{
-          background-color: #B3B4BD;
-          border-radius: 15px; 
-          padding: 20px; 
-          padding-left: 20px;  
-          padding-right: 20px;
-          margin-left: 15px;   // Left margin
-          margin-right: 15px;  // Right margin
-          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-          transition: transform 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
-          &:hover {
-            transform: translateY(-10px);  // Move box 10px up on hover
-            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);  // Make shadow stronger
+        flex-direction: column;
+        gap: 10px;
+        
+        .ag-format-container {
+          width: 842px;
+          margin: 0 auto;
+     
+          .ag-courses_box {
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 0;
+            
+
+            .ag-courses_item {
+              flex-basis: calc(33.333% - 30px);
+              margin: 0 15px 30px;
+              border-radius: 28px;
+              overflow: hidden;
+              transition: transform 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
+                  &:hover {
+                    transform: translateY(-10px);  // Move box 10px up on hover
+                    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);  // Make shadow stronger
+                  }
+
+              .ag-courses-item_link {
+                display: block;
+                padding: 30px 20px;
+                background-color: #121212;
+                position: relative;
+                overflow: hidden;
+                transition: color 0.5s ease;
+
+                &:hover {
+                  text-decoration: none;
+                  color: #fff;
+
+                  .ag-courses-item_bg {
+                    transform: scale(10);
+                  }
+                }
+
+                .ag-courses-item_bg {
+                  height: 128px;
+                  width: 128px;
+                  background-color: #f9b234;
+                  border-radius: 50%;
+                  position: absolute;
+                  top: -75px;
+                  right: -75px;
+                  transition: all 0.5s ease;
+                }
+
+                .ag-courses-item_title {
+                  display: flex;
+                  font-weight: bold;
+                  font-size: 30px;
+                  color: #fff;
+                  min-height: 87px;
+                  margin: 0 0 25px;
+                  position: relative;
+                  z-index: 2;
+
+                  @include lg {
+                    font-size: 24px;
+                  }
+                }
+                .icon {
+                  width: 30px;   // Adjust size of the icon
+                  height: 30px;  // Keep icon square
+                }
+              }
+            }
           }
-        }
-        @include sm {
-          display: none;
-          
         }
 
-        h1 {
-          font-size: 36px;
-          color: #000000;
-          @include lg {
-            font-size: 32px;
-          }
+        @include sm {
+          display: none;
         }
       }
-      
     }
   }
 
   .imgContainer {
     flex: 2;
+    width: 5%;
     background-color: #fcf5f3;
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;  // Center image vertically and horizontally
+    justify-content: center;
 
     @include md {
       display: none;
     }
 
     img {
-      width: 115%;
-      position: absolute;
+      width: 50%;
+      position: relative;
       right: 0;
 
       @include lg {
@@ -96,13 +148,66 @@
     }
   }
 
-  .lockroom {
-    background-color: #6b63ff;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 15px;
-  }
+.lockroom {
+  display: inline-block;
+	position: relative;
+	z-index: 1;
+	overflow: if($debug, unset, hidden);
+	
+	text-decoration: none;
+	
+	font-family: sans-serif;
+	font-weight: 600;
+	font-size: 2em;
+	
+  padding: 8px 6px;
+
+	
+	color: $bgColor;
+	
+	border: 0.15em solid $bgColor;
+	border-radius: calc(0.75em + 0.5em + 0.15em);
+	
+	transition: 4s;
+	
+	&:before,
+	&:after {
+		content: '';
+		position: absolute;
+		top: -1.5em;
+		
+		z-index: -1;
+		
+		width: 200%;
+		aspect-ratio: 1;
+		
+		border: if($debug, inherit, none);
+		border-radius: 10%;
+		
+		background-color: rgba($bgColor, 0.25);
+		
+		transition: 3s;
+	}
+	
+	&:before {
+		left: -80%;
+		transform: translate3d(0, 5em, 0) rotate(-340deg);
+	}
+	
+	&:after {
+		right: -80%;
+		transform: translate3d(0, 5em, 0) rotate(390deg);
+	}
+	
+	&:hover,
+	&:focus {
+		color: $textHoverColor;
+		
+		&:before,
+		&:after {
+			transform: none;
+			background-color: rgba($bgColor, 0.75);
+		}
+	}
+}
 }

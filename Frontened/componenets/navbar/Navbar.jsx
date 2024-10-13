@@ -1,32 +1,28 @@
 import { useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
-
+import heroImage from './assets/image.jpg';
 function Navbar() {
   const [open, setOpen] = useState(false);
-
   const user = true;
   return (
     <nav>
       <div className="left">
         <a href="/" className="logo">
           <img src="" alt="" />
-          <span>Hostel</span>
+          <span>LitedIn</span>
         </a>
         <a href="/">Home</a>
-        <a href="/">About</a>
+        <a href="/">About Us</a>
         <a href="/" className="text-red-500">
-          Contact
+          Contact Us
         </a>
       </div>
       <div className="right">
         {user ? (
           <div className="user">
-            <img
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt=""
-            />
-            <span>John Doe</span>
+            <img src={heroImage} alt="Hero" />
+            <span>Dhruv Verma</span>
             <Link to="/profile" className="profile">
               <div className="notification">3</div>
               <span>Profile</span>
