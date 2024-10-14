@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+.login {
+  display: flex;
+  justify-content: center; // Center horizontally
+  align-items: center; // Center vertically
+  width: 100%;
+  height: 100vh; // Ensure the container takes the full viewport height
+  font-family: "Montserrat", sans-serif;
+}
+
+video {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover; // Ensures the video covers the entire background
+  position: absolute; // Video stays in the background
+  z-index: -1; // Video should be behind the form
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 150); // Semi-transparent overlay
+  z-index: 1; // Overlay above video
+}
+
+.formContainer {
+  flex: 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1); // Light semi-transparent background
+    border-radius: 20px;
+    backdrop-filter: blur(
+      15px
+    ); // Slightly reduce the blur for better readability
+    color: white;
+
+    .social-icons {
+      display: flex; // Flexbox to align icons
+      justify-content: center;
+      margin: 20px 100px;
+
+      a {
+        border: 1px solid #ccc;
+        border-radius: 50%; // Make icons circular
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px; // Space between icons
+        width: 40px;
+        height: 40px;
+        transition: background-color 0.3s; // Smooth background transition
+
+        &:hover {
+          background-color: rgba(
+            255,
+            255,
+            255,
+            0.2
+          ); // Light background on hover
+        }
+
+        // Icon color
+        .material-icons {
+          color: white; // Set icon color
+        }
+      }
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid gray;
+      border-radius: 10px;
+      outline: none; // Remove default outline on focus
+      transition: border-color 0.3s; // Smooth border transition
+
+      &:focus {
+        border-color: teal; // Change border color on focus
+      }
+    }
+
+    button {
+      padding: 15px;
+      border-radius: 5px;
+      border: none;
+      background-color: teal;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s; // Smooth background transition
+
+      &:hover {
+        background-color: #006666; // Darker teal on hover
+      }
+
+      &:disabled {
+        background-color: #bed9d8;
+        cursor: not-allowed;
+      }
+    }
+
+    a {
+      font-size: 14px;
+      color: white;
+      border-bottom: 1px solid gray;
+      width: max-content;
+    }
+  }
+}

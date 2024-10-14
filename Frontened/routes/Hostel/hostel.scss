@@ -6,6 +6,7 @@
 @import "./../../src/layout.scss";
 .map_container {
   position: relative;
+  //display: flex;
 
   .zoom-buttons {
     display: flex;

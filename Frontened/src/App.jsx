@@ -1,13 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-//import Hostel from "../routes/Hostel/Hostel";
-//import "./layout.scss";
 import Layout from "../routes/Layout/layout";
 import HomePage from "../routes/homePage/homePage";
 import Hostel from "../routes/Hostel/Hostel";
 import Login from "../routes/login/Login";
 import Register from "../routes/register/Register";
 import Party from "../routes/party/Party";
-//import { listPageLoader, singlePageLoader } from "./lib/loaders.js";
 
 function App() {
   const router = createBrowserRouter([
@@ -16,26 +13,26 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "/",
+          path: "home", // Remove the leading slash when it's a child route
           element: <HomePage />,
         },
         {
-          path: "/hostel",
+          path: "hostel",
           element: <Hostel />,
         },
         {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
-        },
-        {
-          path: "/party",
+          path: "party",
           element: <Party />,
         },
       ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ]);
 
