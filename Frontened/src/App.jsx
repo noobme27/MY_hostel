@@ -5,6 +5,7 @@ import Hostel from "../routes/Hostel/Hostel";
 import Login from "../routes/login/Login";
 import Register from "../routes/register/Register";
 import Party from "../routes/party/Party";
+import UpdateProfile from "../routes/UpdateProfile/UpdateProfile";
 
 function App() {
   const router = createBrowserRouter([
@@ -13,7 +14,7 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "home", // Remove the leading slash when it's a child route
+          path: "",
           element: <HomePage />,
         },
         {
@@ -23,6 +24,10 @@ function App() {
         {
           path: "party",
           element: <Party />,
+        },
+        {
+          path: "update",
+          element: <UpdateProfile />,
         },
       ],
     },
