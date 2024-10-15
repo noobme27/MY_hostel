@@ -1,14 +1,45 @@
 import "./login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import videoBg from "./../../public/bg.mp4";
+import { useState } from "react";
+
+import apiRequest from "../../lib/apiRequest.js";
 
 function Login() {
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    const formData = new FormData(e.target);
+
+    const username = formData.get("username");
+
+    const password = formData.get("password");
+
+    try {
+      const res = await apiRequest.post("/auth/login", {
+        username,
+
+        password,
+      });
+      console.log(res);
+      navigate("/");
+    } catch (err) {
+      setError(err.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="login">
       <div className="overlay">
         <video className="video" src={videoBg} autoPlay loop muted />
         <div className="formContainer">
-          <form>
+          <form onSubmit={handleSubmit}>
             <h1>Welcome back</h1>
             <div className="social-icons">
               <a href="#" className="icon">
@@ -24,7 +55,8 @@ function Login() {
             </div>
             <input name="username" type="text" placeholder="Username" />
             <input name="password" type="password" placeholder="Password" />
-            <button>Login</button>
+            <button disabled={isLoading}>Login</button>
+            {error && <span>{error}</span>}
             <Link to="/register">{"Don't"} you have an account?</Link>
           </form>
         </div>
