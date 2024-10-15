@@ -1,11 +1,12 @@
 @import "./../../src/responsive.scss";
-$bgColor: #B3B4BD;
+$bgColor: #b3b4bd;
 $textHoverColor: white;
 $debug: false;
 .homePage {
   display: flex;
   flex-direction: row;
-  height: 100vh; // Full height view
+  height: 100vh;
+  overflow: auto;
 
   .textContainer {
     flex: 3;
@@ -44,27 +45,27 @@ $debug: false;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        
+
         .ag-format-container {
           width: 842px;
           margin: 0 auto;
-     
+
           .ag-courses_box {
             display: flex;
             align-items: flex-start;
             padding: 5px 0;
-            
 
             .ag-courses_item {
               flex-basis: calc(33.333% - 30px);
               margin: 0 15px 30px;
               border-radius: 28px;
               overflow: hidden;
-              transition: transform 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
-                  &:hover {
-                    transform: translateY(-10px);  // Move box 10px up on hover
-                    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);  // Make shadow stronger
-                  }
+              transition: transform 0.25s ease-in-out,
+                box-shadow 0.5s ease-in-out;
+              &:hover {
+                transform: translateY(-10px); // Move box 10px up on hover
+                box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); // Make shadow stronger
+              }
 
               .ag-courses-item_link {
                 display: block;
@@ -109,8 +110,8 @@ $debug: false;
                   }
                 }
                 .icon {
-                  width: 30px;   // Adjust size of the icon
-                  height: 30px;  // Keep icon square
+                  width: 30px; // Adjust size of the icon
+                  height: 30px; // Keep icon square
                 }
               }
             }
@@ -127,7 +128,7 @@ $debug: false;
   .imgContainer {
     flex: 2;
     width: 5%;
-    background-color: #fcf5f3;
+    background-color: white;
     position: relative;
     display: flex;
     align-items: center;
@@ -148,66 +149,66 @@ $debug: false;
     }
   }
 
-.lockroom {
-  display: inline-block;
-	position: relative;
-	z-index: 1;
-	overflow: if($debug, unset, hidden);
-	
-	text-decoration: none;
-	
-	font-family: sans-serif;
-	font-weight: 600;
-	font-size: 2em;
-	
-  padding: 8px 6px;
+  .lockroom {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    overflow: if($debug, unset, hidden);
 
-	
-	color: $bgColor;
-	
-	border: 0.15em solid $bgColor;
-	border-radius: calc(0.75em + 0.5em + 0.15em);
-	
-	transition: 4s;
-	
-	&:before,
-	&:after {
-		content: '';
-		position: absolute;
-		top: -1.5em;
-		
-		z-index: -1;
-		
-		width: 200%;
-		aspect-ratio: 1;
-		
-		border: if($debug, inherit, none);
-		border-radius: 10%;
-		
-		background-color: rgba($bgColor, 0.25);
-		
-		transition: 3s;
-	}
-	
-	&:before {
-		left: -80%;
-		transform: translate3d(0, 5em, 0) rotate(-340deg);
-	}
-	
-	&:after {
-		right: -80%;
-		transform: translate3d(0, 5em, 0) rotate(390deg);
-	}
-	
-	&:hover,
-	&:focus {
-		color: $textHoverColor;
-		
-		&:before,
-		&:after {
-			transform: none;
-			background-color: rgba($bgColor, 0.75);
-		}
-	}
-}
+    text-decoration: none;
+    text-align: center;
+
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 2em;
+
+    padding: 8px 6px;
+
+    color: $bgColor;
+
+    border: 0.15em solid $bgColor;
+    border-radius: calc(0.75em + 0.5em + 0.15em);
+
+    transition: 4s;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: -1.5em;
+
+      z-index: -1;
+
+      width: 200%;
+      aspect-ratio: 1;
+
+      border: if($debug, inherit, none);
+      border-radius: 10%;
+
+      background-color: rgba($bgColor, 0.25);
+
+      transition: 3s;
+    }
+
+    &:before {
+      left: -80%;
+      transform: translate3d(0, 5em, 0) rotate(-340deg);
+    }
+
+    &:after {
+      right: -80%;
+      transform: translate3d(0, 5em, 0) rotate(390deg);
+    }
+
+    &:hover,
+    &:focus {
+      color: $textHoverColor;
+
+      &:before,
+      &:after {
+        transform: none;
+        background-color: rgba($bgColor, 0.75);
+      }
+    }
+  }
 }

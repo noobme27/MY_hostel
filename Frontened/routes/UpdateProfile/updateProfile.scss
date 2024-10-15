@@ -1,0 +1,116 @@
+.profile {
+  display: flex;
+  height: 100%;
+  padding-left: 10%;
+}
+
+.profile-update {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  form {
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .image-wrapper {
+        position: relative;
+        width: 40%;
+        height: 70%;
+        border-radius: 20%;
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20%;
+        }
+
+        .edit-btn {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          background-color: rgba(32, 14, 193, 0.6);
+          color: white;
+          padding: 5px 10px;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+          }
+
+          svg {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+        align-self: flex-start; // Align label to the left
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      input[type="file"] {
+        padding: 3px;
+      }
+
+      textarea {
+        resize: none;
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 50px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

@@ -1,20 +1,25 @@
 import "./homePage.scss";
-import reactIcon from './assets/explore.svg';
-import heroImage from './assets/image.jpg';
+import reactIcon from "./assets/explore.svg";
+import heroImage from "./assets/image.jpg";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   return (
     <div className="homePage">
       <div className="textContainer">
         <div className="wrapper">
-          <h1 className="title">Let's connect & grow and make college unforgettable.</h1>
-          <button className="lockroom">Select your Room</button>
+          <h1 className="title">
+            Let's connect & grow and make college unforgettable.
+          </h1>
+
+          <Link to="/update" className="lockroom">
+            Select Your Room
+          </Link>
 
           {/* Boxes Section */}
           <div className="boxes">
             <div className="ag-format-container">
               <div className="ag-courses_box">
-                
                 {/* First Course Item */}
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
@@ -55,7 +60,6 @@ function HomePage() {
                     </div>
                   </a>
                 </div>
-
               </div>
             </div>
           </div>
@@ -71,6 +75,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-
-
