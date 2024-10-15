@@ -34,7 +34,9 @@ video {
   align-items: center;
   justify-content: center;
   padding: 20px;
-
+  .spn {
+    color: black;
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -45,7 +47,7 @@ video {
     backdrop-filter: blur(
       15px
     ); // Slightly reduce the blur for better readability
-    color: white;
+    color: black;
 
     .social-icons {
       display: flex; // Flexbox to align icons
