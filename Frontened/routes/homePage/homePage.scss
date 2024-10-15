@@ -5,7 +5,8 @@ $debug: false;
 .homePage {
   display: flex;
   flex-direction: row;
-  height: 100vh; // Full height view
+  height: 100vh;
+  overflow: auto;
 
   .textContainer {
     flex: 3;
@@ -127,7 +128,7 @@ $debug: false;
   .imgContainer {
     flex: 2;
     width: 5%;
-    background-color: #fcf5f3;
+    background-color: white;
     position: relative;
     display: flex;
     align-items: center;
