@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./updateProfile.scss";
 import heroImage from "./../../public/image.jpg";
-import { FaEdit } from "react-icons/fa";
+// import { FaEdit } from "react-icons/fa";
 function UpdateProfile() {
   const [formData, setFormData] = useState({
     username: "",
