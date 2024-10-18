@@ -1,51 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./updateProfile.scss";
 import heroImage from "./../../public/image.jpg";
-// import { FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext.jsx";
+import apiRequest from "../../lib/apiRequest.js";
 function UpdateProfile() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    profilePicture: null,
-    bio: "",
-    contactNumber: "",
-    socialLinks: {
-      linkedin: "",
-      github: "",
-    },
-  });
+  const { currentUser, updateUser } = useContext(AuthContext);
+  const handleSubmit = async (e) => {
+    /*e.preventDefault();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const formData = new FormData(e.target);
+    const inputs = Object.fromEntries(formData);
 
-  const handleSocialChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      socialLinks: {
-        ...formData.socialLinks,
-        [name]: value,
-      },
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      profilePicture: e.target.files[0],
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit logic
-    console.log(formData);
+    try {
+      const res = await apiRequest.put(`/user/${currentUser.id}`, {
+        username: inputs.username,
+      });
+      updateUser(res.data);
+    } catch (err) {
+      console.log(err);
+    }*/
   };
 
   return (
@@ -55,7 +29,7 @@ function UpdateProfile() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="image-wrapper">
-              <img src={heroImage} alt="Hero" />
+              <img src={heroImage || currentUser.avatar} alt="Hero" />
               <label htmlFor="file-upload" className="edit-btn">
                 <FaEdit /> Edit
               </label>
@@ -63,21 +37,22 @@ function UpdateProfile() {
                 id="file-upload"
                 type="file"
                 name="profilePicture"
-                onChange={handleFileChange}
+                // defaultValue={currentUser.username}
+                //onChange={handleFileChange}
                 hidden
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Username</label>
+            <label htmlFor="username">Username</label>
 
             <input
               type="text"
               name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              required
+              defaultValue={currentUser.username}
+              // value={formData.username}
+              //onChange={handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -86,9 +61,8 @@ function UpdateProfile() {
             <input
               type="text"
               name="Hostel"
-              value={formData.Hostel}
-              onChange={handleInputChange}
-              required
+              // value={formData.Hostel}
+              // onChange={handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -97,9 +71,8 @@ function UpdateProfile() {
             <input
               type="text"
               name="room"
-              value={formData.room}
-              onChange={handleInputChange}
-              required
+              // value={formData.room}
+              // onChange={handleInputChange}
             />
           </div>
 
@@ -108,9 +81,9 @@ function UpdateProfile() {
             <input
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
+              defaultValue={currentUser.email}
+              // value={formData.email}
+              //onChange={handleInputChange}
             />
           </div>
 
@@ -119,9 +92,8 @@ function UpdateProfile() {
             <input
               type="password"
               name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
+              // value={formData.password}
+              // onChange={handleInputChange}
             />
           </div>
 
@@ -129,8 +101,8 @@ function UpdateProfile() {
             <label>Bio</label>
             <textarea
               name="bio"
-              value={formData.bio}
-              onChange={handleInputChange}
+              //  value={formData.bio}
+              //  onChange={handleInputChange}
               rows="3"
             ></textarea>
           </div>
@@ -140,8 +112,8 @@ function UpdateProfile() {
             <input
               type="text"
               name="contactNumber"
-              value={formData.contactNumber}
-              onChange={handleInputChange}
+              //  value={formData.contactNumber}
+              //  onChange={handleInputChange}
             />
           </div>
 
@@ -150,8 +122,8 @@ function UpdateProfile() {
             <input
               type="url"
               name="linkedin"
-              value={formData.socialLinks.linkedin}
-              onChange={handleSocialChange}
+              //  value={formData.socialLinks.linkedin}
+              //  onChange={handleSocialChange}
             />
           </div>
 
@@ -160,8 +132,8 @@ function UpdateProfile() {
             <input
               type="url"
               name="github"
-              value={formData.socialLinks.github}
-              onChange={handleSocialChange}
+              // value={formData.socialLinks.github}
+              // onChange={handleSocialChange}
             />
           </div>
 

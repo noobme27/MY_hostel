@@ -12,10 +12,14 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
-  avatar    String? // profile picture
+  avatar    String?
   createdAt DateTime @default(now())
+  info      Info?    @relation(fields: [infoId], references: [id])
+  infoId    String?  @unique @db.ObjectId
+}
 
-  // New fields based on the provided data
+model Info {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   room        Int?
   name        String?
   instituteId String?
@@ -23,4 +27,5 @@ model User {
   whatsapp    String?
   instagram   String?
   linkedin    String?
+  User        User?
 }
