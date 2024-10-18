@@ -24,7 +24,7 @@ function Navbar() {
         {currentUser ? (
           <div className="user">
             <img
-              src={currentUser.avatar || "./../../public/avatar.png"}
+              src={currentUser.avatar || "./../../src/assets/avatar.png"}
               alt="Hero"
             />
             <span>{currentUser.username}</span>
@@ -35,8 +35,8 @@ function Navbar() {
           </div>
         ) : (
           <>
-            <a href="/">Sign in</a>
-            <a href="/" className="register">
+            <a href="/login">Sign in</a>
+            <a href="/register" className="register">
               Sign up
             </a>
           </>

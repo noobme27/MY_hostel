@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./updateProfile.scss";
-import heroImage from "./../../public/image.jpg";
+import heroImage from "./../../src/assets/avatar.png";
 import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import apiRequest from "../../lib/apiRequest.js";
