@@ -97,21 +97,27 @@ function HomePage() {
       </div>  */}
 
       <div className="imgContainer">
-        <input type="radio" name="slider" id="item-1" defaultChecked />
-        <input type="radio" name="slider" id="item-2" />
-        <input type="radio" name="slider" id="item-3" />
 
-        <div className="cards">
-          <label className="card" htmlFor="item-1" id="song-1">
-            <img src={vyasImage} alt="Vyas" />
-          </label>
-          <label className="card" htmlFor="item-2" id="song-2">
-            <img src={meera0Image} alt="Meera 0" />
-          </label>
-          <label className="card" htmlFor="item-3" id="song-3">
-            <img src={gandhiImage} alt="Gandhi" />
-          </label>
-        </div>
+      <input type="radio" name="slider" id="item-1" defaultChecked />
+      <input type="radio" name="slider" id="item-2" />
+      <input type="radio" name="slider" id="item-3" />
+      <input type="radio" name="slider" id="item-4" />
+ 
+      <div className="cards">
+        <label className="card" htmlFor="item-1" id="song-1">
+           <img src={vyasImage} alt="Vyas" />
+        </label>
+        <label className="card" htmlFor="item-2" id="song-2">
+           <img src={meera0Image} alt="Meera 0" />
+        </label>
+        <label className="card" htmlFor="item-3" id="song-3">
+           <img src={gandhiImage} alt="Gandhi" />
+        </label>
+        {/* <label className="card" htmlFor="item-4" id="song-4">
+           <img src={budhImage} alt="Budh" />
+        </label> */}
+      </div>
+
 
         <div className="player">
           <div className="upper-part">
@@ -154,8 +160,38 @@ function HomePage() {
               </label>
             </div>
           </div>
+
           <div className="progress-bar">
             <span className="progress"></span>
+
+          <div className="info-area" id="test">
+            <label className="song-info" id="song-info-1">
+              <div className="title">Vyas Bhawan</div>
+              <div className="sub-line">
+                {/* <div className="subtitle">Balthazar</div>
+                <div className="time">4:05</div> */}
+              </div>
+            </label>
+            <label className="song-info" id="song-info-2">
+              <div className="title">Meera-0 Bhawan</div>
+              <div className="sub-line">
+                {/* <div className="subtitle">Moderator</div>
+                <div className="time">4:05</div> */}
+              </div>
+            </label>
+            <label className="song-info" id="song-info-3">
+              <div className="title">Gandhi Bhawan</div>
+              <div className="sub-line">
+                {/* <div className="subtitle">Otzeki</div>
+                <div className="time">4:05</div> */}
+              </div>
+            </label>
+            {/* <label className="song-info" id="song-info-4">
+              <div className="title">Budh Bhawan</div>
+              <div className="sub-line">
+              </div>
+            </label> */}
+
           </div>
         </div>
       </div>

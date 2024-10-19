@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import "./updateProfile.scss";
+
 import heroImage from "../../src/assets/avatar.png";
 import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import apiRequest from "../../lib/apiRequest.js";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 function UpdateProfile() {
   const { currentUser, updateUser } = useContext(AuthContext);
