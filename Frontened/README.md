@@ -16,3 +16,4 @@ DATABASE_URL="mongodb+srv://Admin:R41GzO3RQFnjq0T9@hostel.ub5pf.mongodb.net/Host
 JWT_SECRET_KEY = 1e7RULyvGcPe0s4slDRk80YqIg96z6/62T8TketogIk=
 CLIENT_URL = http://localhost:5173
 "
+Made changes in prisma , use " npx prisma db push " in backened

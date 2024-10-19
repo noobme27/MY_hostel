@@ -12,15 +12,26 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
-  avatar    String? // profile picture
+  avatar    String?
   createdAt DateTime @default(now())
+  info      Info?    @relation(fields: [infoId], references: [id])
+  infoId    String?  @unique @db.ObjectId
+}
 
-  // New fields based on the provided data
-  room        Int?
-  name        String?
-  instituteId String?
-  hobbies     String?
-  whatsapp    String?
-  instagram   String?
-  linkedin    String?
+model Info {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  room          String?
+  name          String?
+  hostel        String? // Added this field to store the hostel name
+  instituteId   String?
+  hobbies       String?
+  whatsapp      String?
+  instagram     String?
+  linkedin      String?
+  github        String? // Added this field to store GitHub link
+  bio           String? // Added this field to store user bio
+  contactNumber String? // Added this field to store contact number
+
+  userId String? @db.ObjectId // To establish a relation with User
+  User   User?
 }

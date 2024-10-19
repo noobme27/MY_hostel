@@ -1,14 +1,16 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import videoBg from "./../../public/bg.mp4";
-import { useState } from "react";
+import videoBg from "./../../src/assets/bg.mp4";
+import { useContext, useState } from "react";
 
 import apiRequest from "../../lib/apiRequest.js";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 function Login() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { updateUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,8 @@ function Login() {
 
         password,
       });
-      console.log(res);
+      // console.log(res);
+      updateUser(res.data);
       navigate("/");
     } catch (err) {
       setError(err.response.data.message);

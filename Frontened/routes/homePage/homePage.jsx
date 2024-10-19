@@ -2,30 +2,34 @@ import "./homePage.scss";
 import reactIcon from "./assets/explore.svg";
 import heroImage from "./assets/image.jpg";
 import { Link } from "react-router-dom";
-import gandhiImage from './assets/gandhi.jpg';
-import meera0Image from './assets/meera-0.jpg';
-import meera1Image from './assets/meera-1.jpg';
-import meera2Image from './assets/meera-2.jpg';
-import meera3Image from './assets/meera-3.jpg';
-import meera4Image from './assets/meera-4.jpg';
-import meera5Image from './assets/meera-5.jpg';
-import meera6Image from './assets/meera-6.jpg';
-import meera7Image from './assets/meera-7.jpg';
-import meera8Image from './assets/meera-8.jpg';
-import meera9Image from './assets/meera-9.jpg';
-import ramImage from './assets/ram.jpg';
-import rpImage from './assets/rp.jpg';
-import shankerImage from './assets/shanker.jpg';
-import vkImage from './assets/vk.jpg';
-import vyasImage from './assets/vyas.jpg';
-import bhagirathImage from './assets/bhagirath.jpg';
-import ashokImage from './assets/ashok.jpg';
-import budhImage from './assets/budh.jpg';
-import malviyaAImage from './assets/malviya-A.jpg';
-import malviyaBImage from './assets/malviya-B.jpg';
-import malviyaCImage from './assets/malviya-C.jpg';
+import gandhiImage from "./assets/gandhi.jpg";
+import meera0Image from "./assets/meera-0.jpg";
+import meera1Image from "./assets/meera-1.jpg";
+import meera2Image from "./assets/meera-2.jpg";
+import meera3Image from "./assets/meera-3.jpg";
+import meera4Image from "./assets/meera-4.jpg";
+import meera5Image from "./assets/meera-5.jpg";
+import meera6Image from "./assets/meera-6.jpg";
+import meera7Image from "./assets/meera-7.jpg";
+import meera8Image from "./assets/meera-8.jpg";
+import meera9Image from "./assets/meera-9.jpg";
+import ramImage from "./assets/ram.jpg";
+import rpImage from "./assets/rp.jpg";
+import shankerImage from "./assets/shanker.jpg";
+import vkImage from "./assets/vk.jpg";
+import vyasImage from "./assets/vyas.jpg";
+import bhagirathImage from "./assets/bhagirath.jpg";
+import ashokImage from "./assets/ashok.jpg";
+import budhImage from "./assets/budh.jpg";
+import malviyaAImage from "./assets/malviya-A.jpg";
+import malviyaBImage from "./assets/malviya-B.jpg";
+import malviyaCImage from "./assets/malviya-C.jpg";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function HomePage() {
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
   return (
     <div className="homePage">
       <div className="textContainer">
@@ -88,12 +92,12 @@ function HomePage() {
         </div>
       </div>
 
-
       {/* <div className="imgContainer">
         <img src={heroImage} alt="Hero" />
       </div>  */}
-      
+
       <div className="imgContainer">
+
       <input type="radio" name="slider" id="item-1" defaultChecked />
       <input type="radio" name="slider" id="item-2" />
       <input type="radio" name="slider" id="item-3" />
@@ -114,23 +118,52 @@ function HomePage() {
         </label> */}
       </div>
 
-      <div className="player">
-        <div className="upper-part">
-          <div className="play-icon">
-            <svg
-              width="20"
-              height="20"
-              fill="#2992dc"
-              stroke="#2992dc"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="feather feather-play"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 3l14 9-14 9V3z" />
-            </svg>
+
+        <div className="player">
+          <div className="upper-part">
+            <div className="play-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="#2992dc"
+                stroke="#2992dc"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="feather feather-play"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 3l14 9-14 9V3z" />
+              </svg>
+            </div>
+            <div className="info-area" id="test">
+              <label className="song-info" id="song-info-1">
+                <div className="title">Bunker</div>
+                <div className="sub-line">
+                  <div className="subtitle">Balthazar</div>
+                  <div className="time">4:05</div>
+                </div>
+              </label>
+              <label className="song-info" id="song-info-2">
+                <div className="title">Words Remain</div>
+                <div className="sub-line">
+                  <div className="subtitle">Moderator</div>
+                  <div className="time">4:05</div>
+                </div>
+              </label>
+              <label className="song-info" id="song-info-3">
+                <div className="title">Falling Out</div>
+                <div className="sub-line">
+                  <div className="subtitle">Otzeki</div>
+                  <div className="time">4:05</div>
+                </div>
+              </label>
+            </div>
           </div>
+
+          <div className="progress-bar">
+            <span className="progress"></span>
+
           <div className="info-area" id="test">
             <label className="song-info" id="song-info-1">
               <div className="title">Vyas Bhawan</div>
@@ -158,23 +191,17 @@ function HomePage() {
               <div className="sub-line">
               </div>
             </label> */}
+
           </div>
-        </div>
-        <div className="progress-bar">
-          <span className="progress"></span>
         </div>
       </div>
     </div>
-
-
-
-    </div>
-    
   );
 }
 
 export default HomePage;
-{/*   <img src={gandhiImage} alt="Gandhi" />
+{
+  /*   <img src={gandhiImage} alt="Gandhi" />
       <img src={meera0Image} alt="Meera 0" />
       <img src={meera1Image} alt="Meera 1" />
       <img src={meera2Image} alt="Meera 2" />
@@ -196,4 +223,5 @@ export default HomePage;
       <img src={malviyaAImage} alt="Malviya A" />
       <img src={malviyaBImage} alt="Malviya B" />
       <img src={malviyaCImage} alt="Malviya C" />
- */}
+ */
+}

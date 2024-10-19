@@ -8,14 +8,13 @@ $debug: false;
   flex-direction: row;
   height: 100vh;
   overflow: auto;
-  padding-top: 2%;
+  padding-top: 5%;
 
   .textContainer {
     flex: 3;
     padding: 20px;
 
     .wrapper {
-      
       padding-right: 10px;
       display: flex;
       flex-direction: column;
@@ -151,7 +150,7 @@ $debug: false;
   //     }
   //   }
   // }
-  ////yaha sai start hota 
+  ////yaha sai start hota
   .card {
     position: absolute;
     width: 60%;
@@ -159,10 +158,10 @@ $debug: false;
     left: 0;
     right: 0;
     margin: auto;
-    transition: transform .4s ease;
+    transition: transform 0.4s ease;
     cursor: pointer;
   }
-  input[type=radio] {
+  input[type="radio"] {
     display: none;
   }
   .imgContainer {
@@ -191,23 +190,29 @@ $debug: false;
     object-fit: cover;
   }
 
-  #item-1:checked ~ .cards #song-3, #item-2:checked ~ .cards #song-1, #item-3:checked ~ .cards #song-2 {
-    transform: translatex(-40%) scale(.8);
-    opacity: .4;
+  #item-1:checked ~ .cards #song-3,
+  #item-2:checked ~ .cards #song-1,
+  #item-3:checked ~ .cards #song-2 {
+    transform: translatex(-40%) scale(0.8);
+    opacity: 0.4;
     z-index: 0;
   }
 
-  #item-1:checked ~ .cards #song-2, #item-2:checked ~ .cards #song-3, #item-3:checked ~ .cards #song-1 {
-    transform: translatex(40%) scale(.8);
-    opacity: .4;
+  #item-1:checked ~ .cards #song-2,
+  #item-2:checked ~ .cards #song-3,
+  #item-3:checked ~ .cards #song-1 {
+    transform: translatex(40%) scale(0.8);
+    opacity: 0.4;
     z-index: 0;
   }
 
-  #item-1:checked ~ .cards #song-1, #item-2:checked ~ .cards #song-2, #item-3:checked ~ .cards #song-3 {
+  #item-1:checked ~ .cards #song-1,
+  #item-2:checked ~ .cards #song-2,
+  #item-3:checked ~ .cards #song-3 {
     transform: translatex(0) scale(1);
     opacity: 1;
     z-index: 1;
-    
+
     img {
       box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
     }
@@ -229,7 +234,9 @@ $debug: false;
     overflow: hidden;
   }
 
-  .play-icon{ margin-right: 10px; }
+  .play-icon {
+    margin-right: 10px;
+  }
 
   .song-info {
     width: calc(100% - 32px);
@@ -248,11 +255,14 @@ $debug: false;
     width: 100%;
   }
 
+
+
   // .subtitle, .time {
   //   font-size: 12px;
   //   line-height: 16px;
   //   color: #c6c5c6;
   // }
+
 
   // .time {
   //   font-size: 12px;
@@ -284,12 +294,14 @@ $debug: false;
     position: absolute;
     top: 0;
     left: 30px;
-    transition: transform .4s ease-in;
+    transition: transform 0.4s ease-in;
   }
 
   #item-2:checked ~ .player #test {
     transform: translateY(0);
   }
+
+
 
   #item-2:checked ~ .player #test  {
     transform: translateY(-20px);
@@ -302,6 +314,7 @@ $debug: false;
   //   transform: translateY(-60px);
   // }
 //
+
   .lockroom {
     display: inline-block;
     position: relative;

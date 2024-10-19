@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "../routes/Layout/layout";
+import { Layout, RequireAuth } from "../routes/Layout/layout";
 import HomePage from "../routes/homePage/homePage";
 import Hostel from "../routes/Hostel/Hostel";
 import Login from "../routes/login/Login";
@@ -25,10 +25,6 @@ function App() {
           path: "party",
           element: <Party />,
         },
-        {
-          path: "update",
-          element: <UpdateProfile />,
-        },
       ],
     },
     {
@@ -38,6 +34,21 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
+        /* {
+          path: "/profile",
+          element: <ProfilePage />,
+          loader: profilePageLoader,
+        }, */
+        {
+          path: "update",
+          element: <UpdateProfile />,
+        },
+      ],
     },
   ]);
 
