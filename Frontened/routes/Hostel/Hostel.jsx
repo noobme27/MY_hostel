@@ -46,16 +46,11 @@ const Hostel = () => {
   };
 
   const handleMouseEnter = (room) => {
-    console.log("Hovered Room:", room); // Log the room being hovered
     setHoveredRoom(room);
   };
 
   const getUserByRoom = (roomNumber) => {
-    const user = users.find(
-      (user) => user.info && user.info.room === roomNumber
-    );
-    console.log("User for Room", roomNumber, ":", user); // Log the user found for the room
-    return user;
+    return users.find((user) => user.info && user.info.room === roomNumber);
   };
 
   const roomTypeClasses = {
@@ -69,117 +64,117 @@ const Hostel = () => {
   };
 
   return (
-    <div className="map_container">
-      <div className="zoom-buttons">
-        <button className="zoom-button" onClick={handleZoomIn}>
-          Zoom In
-        </button>
-        <button className="zoom-button" onClick={handleZoomOut}>
-          Zoom Out
-        </button>
-      </div>
-      {error && <div className="error-message">{error}</div>}{" "}
-      {/* Error message */}
-      <div
-        className="scroll-container"
-        style={{
-          transform: `scale(${zoomLevel})`,
-          transformOrigin: "top left",
-          width: "fit-content",
-        }}
-      >
-        <div className="room-layout">
-          {layout.map((row, rowIndex) => (
-            <div key={rowIndex} className="row">
-              {row.map((cell, colIndex) => {
-                const roomUser = getUserByRoom(cell);
-                const { info } = roomUser || {}; // Destructure info from roomUser
+    <div className="parent-container">
+      <div className="map_container">
+        <div className="zoom-buttons">
+          <button className="zoom-button" onClick={handleZoomIn}>
+            Zoom In
+          </button>
+          <button className="zoom-button" onClick={handleZoomOut}>
+            Zoom Out
+          </button>
+        </div>
+        {error && <div className="error-message">{error}</div>}
+        <div
+          className="scroll-container"
+          style={{
+            transform: `scale(${zoomLevel})`,
+            transformOrigin: "top left",
+            width: "fit-content",
+          }}
+        >
+          <div className="room-layout">
+            {layout.map((row, rowIndex) => (
+              <div key={rowIndex} className="row">
+                {row.map((cell, colIndex) => {
+                  const roomUser = getUserByRoom(cell);
+                  const { info } = roomUser || {};
 
-                return (
-                  <div
-                    key={colIndex}
-                    className={`cell ${roomTypeClasses[cell] || "room"}`}
-                    onMouseEnter={() => handleMouseEnter(cell)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {cell === "H" && (
-                      <div className="btn btn-primary hallway">Hallway</div>
-                    )}
-                    {cell === "T" && <div className="toilet">Toilet</div>}
-                    {cell === "S" && <div className="stairs">Stairs</div>}
-                    {cell === "EN" && <div className="entrance">Entrance</div>}
-                    {cell === "W" && <div className="water">Water</div>}
-                    {cell === "CR" && (
-                      <div className="common-room">Common Room</div>
-                    )}
-                    {cell !== "H" &&
-                      cell !== "E" &&
-                      cell !== "T" &&
-                      cell !== "S" &&
-                      cell !== "EN" &&
-                      cell !== "W" &&
-                      cell !== "CR" && (
-                        <button className="room-button room">{cell}</button>
+                  return (
+                    <div
+                      key={colIndex}
+                      className={`cell ${roomTypeClasses[cell] || "room"}`}
+                      onMouseEnter={() => handleMouseEnter(cell)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      {cell === "H" && (
+                        <div className="btn btn-primary hallway">Hallway</div>
                       )}
+                      {cell === "T" && <div className="toilet">Toilet</div>}
+                      {cell === "S" && <div className="stairs">Stairs</div>}
+                      {cell === "EN" && (
+                        <div className="entrance">Entrance</div>
+                      )}
+                      {cell === "W" && <div className="water">Water</div>}
+                      {cell === "CR" && (
+                        <div className="common-room">Common Room</div>
+                      )}
+                      {cell !== "H" &&
+                        cell !== "E" &&
+                        cell !== "T" &&
+                        cell !== "S" &&
+                        cell !== "EN" &&
+                        cell !== "W" &&
+                        cell !== "CR" && (
+                          <button className="room-button room">{cell}</button>
+                        )}
 
-                    {hoveredRoom === cell && info && (
-                      <div
-                        className="info-box"
-                        aria-labelledby={`info-${cell}`}
-                      >
-                        <img
-                          src={info.avatar || "./../../src/assets/avatar.png"}
-                          alt="Profile"
-                          className="profile-pic"
-                        />
-                        <div className="user-info">
-                          <h3>{info.name || "Unknown User"}</h3>{" "}
-                          {/* Default name if null */}
-                          <p>Room: {info.room}</p>
-                          <p>Institute ID: {info.instituteId || "N/A"}</p>{" "}
-                          {/* Default for institute ID */}
-                          <p>Hobbies: {info.hobbies || "N/A"}</p>{" "}
-                          {/* Default for hobbies */}
-                          <div className="social-links">
-                            {info.whatsapp && (
-                              <a
-                                href={info.whatsapp}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="WhatsApp"
-                              >
-                                WhatsApp
-                              </a>
-                            )}
-                            {info.instagram && (
-                              <a
-                                href={info.instagram}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Instagram"
-                              >
-                                Instagram
-                              </a>
-                            )}
-                            {info.linkedin && (
-                              <a
-                                href={info.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="LinkedIn"
-                              >
-                                LinkedIn
-                              </a>
-                            )}
+                      {hoveredRoom === cell && info && (
+                        <div
+                          className="info-box"
+                          aria-labelledby={`info-${cell}`}
+                        >
+                          <img
+                            src={info.avatar || "./../../src/assets/avatar.png"}
+                            alt="Profile"
+                            className="profile-pic"
+                          />
+                          <div className="user-info">
+                            <h3>{info.name || "Unknown User"}</h3>
+                            <p>Room: {info.room}</p>
+                            <p>Institute ID: {info.instituteId || "N/A"}</p>
+                            <p>Hobbies: {info.hobbies || "N/A"}</p>
+                            <div className="social-links">
+                              {info.whatsapp && (
+                                <a
+                                  href={info.whatsapp}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="WhatsApp"
+                                >
+                                  WhatsApp
+                                </a>
+                              )}
+                              {info.instagram && (
+                                <a
+                                  href={info.instagram}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="Instagram"
+                                >
+                                  Instagram
+                                </a>
+                              )}
+                              {info.linkedin && (
+                                <a
+                                  href={info.linkedin}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="LinkedIn"
+                                >
+                                  LinkedIn
+                                </a>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ model Info {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String? // Change to optional if name can be null
   instituteId String?
+  hostel      String?
   room        Int?
   hobbies     String?
   user        User?   @relation

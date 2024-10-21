@@ -4,6 +4,7 @@ import daisyui from "daisyui";
 export default {
   content: [
     "./src/**/*.{html,js,jsx,ts,tsx,vue,scss}", // This covers all relevant files inside the src directory
+
     "./index.html",
   ],
   theme: {

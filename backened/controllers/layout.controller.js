@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 // Function to generate room layout
 const generateRoomLayout = () => {
-  const rows = 27; // Number of rows
+  const rows = 31; // Number of rows
   const cols = 36; // Number of columns
   const layout = Array.from({ length: rows }, () => Array(cols).fill(0)); // Create an empty matrix filled with 0
 

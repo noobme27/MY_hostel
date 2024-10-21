@@ -7,6 +7,8 @@ import Register from "../routes/register/Register";
 import Party from "../routes/party/Party";
 import UpdateProfile from "../routes/UpdateProfile/UpdateProfile";
 
+import ListPage from "../routes/listPage/listPage";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -24,6 +26,10 @@ function App() {
         {
           path: "party",
           element: <Party />,
+        },
+        {
+          path: "list",
+          element: <ListPage />,
         },
       ],
     },
