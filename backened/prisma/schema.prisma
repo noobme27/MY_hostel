@@ -9,29 +9,20 @@ datasource db {
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  username  String   @unique
+  username  String   @unique // Ensure usernames are unique
+  email     String   @unique // Email should be unique for users
   password  String
-  avatar    String?
+  infoId    String?  @unique @db.ObjectId // Make infoId unique to maintain one-to-one relationship
+  info      Info?    @relation(fields: [infoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   createdAt DateTime @default(now())
-  info      Info?    @relation(fields: [infoId], references: [id])
-  infoId    String?  @unique @db.ObjectId
 }
 
 model Info {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  room          String?
-  name          String?
-  hostel        String? // Added this field to store the hostel name
-  instituteId   String?
-  hobbies       String?
-  whatsapp      String?
-  instagram     String?
-  linkedin      String?
-  github        String? // Added this field to store GitHub link
-  bio           String? // Added this field to store user bio
-  contactNumber String? // Added this field to store contact number
-
-  userId String? @db.ObjectId // To establish a relation with User
-  User   User?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String? // Change to optional if name can be null
+  instituteId String?
+  room        Int?
+  hobbies     String?
+  user        User?   @relation
+  userId      String? @db.ObjectId
 }

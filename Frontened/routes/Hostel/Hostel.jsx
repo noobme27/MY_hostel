@@ -3,54 +3,73 @@ import { useEffect, useState } from "react";
 
 const Hostel = () => {
   const [layout, setLayout] = useState([]);
-  const [zoomLevel, setZoomLevel] = useState(1); // State for zoom level
-  const [hoveredRoom, setHoveredRoom] = useState(null); // State for hovered room
-  const [users, setUsers] = useState([]); // State for user data
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [hoveredRoom, setHoveredRoom] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null); // State for error handling
 
-  // Fetch layout and user data from the backend
   useEffect(() => {
-    fetch("http://localhost:8800/api/room-layout/Vyas")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+    const fetchLayoutAndUsers = async () => {
+      try {
+        const [layoutResponse, usersResponse] = await Promise.all([
+          fetch("http://localhost:8800/api/room-layout/Vyas"),
+          fetch("http://localhost:8800/api/users"),
+        ]);
+
+        if (!layoutResponse.ok || !usersResponse.ok) {
+          throw new Error("Failed to fetch data");
         }
-        return response.json();
-      })
-      .then((data) => {
-        setLayout(data.layout); // Set room layout
-        setUsers(data.users); // Set user data
-      })
-      .catch((err) =>
-        console.error("Error fetching layout and user data:", err)
-      );
+
+        const layoutData = await layoutResponse.json();
+        const usersData = await usersResponse.json();
+        setLayout(layoutData.layout);
+        setUsers(usersData);
+      } catch (err) {
+        console.error("Error fetching layout and user data:", err);
+        setError("Failed to load data. Please try again later.");
+      }
+    };
+
+    fetchLayoutAndUsers();
   }, []);
 
-  // Zoom in function
   const handleZoomIn = () => {
-    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 2)); // Max zoom level
+    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 2));
   };
 
-  // Zoom out function
   const handleZoomOut = () => {
-    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 1)); // Min zoom level
-  };
-
-  // Handle mouse hover
-  const handleMouseEnter = (room) => {
-    setHoveredRoom(room);
+    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 1));
   };
 
   const handleMouseLeave = () => {
     setHoveredRoom(null);
   };
 
-  // Find user by room number
-  const getUserByRoom = (roomNumber) => {
-    return users.find((user) => user.room === roomNumber);
+  const handleMouseEnter = (room) => {
+    console.log("Hovered Room:", room); // Log the room being hovered
+    setHoveredRoom(room);
   };
+
+  const getUserByRoom = (roomNumber) => {
+    const user = users.find(
+      (user) => user.info && user.info.room === roomNumber
+    );
+    console.log("User for Room", roomNumber, ":", user); // Log the user found for the room
+    return user;
+  };
+
+  const roomTypeClasses = {
+    H: "hallway",
+    E: "empty",
+    T: "toilet",
+    S: "stairs",
+    EN: "entrance",
+    W: "water",
+    CR: "common-room",
+  };
+
   return (
     <div className="map_container">
-      {/* Zoom buttons positioned at the top */}
       <div className="zoom-buttons">
         <button className="zoom-button" onClick={handleZoomIn}>
           Zoom In
@@ -59,6 +78,8 @@ const Hostel = () => {
           Zoom Out
         </button>
       </div>
+      {error && <div className="error-message">{error}</div>}{" "}
+      {/* Error message */}
       <div
         className="scroll-container"
         style={{
@@ -71,34 +92,18 @@ const Hostel = () => {
           {layout.map((row, rowIndex) => (
             <div key={rowIndex} className="row">
               {row.map((cell, colIndex) => {
-                const roomUser = getUserByRoom(cell); // Get user for the current room
+                const roomUser = getUserByRoom(cell);
+                const { info } = roomUser || {}; // Destructure info from roomUser
 
                 return (
                   <div
                     key={colIndex}
-                    className={`cell ${
-                      cell === "H"
-                        ? "hallway"
-                        : cell === "E"
-                        ? "empty"
-                        : cell === "T"
-                        ? "toilet"
-                        : cell === "S"
-                        ? "stairs"
-                        : cell === "EN"
-                        ? "entrance"
-                        : cell === "W"
-                        ? "water"
-                        : cell === "CR"
-                        ? "common-room"
-                        : "room" // Default class for other rooms
-                    }`}
+                    className={`cell ${roomTypeClasses[cell] || "room"}`}
                     onMouseEnter={() => handleMouseEnter(cell)}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {/* Check for room types and render accordingly */}
                     {cell === "H" && (
-                      <div className=" btn btn-primary hallway ">Hallway</div>
+                      <div className="btn btn-primary hallway">Hallway</div>
                     )}
                     {cell === "T" && <div className="toilet">Toilet</div>}
                     {cell === "S" && <div className="stairs">Stairs</div>}
@@ -117,40 +122,55 @@ const Hostel = () => {
                         <button className="room-button room">{cell}</button>
                       )}
 
-                    {/* Show info box when room is hovered */}
-                    {hoveredRoom === cell && roomUser && (
-                      <div className="info-box">
+                    {hoveredRoom === cell && info && (
+                      <div
+                        className="info-box"
+                        aria-labelledby={`info-${cell}`}
+                      >
                         <img
-                          src={roomUser.profilePic}
+                          src={info.avatar || "./../../src/assets/avatar.png"}
                           alt="Profile"
                           className="profile-pic"
                         />
                         <div className="user-info">
-                          <h3>{roomUser.name}</h3>
-                          <p>Institute ID: {roomUser.instituteId}</p>
-                          <p>Hobbies: {roomUser.hobbies}</p>
+                          <h3>{info.name || "Unknown User"}</h3>{" "}
+                          {/* Default name if null */}
+                          <p>Room: {info.room}</p>
+                          <p>Institute ID: {info.instituteId || "N/A"}</p>{" "}
+                          {/* Default for institute ID */}
+                          <p>Hobbies: {info.hobbies || "N/A"}</p>{" "}
+                          {/* Default for hobbies */}
                           <div className="social-links">
-                            <a
-                              href={roomUser.whatsapp}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              WhatsApp
-                            </a>
-                            <a
-                              href={roomUser.instagram}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Instagram
-                            </a>
-                            <a
-                              href={roomUser.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              LinkedIn
-                            </a>
+                            {info.whatsapp && (
+                              <a
+                                href={info.whatsapp}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WhatsApp"
+                              >
+                                WhatsApp
+                              </a>
+                            )}
+                            {info.instagram && (
+                              <a
+                                href={info.instagram}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                              >
+                                Instagram
+                              </a>
+                            )}
+                            {info.linkedin && (
+                              <a
+                                href={info.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                              >
+                                LinkedIn
+                              </a>
+                            )}
                           </div>
                         </div>
                       </div>
