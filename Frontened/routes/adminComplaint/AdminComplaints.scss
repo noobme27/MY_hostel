@@ -1,49 +1,80 @@
 .lay {
   margin-top: 100px;
 }
-.admin-complaints {
+.complaints-container {
   padding: 20px;
 
   h1 {
-    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
   }
 
-  .search-bar {
-    margin-bottom: 20px;
-    padding: 10px;
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .complaints-list {
+  .complaint-list {
     list-style-type: none;
     padding: 0;
 
     .complaint-item {
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 15px;
-      margin-bottom: 10px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between; // Aligns details and dropdown
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      transition: box-shadow 0.3s;
 
-      .status-buttons {
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .complaint-details {
+        flex-grow: 1; // Allows details to take available space
+        margin-right: 20px; // Adds spacing between details and dropdown
+
+        h3 {
+          margin: 0;
+          color: #007bff;
+        }
+
+        p {
+          margin: 5px 0;
+          color: #555;
+        }
+      }
+
+      .status-dropdown {
         display: flex;
-        gap: 10px;
+        align-items: center;
 
-        button {
-          padding: 5px 10px;
-          border: none;
+        label {
+          margin-right: 10px;
+          color: #333;
+        }
+
+        select {
+          padding: 5px;
+          border: 1px solid #ccc;
           border-radius: 4px;
+          background-color: #fff;
           cursor: pointer;
 
-          &:hover {
-            background-color: #f0f0f0;
+          &:focus {
+            outline: none;
+            border-color: #007bff;
           }
         }
       }
     }
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #007bff;
+  }
+
+  .error {
+    text-align: center;
+    color: red;
   }
 }
