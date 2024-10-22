@@ -49,12 +49,14 @@ const Hostel = () => {
     setHoveredRoom(room);
   };
 
-  /* const handleButtonClick = (type) => {
-    alert(`You clicked on ${type}`);
-  }; */
-
+  // Function to get user by room, with room number converted to string
   const getUserByRoom = (roomNumber) => {
-    return users.find((user) => user.info && user.info.room === roomNumber);
+    if (isNaN(roomNumber)) return null; // Only compare if it's a valid room number
+    return users.find((user) => {
+      const userRoom =
+        user.info && user.info.room ? user.info.room.toString() : null;
+      return userRoom === roomNumber;
+    });
   };
 
   const roomTypeClasses = {
