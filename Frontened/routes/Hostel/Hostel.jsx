@@ -49,6 +49,10 @@ const Hostel = () => {
     setHoveredRoom(room);
   };
 
+  /* const handleButtonClick = (type) => {
+    alert(`You clicked on ${type}`);
+  }; */
+
   const getUserByRoom = (roomNumber) => {
     return users.find((user) => user.info && user.info.room === roomNumber);
   };
@@ -98,17 +102,23 @@ const Hostel = () => {
                       onMouseLeave={handleMouseLeave}
                     >
                       {cell === "H" && (
-                        <div className="btn btn-primary hallway">Hallway</div>
+                        <div className="btn btn-primary hallway"></div>
                       )}
-                      {cell === "T" && <div className="toilet">Toilet</div>}
-                      {cell === "S" && <div className="stairs">Stairs</div>}
-                      {cell === "EN" && (
-                        <div className="entrance">Entrance</div>
+                      {cell === "T" && (
+                        <button
+                          className="toilet toilet-button"
+                          onClick={() => handleButtonClick()}
+                        ></button>
                       )}
-                      {cell === "W" && <div className="water">Water</div>}
-                      {cell === "CR" && (
-                        <div className="common-room">Common Room</div>
+                      {cell === "S" && <div className="stairs"></div>}
+                      {cell === "EN" && <div className="entrance"></div>}
+                      {cell === "W" && (
+                        <button
+                          className="water water-button"
+                          onClick={() => handleButtonClick()}
+                        ></button>
                       )}
+                      {cell === "CR" && <div className="common-room"></div>}
                       {cell !== "H" &&
                         cell !== "E" &&
                         cell !== "T" &&
