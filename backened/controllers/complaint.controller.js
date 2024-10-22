@@ -22,12 +22,10 @@ export const createComplaint = async (req, res) => {
     });
 
     console.log(newComplaint);
-    res
-      .status(201)
-      .json({
-        message: "Complaint created successfully",
-        complaint: newComplaint,
-      });
+    res.status(201).json({
+      message: "Complaint created successfully",
+      complaint: newComplaint,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to create complaint" });

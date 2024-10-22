@@ -9,6 +9,7 @@ import UpdateProfile from "../routes/UpdateProfile/UpdateProfile";
 
 import ListPage from "../routes/listPage/listPage";
 import MakeAdmin from "../routes/makeAdmin/makeAdminPage";
+import Complaint from "../routes/ComplaintPage/Complaint";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,10 @@ function App() {
         {
           path: "/makeAdmin",
           element: <MakeAdmin />,
+        },
+        {
+          path: "/complaint",
+          element: <Complaint />,
         },
       ],
     },
