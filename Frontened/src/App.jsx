@@ -8,6 +8,7 @@ import Party from "../routes/party/Party";
 import UpdateProfile from "../routes/UpdateProfile/UpdateProfile";
 
 import ListPage from "../routes/listPage/listPage";
+import MakeAdmin from "../routes/makeAdmin/makeAdminPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -30,6 +31,10 @@ function App() {
         {
           path: "list",
           element: <ListPage />,
+        },
+        {
+          path: "/makeAdmin",
+          element: <MakeAdmin />,
         },
       ],
     },

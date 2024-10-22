@@ -6,7 +6,7 @@ export const register = async (req, res) => {
   try {
     //HASH THE PASSWORD
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
     //CREATE A NEW USER AND SAVE TO DB
     const newUser = await prisma.user.create({
       data: {
@@ -66,4 +66,27 @@ export const login = async (req, res) => {
 };
 export const logout = (req, res) => {
   res.clearCookie("token").status(200).json({ message: "logout successful" }); // removes the token from the backened
+};
+export const makeAdmin = async (req, res) => {
+  const { userId } = req.body; // Get the user ID from the request body
+
+  // Verify that the requester is an admin
+  if (!req.user.isAdmin) {
+    return res.status(403).json({ message: "Access denied" });
+  }
+
+  try {
+    // Update the user's isAdmin field
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { isAdmin: true },
+    });
+
+    res
+      .status(200)
+      .json({ message: "User has been made an admin", user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to update user role" });
+  }
 };
