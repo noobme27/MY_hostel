@@ -37,7 +37,7 @@ const ComplaintsPage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status }),
+          body: JSON.stringify({ status }), // Ensure this matches the expected structure
           credentials: "include", // Include cookies for authentication
         }
       );
@@ -84,10 +84,9 @@ const ComplaintsPage = () => {
                   value={complaint.status}
                   onChange={(e) => updateStatus(complaint.id, e.target.value)}
                 >
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="resolved">Resolved</option>
-                  <option value="closed">Closed</option>
+                  <option value="PENDING">PENDING</option>
+                  <option value="IN_PROGRESS">IN_PROGRESS</option>
+                  <option value="RESOLVED">RESOLVED</option>
                 </select>
               </div>
             </li>

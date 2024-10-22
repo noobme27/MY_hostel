@@ -54,6 +54,15 @@ export const updateComplaintStatus = async (req, res) => {
   const { status } = req.body; // Get new status from request body
 
   try {
+    // Check if the complaint exists before updating
+    const complaintExists = await prisma.complaint.findUnique({
+      where: { id },
+    });
+
+    if (!complaintExists) {
+      return res.status(404).json({ message: "Complaint not found." });
+    }
+
     // Update the complaint's status
     const updatedComplaint = await prisma.complaint.update({
       where: { id },
@@ -65,7 +74,9 @@ export const updateComplaintStatus = async (req, res) => {
       complaint: updatedComplaint,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to update complaint" });
+    console.error("Error updating complaint status:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to update complaint", error: err.message });
   }
 };
