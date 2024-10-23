@@ -17,3 +17,8 @@ JWT_SECRET_KEY = 1e7RULyvGcPe0s4slDRk80YqIg96z6/62T8TketogIk=
 CLIENT_URL = http://localhost:5173
 "
 Made changes in prisma , use " npx prisma db push " in backened
+
+Remove Prop types error in Complaint box by using prop-types , install in Frontened
+"
+npm install prop-types
+"
