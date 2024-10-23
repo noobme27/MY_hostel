@@ -75,9 +75,11 @@ function HomePage() {
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
                     <div className="ag-courses-item_bg"></div>
-                    <div className="ag-courses-item_title">
-                      Raise a Complain
-                    </div>
+                    <Link to={"/complaint"}>
+                      <div className="ag-courses-item_title">
+                        Raise a Complain
+                      </div>
+                    </Link>
                   </a>
                 </div>
 

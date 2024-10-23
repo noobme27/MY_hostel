@@ -138,19 +138,21 @@ const Hostel = () => {
                           aria-labelledby={`info-${cell}`}
                         >
                           <img
-                            src={info.avatar || "./../../src/assets/avatar.png"}
+                            src={
+                              info[0].avatar || "./../../src/assets/avatar.png"
+                            }
                             alt="Profile"
                             className="profile-pic"
                           />
                           <div className="user-info">
-                            <h3>{info.name || "Unknown User"}</h3>
-                            <p>Room: {info.room}</p>
-                            <p>Institute ID: {info.instituteId || "N/A"}</p>
-                            <p>Hobbies: {info.hobbies || "N/A"}</p>
+                            <h3>{info[0].name || "Unknown User"}</h3>
+                            <p>Room: {info[0].room}</p>
+                            <p>Institute ID: {info[0].instituteId || "N/A"}</p>
+                            <p>Hobbies: {info[0].hobbies || "N/A"}</p>
                             <div className="social-links">
-                              {info.whatsapp && (
+                              {info[0].whatsapp && (
                                 <a
-                                  href={info.whatsapp}
+                                  href={info[0].whatsapp}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   aria-label="WhatsApp"
@@ -158,9 +160,9 @@ const Hostel = () => {
                                   WhatsApp
                                 </a>
                               )}
-                              {info.instagram && (
+                              {info[0].instagram && (
                                 <a
-                                  href={info.instagram}
+                                  href={info[0].instagram}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   aria-label="Instagram"
@@ -168,9 +170,9 @@ const Hostel = () => {
                                   Instagram
                                 </a>
                               )}
-                              {info.linkedin && (
+                              {info[0].linkedin && (
                                 <a
-                                  href={info.linkedin}
+                                  href={info[0].linkedin}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   aria-label="LinkedIn"
