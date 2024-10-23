@@ -1,3 +1,4 @@
+import Complaint from "../ComplaintPage/Complaint";
 import "./hostel.scss";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,7 @@ const Hostel = () => {
   const [hoveredRoom, setHoveredRoom] = useState(null);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null); // State for error handling
+  const [showComplaint, setShowComplaint] = useState(false); // State to toggle complaint form
 
   useEffect(() => {
     const fetchLayoutAndUsers = async () => {
@@ -46,7 +48,6 @@ const Hostel = () => {
   };
 
   const handleMouseEnter = (room) => {
-    // console.log(room.info);
     setHoveredRoom(room);
   };
 
@@ -68,6 +69,11 @@ const Hostel = () => {
     EN: "entrance",
     W: "water",
     CR: "common-room",
+  };
+
+  // Function to handle showing complaint form
+  const handleComplaintClick = () => {
+    setShowComplaint(true);
   };
 
   return (
@@ -110,7 +116,7 @@ const Hostel = () => {
                       {cell === "T" && (
                         <button
                           className="toilet toilet-button"
-                          onClick={() => handleButtonClick()}
+                          onClick={handleComplaintClick} // Show complaint form on click
                         ></button>
                       )}
                       {cell === "S" && <div className="stairs"></div>}
@@ -118,7 +124,7 @@ const Hostel = () => {
                       {cell === "W" && (
                         <button
                           className="water water-button"
-                          onClick={() => handleButtonClick()}
+                          onClick={handleComplaintClick} // Show complaint form on click
                         ></button>
                       )}
                       {cell === "CR" && <div className="common-room"></div>}
@@ -192,6 +198,9 @@ const Hostel = () => {
           </div>
         </div>
       </div>
+
+      {/* Render the complaint form if showComplaint is true */}
+      {showComplaint && <Complaint onClose={() => setShowComplaint(false)} />}
     </div>
   );
 };
