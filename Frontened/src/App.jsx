@@ -14,6 +14,7 @@ import AdminComplaints from "../routes/adminComplaint/AdminComplaints";
 import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
 import Complaint from "../routes/Complaint/Complaint";
 import ComplaintPage from "../routes/ComplaintPage/ComplaintPage";
+import UserSearchPage from "../routes/UserSearch/UserSearch";
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +49,10 @@ function App() {
         {
           path: "/admincomplaint",
           element: <ComplaintsPage />,
+        },
+        {
+          path: "/search",
+          element: <UserSearchPage />,
         },
       ],
     },
