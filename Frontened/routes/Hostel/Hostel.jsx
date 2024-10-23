@@ -46,16 +46,17 @@ const Hostel = () => {
   };
 
   const handleMouseEnter = (room) => {
+    // console.log(room.info);
     setHoveredRoom(room);
   };
 
-  // Function to get user by room, with room number converted to string
   const getUserByRoom = (roomNumber) => {
     if (isNaN(roomNumber)) return null; // Only compare if it's a valid room number
+
     return users.find((user) => {
-      const userRoom =
-        user.info && user.info.room ? user.info.room.toString() : null;
-      return userRoom === roomNumber;
+      // Since info is an array, we need to find the correct room inside the array
+      const userRoomInfo = user.info.find((info) => info.room === roomNumber);
+      return userRoomInfo ? userRoomInfo.room === roomNumber : false;
     });
   };
 
