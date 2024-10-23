@@ -1,4 +1,4 @@
-import Complaint from "../ComplaintPage/Complaint";
+import Complaint from "../Complaint/Complaint";
 import "./hostel.scss";
 import { useEffect, useState } from "react";
 
@@ -7,8 +7,12 @@ const Hostel = () => {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [hoveredRoom, setHoveredRoom] = useState(null);
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null); // State for error handling
-  const [showComplaint, setShowComplaint] = useState(false); // State to toggle complaint form
+  const [error, setError] = useState(null);
+  const [showComplaint, setShowComplaint] = useState(false);
+  const [complaintPosition, setComplaintPosition] = useState({
+    top: 0,
+    left: 0,
+  });
 
   useEffect(() => {
     const fetchLayoutAndUsers = async () => {
@@ -52,10 +56,9 @@ const Hostel = () => {
   };
 
   const getUserByRoom = (roomNumber) => {
-    if (isNaN(roomNumber)) return null; // Only compare if it's a valid room number
+    if (isNaN(roomNumber)) return null;
 
     return users.find((user) => {
-      // Since info is an array, we need to find the correct room inside the array
       const userRoomInfo = user.info.find((info) => info.room === roomNumber);
       return userRoomInfo ? userRoomInfo.room === roomNumber : false;
     });
@@ -71,8 +74,12 @@ const Hostel = () => {
     CR: "common-room",
   };
 
-  // Function to handle showing complaint form
-  const handleComplaintClick = () => {
+  const handleComplaintClick = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setComplaintPosition({
+      top: rect.bottom + window.scrollY, // Position just below the button
+      left: rect.left + window.scrollX, // Align with the button
+    });
     setShowComplaint(true);
   };
 
@@ -116,17 +123,18 @@ const Hostel = () => {
                       {cell === "T" && (
                         <button
                           className="toilet toilet-button"
-                          onClick={handleComplaintClick} // Show complaint form on click
+                          onClick={handleComplaintClick}
+                        ></button>
+                      )}
+                      {cell === "W" && (
+                        <button
+                          className="water water-button"
+                          onClick={handleComplaintClick}
                         ></button>
                       )}
                       {cell === "S" && <div className="stairs"></div>}
                       {cell === "EN" && <div className="entrance"></div>}
-                      {cell === "W" && (
-                        <button
-                          className="water water-button"
-                          onClick={handleComplaintClick} // Show complaint form on click
-                        ></button>
-                      )}
+
                       {cell === "CR" && <div className="common-room"></div>}
                       {cell !== "H" &&
                         cell !== "E" &&
@@ -176,16 +184,6 @@ const Hostel = () => {
                                   Instagram
                                 </a>
                               )}
-                              {info[0].linkedin && (
-                                <a
-                                  href={info[0].linkedin}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="LinkedIn"
-                                >
-                                  LinkedIn
-                                </a>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -198,9 +196,12 @@ const Hostel = () => {
           </div>
         </div>
       </div>
-
-      {/* Render the complaint form if showComplaint is true */}
-      {showComplaint && <Complaint onClose={() => setShowComplaint(false)} />}
+      {showComplaint && (
+        <Complaint
+          onClose={() => setShowComplaint(false)}
+          position={complaintPosition}
+        />
+      )}
     </div>
   );
 };

@@ -9,9 +9,11 @@ import UpdateProfile from "../routes/UpdateProfile/UpdateProfile";
 
 import ListPage from "../routes/listPage/listPage";
 import MakeAdmin from "../routes/makeAdmin/makeAdminPage";
-import Complaint from "../routes/ComplaintPage/Complaint";
+
 import AdminComplaints from "../routes/adminComplaint/AdminComplaints";
 import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
+import Complaint from "../routes/Complaint/Complaint";
+import ComplaintPage from "../routes/ComplaintPage/ComplaintPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -41,7 +43,7 @@ function App() {
         },
         {
           path: "/complaint",
-          element: <Complaint />,
+          element: <ComplaintPage />,
         },
         {
           path: "/admincomplaint",

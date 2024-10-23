@@ -1,7 +1,7 @@
-import "./complaint.scss";
+import "./complaintPage.scss";
 import { useState } from "react";
 
-const Complaint = () => {
+const ComplaintPage = () => {
   const [complaintType, setComplaintType] = useState("");
   const [complaintDescription, setComplaintDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,33 +49,35 @@ const Complaint = () => {
   };
 
   return (
-    <div className="complaint-container">
-      <h2>Register Complaint</h2>
-      <form onSubmit={handleComplaintSubmit}>
-        <select
-          value={complaintType}
-          onChange={(e) => setComplaintType(e.target.value)}
-          required
-        >
-          <option value="" disabled>
-            Select Complaint Type
-          </option>
-          <option value="TOILET">Toilet</option>
-          <option value="WATER">Water</option>
-          {/* Add other complaint types as needed */}
-        </select>
-        <textarea
-          placeholder="Describe your complaint..."
-          value={complaintDescription}
-          onChange={(e) => setComplaintDescription(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit Complaint"}
-        </button>
-      </form>
+    <div className="lay">
+      <div className="complaint-container">
+        <h2>Register Complaint</h2>
+        <form onSubmit={handleComplaintSubmit}>
+          <select
+            value={complaintType}
+            onChange={(e) => setComplaintType(e.target.value)}
+            required
+          >
+            <option value="" disabled>
+              Select Complaint Type
+            </option>
+            <option value="TOILET">Toilet</option>
+            <option value="WATER">Water</option>
+            {/* Add other complaint types as needed */}
+          </select>
+          <textarea
+            placeholder="Describe your complaint..."
+            value={complaintDescription}
+            onChange={(e) => setComplaintDescription(e.target.value)}
+            required
+          />
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit Complaint"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default Complaint;
+export default ComplaintPage;
