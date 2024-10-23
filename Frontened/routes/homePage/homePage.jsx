@@ -87,9 +87,11 @@ function HomePage() {
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
                     <div className="ag-courses-item_bg"></div>
-                    <div className="ag-courses-item_title">
-                      Search Community
-                    </div>
+                    <Link to={"/search"}>
+                      <div className="ag-courses-item_title">
+                        Search Community
+                      </div>
+                    </Link>
                   </a>
                 </div>
               </div>
