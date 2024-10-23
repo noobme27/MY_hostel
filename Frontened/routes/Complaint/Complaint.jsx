@@ -1,5 +1,6 @@
 import "./complaint.scss";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const Complaint = ({ onClose, position }) => {
   const [complaintType, setComplaintType] = useState("");
@@ -53,10 +54,10 @@ const Complaint = ({ onClose, position }) => {
     <div
       className="complaint-box"
       style={{
-        position: "absolute", // Ensure absolute positioning
+        position: "absolute",
         top: position.top,
         left: position.left,
-        zIndex: 9999, // Ensure it appears on top
+        zIndex: 9999,
       }}
     >
       <h2>Register Complaint</h2>
@@ -85,6 +86,13 @@ const Complaint = ({ onClose, position }) => {
       <button onClick={onClose}>Cancel</button>
     </div>
   );
+};
+Complaint.propTypes = {
+  onClose: PropTypes.func.isRequired, // onClose should be a required function
+  position: PropTypes.shape({
+    top: PropTypes.number.isRequired, // Ensure top is a required number
+    left: PropTypes.number.isRequired, // Ensure left is a required number
+  }).isRequired, // position should be a required object with top and left
 };
 
 export default Complaint;
