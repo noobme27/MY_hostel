@@ -7,7 +7,6 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import apiRequest from "../../lib/apiRequest.js";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-
 function UpdateProfile() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate(); // Initialize the navigate hook
@@ -16,13 +15,16 @@ function UpdateProfile() {
   const [formData, setFormData] = useState({
     username: currentUser.username || "",
     email: currentUser.email || "",
+    password: "", // Add password to state for updating
     info: {
-      hostel: "",
-      room: "",
-      bio: "",
-      contactNumber: "",
-      linkedin: "",
-      github: "",
+      name: "", // New field for name
+      hostel: currentUser.info?.hostel || "",
+      room: currentUser.info?.room || "", // Keep it as string initially to handle input, will convert later
+      hobbies: "", // New field for hobbies
+      bio: currentUser.info?.bio || "",
+      contactNumber: currentUser.info?.contactNumber || "",
+      linkedin: currentUser.info?.linkedin || "",
+      github: currentUser.info?.github || "",
     },
   });
   const [profilePicture, setProfilePicture] = useState(null);
@@ -34,13 +36,25 @@ function UpdateProfile() {
     // Update nested info state if name starts with "info."
     if (name.startsWith("info.")) {
       const infoField = name.split(".")[1]; // Get the field name after "info."
-      setFormData((prevData) => ({
-        ...prevData,
-        info: {
-          ...prevData.info,
-          [infoField]: value,
-        },
-      }));
+
+      // Convert room input to integer if the field is "room"
+      if (infoField === "room") {
+        setFormData((prevData) => ({
+          ...prevData,
+          info: {
+            ...prevData.info,
+            [infoField]: parseInt(value, 10) || "", // Convert to integer or fallback to empty string
+          },
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          info: {
+            ...prevData.info,
+            [infoField]: value,
+          },
+        }));
+      }
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -119,6 +133,16 @@ function UpdateProfile() {
           </div>
 
           <div className="form-group">
+            <label htmlFor="name">Name</label> {/* New field for name */}
+            <input
+              type="text"
+              name="info.name"
+              value={formData.info.name}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="form-group">
             <label>Hostel</label>
             <input
               type="text"
@@ -131,7 +155,7 @@ function UpdateProfile() {
           <div className="form-group">
             <label>Room No.</label>
             <input
-              type="text"
+              type="text" // Keep as text to allow numeric input
               name="info.room" // Updated name to reflect nested structure
               value={formData.info.room}
               onChange={handleInputChange}
@@ -153,6 +177,7 @@ function UpdateProfile() {
             <input
               type="password"
               name="password"
+              value={formData.password}
               onChange={handleInputChange}
             />
           </div>
@@ -193,6 +218,16 @@ function UpdateProfile() {
               type="url"
               name="info.github" // Updated name to reflect nested structure
               value={formData.info.github}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Hobbies</label> {/* New field for hobbies */}
+            <input
+              type="text"
+              name="info.hobbies"
+              value={formData.info.hobbies}
               onChange={handleInputChange}
             />
           </div>

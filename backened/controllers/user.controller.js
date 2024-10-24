@@ -2,11 +2,13 @@ import prisma from "../lib/prisma.js";
 import bcrypt from "bcrypt";
 export const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      include: { info: true },
+    });
     res.status(200).json(users);
   } catch (err) {
     console.log(err);
-    res.staus(500).json({ message: "Failed to get users!" });
+    res.status(500).json({ message: "Failed to get users!" });
   }
 };
 export const getUser = async (req, res) => {
@@ -21,46 +23,13 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: "Failed to get user!" });
   }
 };
-
-/* export const updateUser = async (req, res) => {
-  const id = req.params.id;
-  const tokenUserId = req.userId;
-  const { password, avatar, ...inputs } = req.body;
-
-  if (id !== tokenUserId) {
-    return res.status(403).json({ message: "Not authorised" });
-  }
-
-  let updatedPassword = null;
-
-  try {
-    if (password) {
-      updatedPassword = await bcrypt.hash(password, 10);
-    }
-    const updatedUser = await prisma.user.update({
-      where: { id },
-      data: {
-        ...inputs,
-        ...(updatedPassword && { password: updatedPassword }),
-        ...(avatar && { avatar }),
-      },
-    });
-
-    const { password: userPassword, ...rest } = updatedUser;
-    res.status(200).json(rest);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Failed to get users!" });
-  }
-}; */
-
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;
   const { password, avatar, info, ...inputs } = req.body;
 
   if (id !== tokenUserId) {
-    return res.status(403).json({ message: "Not authorised" });
+    return res.status(403).json({ message: "Not authorized" });
   }
 
   let updatedPassword = null;
@@ -70,35 +39,55 @@ export const updateUser = async (req, res) => {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
+    // Fetch existing user info to get the ID
+    const existingUser = await prisma.user.findUnique({
+      where: { id },
+      include: { info: true }, // Include info to get its ID
+    });
+
+    // Determine the ID for the info
+    const infoId =
+      existingUser.info.length > 0 ? existingUser.info[0].id : undefined;
+
+    // Prepare data for the user update
+    const updateData = {
+      ...inputs,
+      ...(updatedPassword && { password: updatedPassword }),
+      ...(avatar && { avatar }),
+    };
+
+    // If we have a valid infoId, include the upsert; otherwise, create a new info record without where clause
+    if (infoId) {
+      updateData.info = {
+        upsert: {
+          where: { id: infoId }, // Use infoId if it exists
+          create: {
+            hostel: info.hostel,
+            room: info.room,
+            // Add other fields from info if necessary
+          },
+          update: {
+            hostel: info.hostel,
+            room: info.room,
+            // Add other fields to update if necessary
+          },
+        },
+      };
+    } else {
+      // If infoId is not available, create a new info record
+      updateData.info = {
+        create: {
+          hostel: info.hostel,
+          room: info.room,
+          // Add other fields to create if necessary
+        },
+      };
+    }
+
     // Update user data
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: {
-        ...inputs,
-        ...(updatedPassword && { password: updatedPassword }),
-        ...(avatar && { avatar }),
-        info: {
-          upsert: {
-            where: { id: inputs.infoId || undefined }, // Ensure to replace with actual info ID if exists
-            create: {
-              hostel: info.hostel,
-              room: info.room,
-              bio: info.bio,
-              contactNumber: info.contactNumber,
-              linkedin: info.linkedin,
-              github: info.github,
-            },
-            update: {
-              hostel: info.hostel,
-              room: info.room,
-              bio: info.bio,
-              contactNumber: info.contactNumber,
-              linkedin: info.linkedin,
-              github: info.github,
-            },
-          },
-        },
-      },
+      data: updateData,
     });
 
     const { password: userPassword, info: userInfo, ...rest } = updatedUser;

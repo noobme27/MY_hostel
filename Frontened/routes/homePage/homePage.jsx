@@ -52,7 +52,9 @@ function HomePage() {
                     <div className="ag-courses-item_bg"></div>
                     <div className="ag-courses-item_title">
                       {/* <img src={reactIcon} alt="Explore Icon" className="icon" /> */}
-                      <div className="ag-courses-item_content">Explore</div>
+                      <Link to={"/searchParty"}>
+                        <div className="ag-courses-item_content">Explore</div>
+                      </Link>
                     </div>
                   </a>
                 </div>
@@ -61,9 +63,11 @@ function HomePage() {
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
                     <div className="ag-courses-item_bg"></div>
-                    <div className="ag-courses-item_title">
-                      View Your Bhawan
-                    </div>
+                    <Link to={"/hostel"}>
+                      <div className="ag-courses-item_title">
+                        View Your Bhawan
+                      </div>
+                    </Link>
                   </a>
                 </div>
 
@@ -71,9 +75,11 @@ function HomePage() {
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
                     <div className="ag-courses-item_bg"></div>
-                    <div className="ag-courses-item_title">
-                      Raise a Complain
-                    </div>
+                    <Link to={"/complaint"}>
+                      <div className="ag-courses-item_title">
+                        Raise a Complain
+                      </div>
+                    </Link>
                   </a>
                 </div>
 
@@ -81,9 +87,11 @@ function HomePage() {
                 <div className="ag-courses_item">
                   <a href="#" className="ag-courses-item_link">
                     <div className="ag-courses-item_bg"></div>
-                    <div className="ag-courses-item_title">
-                      Search Community
-                    </div>
+                    <Link to={"/search"}>
+                      <div className="ag-courses-item_title">
+                        Search Community
+                      </div>
+                    </Link>
                   </a>
                 </div>
               </div>
@@ -97,27 +105,25 @@ function HomePage() {
       </div>  */}
 
       <div className="imgContainer">
+        <input type="radio" name="slider" id="item-1" defaultChecked />
+        <input type="radio" name="slider" id="item-2" />
+        <input type="radio" name="slider" id="item-3" />
+        <input type="radio" name="slider" id="item-4" />
 
-      <input type="radio" name="slider" id="item-1" defaultChecked />
-      <input type="radio" name="slider" id="item-2" />
-      <input type="radio" name="slider" id="item-3" />
-      <input type="radio" name="slider" id="item-4" />
- 
-      <div className="cards">
-        <label className="card" htmlFor="item-1" id="song-1">
-           <img src={vyasImage} alt="Vyas" />
-        </label>
-        <label className="card" htmlFor="item-2" id="song-2">
-           <img src={meera0Image} alt="Meera 0" />
-        </label>
-        <label className="card" htmlFor="item-3" id="song-3">
-           <img src={gandhiImage} alt="Gandhi" />
-        </label>
-        {/* <label className="card" htmlFor="item-4" id="song-4">
+        <div className="cards">
+          <label className="card" htmlFor="item-1" id="song-1">
+            <img src={vyasImage} alt="Vyas" />
+          </label>
+          <label className="card" htmlFor="item-2" id="song-2">
+            <img src={meera0Image} alt="Meera 0" />
+          </label>
+          <label className="card" htmlFor="item-3" id="song-3">
+            <img src={gandhiImage} alt="Gandhi" />
+          </label>
+          {/* <label className="card" htmlFor="item-4" id="song-4">
            <img src={budhImage} alt="Budh" />
         </label> */}
-      </div>
-
+        </div>
 
         <div className="player">
           <div className="upper-part">
@@ -164,29 +170,29 @@ function HomePage() {
           <div className="progress-bar">
             <span className="progress"></span>
 
-          <div className="info-area" id="test">
-            <label className="song-info" id="song-info-1">
-              <div className="title">Vyas Bhawan</div>
-              <div className="sub-line">
-                {/* <div className="subtitle">Balthazar</div>
+            <div className="info-area" id="test">
+              <label className="song-info" id="song-info-1">
+                <div className="title">Vyas Bhawan</div>
+                <div className="sub-line">
+                  {/* <div className="subtitle">Balthazar</div>
                 <div className="time">4:05</div> */}
-              </div>
-            </label>
-            <label className="song-info" id="song-info-2">
-              <div className="title">Meera-0 Bhawan</div>
-              <div className="sub-line">
-                {/* <div className="subtitle">Moderator</div>
+                </div>
+              </label>
+              <label className="song-info" id="song-info-2">
+                <div className="title">Meera-0 Bhawan</div>
+                <div className="sub-line">
+                  {/* <div className="subtitle">Moderator</div>
                 <div className="time">4:05</div> */}
-              </div>
-            </label>
-            <label className="song-info" id="song-info-3">
-              <div className="title">Gandhi Bhawan</div>
-              <div className="sub-line">
-                {/* <div className="subtitle">Otzeki</div>
+                </div>
+              </label>
+              <label className="song-info" id="song-info-3">
+                <div className="title">Gandhi Bhawan</div>
+                <div className="sub-line">
+                  {/* <div className="subtitle">Otzeki</div>
                 <div className="time">4:05</div> */}
-              </div>
-            </label>
-            {/* <label className="song-info" id="song-info-4">
+                </div>
+              </label>
+              {/* <label className="song-info" id="song-info-4">
               <div className="title">Budh Bhawan</div>
               <div className="sub-line">
               </div>

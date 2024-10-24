@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 // Function to generate room layout
 const generateRoomLayout = () => {
-  const rows = 27; // Number of rows
+  const rows = 31; // Number of rows
   const cols = 36; // Number of columns
   const layout = Array.from({ length: rows }, () => Array(cols).fill(0)); // Create an empty matrix filled with 0
 
@@ -141,13 +141,17 @@ export const getRoomLayout = async (req, res) => {
   try {
     const layout = generateRoomLayout(); // Generate the layout
 
-    // Fetch users from the database
-    const users = await prisma.user.findMany(); // Fetch users from MongoDB
+    // Fetch users and their associated room info
+    const users = await prisma.user.findMany({
+      include: {
+        info: true, // Include related room info
+      },
+    });
 
-    // Include user data and associate users with their rooms in the layout
+    // Associate users with their rooms in the layout
     const response = {
       layout, // Room layout matrix
-      users, // User data from MongoDB
+      users, // User data with room info from MongoDB
     };
 
     res.status(200).json(response); // Send layout and users data

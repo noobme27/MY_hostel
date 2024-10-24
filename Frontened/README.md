@@ -18,5 +18,7 @@ CLIENT_URL = http://localhost:5173
 "
 Made changes in prisma , use " npx prisma db push " in backened
 
-to run backend use nodemon node --watch app.js
-to run frontend use npm run dev
+Remove Prop types error in Complaint box by using prop-types , install in Frontened
+"
+npm install prop-types
+"

@@ -8,30 +8,71 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  username  String   @unique
-  password  String
-  avatar    String?
-  createdAt DateTime @default(now())
-  info      Info?    @relation(fields: [infoId], references: [id])
-  infoId    String?  @unique @db.ObjectId
+  id         String            @id @default(auto()) @map("_id") @db.ObjectId
+  username   String            @unique
+  email      String            @unique
+  password   String
+  isAdmin    Boolean           @default(false)
+  info       Info[]            @relation("UserInfo")
+  createdAt  DateTime          @default(now())
+  complaints Complaint[]
+  parties    Party[]           @relation("PartyCreator")
+  attended   PartyAttendance[]
 }
 
 model Info {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  room          String?
-  name          String?
-  hostel        String? // Added this field to store the hostel name
-  instituteId   String?
-  hobbies       String?
-  whatsapp      String?
-  instagram     String?
-  linkedin      String?
-  github        String? // Added this field to store GitHub link
-  bio           String? // Added this field to store user bio
-  contactNumber String? // Added this field to store contact number
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  instituteId String?
+  hostel      String?
+  room        Int?
+  hobbies     String?
+  userId      String? @db.ObjectId
+  user        User?   @relation("UserInfo", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
 
-  userId String? @db.ObjectId // To establish a relation with User
-  User   User?
+model Complaint {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String            @db.ObjectId
+  description String
+  category    ComplaintCategory
+  status      ComplaintStatus   @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Party {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  capacity    Int
+  createdAt   DateTime          @default(now())
+  creator     User              @relation("PartyCreator", fields: [creatorId], references: [id])
+  creatorId   String            @db.ObjectId
+  attendees   PartyAttendance[]
+}
+
+model PartyAttendance {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String @db.ObjectId
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  partyId String @db.ObjectId
+  party   Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, partyId])
+}
+
+enum ComplaintCategory {
+  TOILET
+  WATER
+  FAN
+  LIGHT
+  OTHER
+}
+
+enum ComplaintStatus {
+  PENDING
+  RESOLVED
+  IN_PROGRESS
 }

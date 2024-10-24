@@ -1,29 +1,30 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-@import "tailwindcss/utilities";
-
-@import "./../../src/layout.scss";
 .map_container {
   position: relative;
-  //display: flex;
+  margin: 0 auto;
 
   .zoom-buttons {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 10px;
+    margin-top: 10%;
 
     .zoom-button {
-      padding: 10px 15px; // Padding for better touch area
-      background-color: #007bff; // Button color
-      color: white; // Text color
-      border: none; // No border
-      border-radius: 5px; // Rounded corners
-      cursor: pointer; // Change cursor on hover
-      transition: background-color 0.3s; // Smooth background color transition
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
 
       &:hover {
-        background-color: #0056b3; // Darker shade on hover
+        background-color: #0056b3;
       }
     }
   }
@@ -46,31 +47,66 @@
         position: relative;
 
         &.room {
-          border-radius: 5px; // Rounded corners
-          cursor: pointer; // Change cursor on hover
+          border-radius: 5px;
+          cursor: pointer;
           transition: background-color 0.3s;
 
           .room-button {
-            display: block; // Make it a block element
-            width: 100%; // Full width
-            height: 100%; // Full height
-            background-color: #1ec120; // Initial button color
-            color: white; // Text color
-            border: none; // No border
-            border-radius: 5px; // Rounded corners
-            font-size: 7px; // Font size
-            font-weight: bold; // Bold text
-            //text-align: center; // Center text
-            line-height: 5px; // Vertically center text
-            transition: background-color 0.3s, transform 0.2s; // Transition for background color and transform
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: #1ec120;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 7px;
+            font-weight: bold;
+            line-height: 5px;
+            transition: background-color 0.3s, transform 0.2s;
 
             &:hover {
-              background-color: #0056b3; // Darker color on hover
-              transform: scale(1.05); // Slightly enlarge on hover
+              background-color: #0056b3;
+              transform: scale(1.05);
             }
 
             &:active {
-              transform: scale(0.95); // Slightly shrink on click
+              transform: scale(0.95);
+            }
+          }
+        }
+
+        &.toilet {
+          .toilet-button {
+            width: 100%;
+            height: 100%;
+            background-color: #ff6f61; // Red color for toilet button
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #ff4d4d;
+            }
+          }
+        }
+
+        &.water {
+          .water-button {
+            width: 100%;
+            height: 100%;
+            background-color: #1e90ff; // Blue color for water button
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #1c75d8;
             }
           }
         }
@@ -80,38 +116,25 @@
           font-size: 9px;
         }
 
-        &.toilet {
-          background-color: #ffcccb;
-          font-size: 9px;
-        }
-
         &.stairs {
           background-color: #add8e6;
-          font-size: 9px;
         }
 
         &.entrance {
           background-color: #90ee90;
-          font-size: 9px;
-        }
-
-        &.water {
-          background-color: #ffffe0;
-          font-size: 9px;
         }
 
         &.common-room {
           background-color: #d3d3d3;
-          font-size: 9px;
         }
 
         &.empty {
-          background-color: #fff; // Background color for empty cells
+          background-color: #fff;
         }
 
         .info-box {
           position: absolute;
-          top: 24px; /* Adjust as necessary */
+          top: 24px;
           left: 24px;
           width: 200px;
           background-color: white;
@@ -143,7 +166,7 @@
               a {
                 margin-right: 10px;
                 text-decoration: none;
-                color: #0077b5; /* LinkedIn blue */
+                color: #0077b5; // LinkedIn blue
 
                 &:hover {
                   text-decoration: underline;

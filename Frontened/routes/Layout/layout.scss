@@ -1,4 +1,5 @@
-@import "./../../src/responsive.scss";
+@use "./../../src/responsive.scss";
+
 // @tailwind base;
 // @tailwind components;
 // @tailwind utilities;
@@ -10,10 +11,6 @@
   overflow: auto; // Allows both vertical and horizontal scrolling
 
   position: relative;
-
-  @include sm {
-    background-color: red;
-  }
 }
 
 * {

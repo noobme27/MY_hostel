@@ -1,0 +1,80 @@
+.lay {
+  margin-top: 100px;
+}
+.complaints-container {
+  padding: 20px;
+
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+
+  .complaint-list {
+    list-style-type: none;
+    padding: 0;
+
+    .complaint-item {
+      display: flex;
+      justify-content: space-between; // Aligns details and dropdown
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      transition: box-shadow 0.3s;
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .complaint-details {
+        flex-grow: 1; // Allows details to take available space
+        margin-right: 20px; // Adds spacing between details and dropdown
+
+        h3 {
+          margin: 0;
+          color: #007bff;
+        }
+
+        p {
+          margin: 5px 0;
+          color: #555;
+        }
+      }
+
+      .status-dropdown {
+        display: flex;
+        align-items: center;
+
+        label {
+          margin-right: 10px;
+          color: #333;
+        }
+
+        select {
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #fff;
+          cursor: pointer;
+
+          &:focus {
+            outline: none;
+            border-color: #007bff;
+          }
+        }
+      }
+    }
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #007bff;
+  }
+
+  .error {
+    text-align: center;
+    color: red;
+  }
+}

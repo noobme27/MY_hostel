@@ -1,167 +1,207 @@
+import Complaint from "../Complaint/Complaint";
 import "./hostel.scss";
 import { useEffect, useState } from "react";
 
 const Hostel = () => {
   const [layout, setLayout] = useState([]);
-  const [zoomLevel, setZoomLevel] = useState(1); // State for zoom level
-  const [hoveredRoom, setHoveredRoom] = useState(null); // State for hovered room
-  const [users, setUsers] = useState([]); // State for user data
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [hoveredRoom, setHoveredRoom] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+  const [showComplaint, setShowComplaint] = useState(false);
+  const [complaintPosition, setComplaintPosition] = useState({
+    top: 0,
+    left: 0,
+  });
 
-  // Fetch layout and user data from the backend
   useEffect(() => {
-    fetch("http://localhost:8800/api/room-layout/Vyas")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+    const fetchLayoutAndUsers = async () => {
+      try {
+        const [layoutResponse, usersResponse] = await Promise.all([
+          fetch("http://localhost:8800/api/room-layout/Vyas"),
+          fetch("http://localhost:8800/api/users"),
+        ]);
+
+        if (!layoutResponse.ok || !usersResponse.ok) {
+          throw new Error("Failed to fetch data");
         }
-        return response.json();
-      })
-      .then((data) => {
-        setLayout(data.layout); // Set room layout
-        setUsers(data.users); // Set user data
-      })
-      .catch((err) =>
-        console.error("Error fetching layout and user data:", err)
-      );
+
+        const layoutData = await layoutResponse.json();
+        const usersData = await usersResponse.json();
+        setLayout(layoutData.layout);
+        setUsers(usersData);
+      } catch (err) {
+        console.error("Error fetching layout and user data:", err);
+        setError("Failed to load data. Please try again later.");
+      }
+    };
+
+    fetchLayoutAndUsers();
   }, []);
 
-  // Zoom in function
   const handleZoomIn = () => {
-    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 2)); // Max zoom level
+    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 2));
   };
 
-  // Zoom out function
   const handleZoomOut = () => {
-    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 1)); // Min zoom level
-  };
-
-  // Handle mouse hover
-  const handleMouseEnter = (room) => {
-    setHoveredRoom(room);
+    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 1));
   };
 
   const handleMouseLeave = () => {
     setHoveredRoom(null);
   };
 
-  // Find user by room number
-  const getUserByRoom = (roomNumber) => {
-    return users.find((user) => user.room === roomNumber);
+  const handleMouseEnter = (room) => {
+    setHoveredRoom(room);
   };
+
+  const getUserByRoom = (roomNumber) => {
+    if (isNaN(roomNumber)) return null;
+
+    return users.find((user) => {
+      const userRoomInfo = user.info.find((info) => info.room === roomNumber);
+      return userRoomInfo ? userRoomInfo.room === roomNumber : false;
+    });
+  };
+
+  const roomTypeClasses = {
+    H: "hallway",
+    E: "empty",
+    T: "toilet",
+    S: "stairs",
+    EN: "entrance",
+    W: "water",
+    CR: "common-room",
+  };
+
+  const handleComplaintClick = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    setComplaintPosition({
+      top: rect.bottom + window.scrollY, // Position just below the button
+      left: rect.left + window.scrollX, // Align with the button
+    });
+    setShowComplaint(true);
+  };
+
   return (
-    <div className="map_container">
-      {/* Zoom buttons positioned at the top */}
-      <div className="zoom-buttons">
-        <button className="zoom-button" onClick={handleZoomIn}>
-          Zoom In
-        </button>
-        <button className="zoom-button" onClick={handleZoomOut}>
-          Zoom Out
-        </button>
-      </div>
-      <div
-        className="scroll-container"
-        style={{
-          transform: `scale(${zoomLevel})`,
-          transformOrigin: "top left",
-          width: "fit-content",
-        }}
-      >
-        <div className="room-layout">
-          {layout.map((row, rowIndex) => (
-            <div key={rowIndex} className="row">
-              {row.map((cell, colIndex) => {
-                const roomUser = getUserByRoom(cell); // Get user for the current room
+    <div className="parent-container">
+      <div className="map_container">
+        <div className="zoom-buttons">
+          <button className="zoom-button" onClick={handleZoomIn}>
+            Zoom In
+          </button>
+          <button className="zoom-button" onClick={handleZoomOut}>
+            Zoom Out
+          </button>
+        </div>
+        {error && <div className="error-message">{error}</div>}
+        <div
+          className="scroll-container"
+          style={{
+            transform: `scale(${zoomLevel})`,
+            transformOrigin: "top left",
+            width: "fit-content",
+          }}
+        >
+          <div className="room-layout">
+            {layout.map((row, rowIndex) => (
+              <div key={rowIndex} className="row">
+                {row.map((cell, colIndex) => {
+                  const roomUser = getUserByRoom(cell);
+                  const { info } = roomUser || {};
 
-                return (
-                  <div
-                    key={colIndex}
-                    className={`cell ${
-                      cell === "H"
-                        ? "hallway"
-                        : cell === "E"
-                        ? "empty"
-                        : cell === "T"
-                        ? "toilet"
-                        : cell === "S"
-                        ? "stairs"
-                        : cell === "EN"
-                        ? "entrance"
-                        : cell === "W"
-                        ? "water"
-                        : cell === "CR"
-                        ? "common-room"
-                        : "room" // Default class for other rooms
-                    }`}
-                    onMouseEnter={() => handleMouseEnter(cell)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {/* Check for room types and render accordingly */}
-                    {cell === "H" && (
-                      <div className=" btn btn-primary hallway ">Hallway</div>
-                    )}
-                    {cell === "T" && <div className="toilet">Toilet</div>}
-                    {cell === "S" && <div className="stairs">Stairs</div>}
-                    {cell === "EN" && <div className="entrance">Entrance</div>}
-                    {cell === "W" && <div className="water">Water</div>}
-                    {cell === "CR" && (
-                      <div className="common-room">Common Room</div>
-                    )}
-                    {cell !== "H" &&
-                      cell !== "E" &&
-                      cell !== "T" &&
-                      cell !== "S" &&
-                      cell !== "EN" &&
-                      cell !== "W" &&
-                      cell !== "CR" && (
-                        <button className="room-button room">{cell}</button>
+                  return (
+                    <div
+                      key={colIndex}
+                      className={`cell ${roomTypeClasses[cell] || "room"}`}
+                      onMouseEnter={() => handleMouseEnter(cell)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      {cell === "H" && (
+                        <div className="btn btn-primary hallway"></div>
                       )}
+                      {cell === "T" && (
+                        <button
+                          className="toilet toilet-button"
+                          onClick={handleComplaintClick}
+                        ></button>
+                      )}
+                      {cell === "W" && (
+                        <button
+                          className="water water-button"
+                          onClick={handleComplaintClick}
+                        ></button>
+                      )}
+                      {cell === "S" && <div className="stairs"></div>}
+                      {cell === "EN" && <div className="entrance"></div>}
 
-                    {/* Show info box when room is hovered */}
-                    {hoveredRoom === cell && roomUser && (
-                      <div className="info-box">
-                        <img
-                          src={roomUser.profilePic}
-                          alt="Profile"
-                          className="profile-pic"
-                        />
-                        <div className="user-info">
-                          <h3>{roomUser.name}</h3>
-                          <p>Institute ID: {roomUser.instituteId}</p>
-                          <p>Hobbies: {roomUser.hobbies}</p>
-                          <div className="social-links">
-                            <a
-                              href={roomUser.whatsapp}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              WhatsApp
-                            </a>
-                            <a
-                              href={roomUser.instagram}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Instagram
-                            </a>
-                            <a
-                              href={roomUser.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              LinkedIn
-                            </a>
+                      {cell === "CR" && <div className="common-room"></div>}
+                      {cell !== "H" &&
+                        cell !== "E" &&
+                        cell !== "T" &&
+                        cell !== "S" &&
+                        cell !== "EN" &&
+                        cell !== "W" &&
+                        cell !== "CR" && (
+                          <button className="room-button room">{cell}</button>
+                        )}
+
+                      {hoveredRoom === cell && info && (
+                        <div
+                          className="info-box"
+                          aria-labelledby={`info-${cell}`}
+                        >
+                          <img
+                            src={
+                              info[0].avatar || "./../../src/assets/avatar.png"
+                            }
+                            alt="Profile"
+                            className="profile-pic"
+                          />
+                          <div className="user-info">
+                            <h3>{info[0].name || "Unknown User"}</h3>
+                            <p>Room: {info[0].room}</p>
+                            <p>Institute ID: {info[0].instituteId || "N/A"}</p>
+                            <p>Hobbies: {info[0].hobbies || "N/A"}</p>
+                            <div className="social-links">
+                              {info[0].whatsapp && (
+                                <a
+                                  href={info[0].whatsapp}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="WhatsApp"
+                                >
+                                  WhatsApp
+                                </a>
+                              )}
+                              {info[0].instagram && (
+                                <a
+                                  href={info[0].instagram}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="Instagram"
+                                >
+                                  Instagram
+                                </a>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+      {showComplaint && (
+        <Complaint
+          onClose={() => setShowComplaint(false)}
+          position={complaintPosition}
+        />
+      )}
     </div>
   );
 };
