@@ -13,6 +13,7 @@ const PartyPage = () => {
   const [searchType, setSearchType] = useState("title"); // State for search type (title or description)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [authToken, setAuthToken] = useState(null); // State for storing the auth token
 
   // Fetch parties when the component mounts
   useEffect(() => {
@@ -36,6 +37,18 @@ const PartyPage = () => {
     fetchParties();
   }, []);
 
+  // Retrieve the token from cookies (or wherever you store it)
+  useEffect(() => {
+    const token = document.cookie
+      .split("; ")
+      .find(row => row.startsWith("token="))
+      ?.split("=")[1];
+    
+    if (token) {
+      setAuthToken(token);
+    }
+  }, []);
+
   // Handle party creation
   const handleCreateParty = async () => {
     try {
@@ -43,23 +56,29 @@ const PartyPage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${yourAuthToken}`, // Ensure token is added
         },
-        body: JSON.stringify({ /* your party data */ }),
+        credentials: 'include', // Include credentials (cookies)
+        body: JSON.stringify(newParty), // Send the new party data
       });
-      
+  
       if (!response.ok) {
-        throw new Error('Unauthorized');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create party');
       }
-
+  
       const data = await response.json();
       setParties((prevParties) => [...prevParties, data]);
+      setFilteredParties((prevFiltered) => [...prevFiltered, data]); // Update filtered parties
+      setNewParty({ title: "", description: "", capacity: 0 }); // Reset the form
     } catch (err) {
-      setError(err.message);
-      console.error(err);
+      setError(err.message); // Set the error message
+      console.error("Error creating party:", err);
     }
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;   
+  
   // Handle party joining
   const handleJoinParty = async (partyId) => {
     try {
@@ -80,13 +99,16 @@ const PartyPage = () => {
   
       const data = await response.json();
       console.log('Success:', data);
+      
+      // Show success alert
+      alert("You have successfully joined this party!");
+      
+      // Refresh the page to show updated participant count
+      window.location.reload();
     } catch (error) {
       console.error('Error joining party:', error);
     }
   };
-  
-  
-  
 
   // Handle search/filtering
   const handleSearch = (e) => {
@@ -107,9 +129,6 @@ const PartyPage = () => {
 
     setFilteredParties(filtered); // Update filtered parties based on search
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="lay">
@@ -141,10 +160,12 @@ const PartyPage = () => {
           />
           <button onClick={handleCreateParty}>Create Party</button>
         </div>
-
+  
+        {/* Display error message here if present */}
+        {error && <div style={{ color: 'red' }}>{error}</div>} 
+  
         <h1>Available Parties</h1>
-
-        {/* Search input and dropdown for search type */}
+  
         <div className="search-container">
           <select
             value={searchType}
@@ -153,7 +174,7 @@ const PartyPage = () => {
             <option value="title">Search by Title</option>
             <option value="description">Search by Description</option>
           </select>
-
+  
           <input
             type="text"
             placeholder={`Search by ${searchType}...`}
@@ -161,14 +182,14 @@ const PartyPage = () => {
             onChange={handleSearch}
           />
         </div>
-
+  
         <ul className="party-list">
           {filteredParties.map((party) => (
             <li key={party.id}>
               <h2>{party.title}</h2>
               <p>{party.description}</p>
               <p>
-                {party.attendees.length}/{party.capacity} attending
+                {Array.isArray(party.attendees) ? party.attendees.length : 0}/{party.capacity} attending
               </p>
               <button onClick={() => handleJoinParty(party.id)}>Join</button>
             </li>
