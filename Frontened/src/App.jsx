@@ -15,6 +15,7 @@ import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
 import Complaint from "../routes/Complaint/Complaint";
 import ComplaintPage from "../routes/ComplaintPage/ComplaintPage";
 import UserSearchPage from "../routes/UserSearch/UserSearch";
+import PartyPage from "../routes/PartyPage/PartyPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -53,6 +54,10 @@ function App() {
         {
           path: "/search",
           element: <UserSearchPage />,
+        },
+        {
+          path: "/searchParty",
+          element: <PartyPage />,
         },
       ],
     },
