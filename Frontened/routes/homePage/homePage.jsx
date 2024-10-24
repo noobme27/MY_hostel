@@ -52,7 +52,7 @@ function HomePage() {
                     <div className="ag-courses-item_bg"></div>
                     <div className="ag-courses-item_title">
                       {/* <img src={reactIcon} alt="Explore Icon" className="icon" /> */}
-                      <Link to={"/list"}>
+                      <Link to={"/searchParty"}>
                         <div className="ag-courses-item_content">Explore</div>
                       </Link>
                     </div>

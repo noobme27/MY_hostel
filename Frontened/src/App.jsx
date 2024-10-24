@@ -11,7 +11,7 @@ import ListPage from "../routes/listPage/listPage";
 import MakeAdmin from "../routes/makeAdmin/makeAdminPage";
 
 import AdminComplaints from "../routes/adminComplaint/AdminComplaints";
-import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
+//import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
 import Complaint from "../routes/Complaint/Complaint";
 import ComplaintPage from "../routes/ComplaintPage/ComplaintPage";
 import UserSearchPage from "../routes/UserSearch/UserSearch";
@@ -49,7 +49,7 @@ function App() {
         },
         {
           path: "/admincomplaint",
-          element: <ComplaintsPage />,
+          element: <AdminComplaints />,
         },
         {
           path: "/search",
