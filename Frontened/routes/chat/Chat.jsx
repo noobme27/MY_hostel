@@ -1,42 +1,78 @@
-// src/components/Chat.jsx
-
 import { useContext, useEffect, useState } from "react";
-import { SocketContext } from "./../../context/SocketContext";
+import { SocketContext } from "../../context/SocketContext";
 import "./chat.scss"; // Import the SCSS file for styling
 
 const Chat = () => {
   const { socket } = useContext(SocketContext);
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState([]); // Initialize as empty array for chats
   const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState([]); // Messages for the current chat
+  const [newMessage, setNewMessage] = useState(""); // New message input
 
   useEffect(() => {
     // Fetch chats from backend when component mounts
     const fetchChats = async () => {
-      const response = await fetch("/api/chats"); // Adjust the endpoint as needed
-      const data = await response.json();
-      setChats(data);
+      try {
+        console.log("Fetching chats..."); // Log when fetching starts
+        const response = await fetch("http://localhost:8800/api/chats", {
+          credentials: "include",
+        });
+
+        if (response.status === 401) {
+          console.warn("Unauthorized. Redirecting to login.");
+          // Redirect to login if unauthorized
+          window.location.href = "/login";
+          return;
+        }
+        if (!response.ok) {
+          throw new Error(`Failed to fetch chats: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Fetched chats data:", data); // Log fetched data
+        setChats(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+        setChats([]);
+      }
     };
 
     fetchChats();
 
     // Handle incoming messages
-    socket?.on("getMessage", (data) => {
-      setMessages((prev) => [...prev, data]);
-    });
+    const handleIncomingMessage = (data) => {
+      console.log("Received message:", data); // Log the incoming message
+      setMessages((prev) => [...prev, data]); // Append the new message
+    };
+
+    socket?.on("getMessage", handleIncomingMessage);
 
     return () => {
-      socket?.off("getMessage");
+      socket?.off("getMessage", handleIncomingMessage); // Cleanup listener
     };
   }, [socket]);
 
   const handleChatClick = async (chatId) => {
     setCurrentChat(chatId);
-    // Fetch messages for the selected chat
-    const response = await fetch(`/api/chats/${chatId}/messages`);
-    const data = await response.json();
-    setMessages(data);
+    try {
+      // Fetch messages for the selected chat
+      const response = await fetch(
+        `http://localhost:8800/api/messages/${chatId}`,
+        {
+          credentials: "include", // Ensure credentials are included in the request
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch messages: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessages(Array.isArray(data) ? data : []); // Ensure data is an array
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      setMessages([]); // Handle error by setting to an empty array
+    }
   };
 
   const handleSendMessage = async () => {
@@ -45,20 +81,32 @@ const Chat = () => {
         chatId: currentChat,
         text: newMessage,
       };
-      // Send message to backend
-      await fetch(`/api/chats/${currentChat}/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageData),
-      });
-      // Emit message through socket
-      socket.emit("sendMessage", {
-        receiverId: currentChat,
-        data: messageData,
-      });
-      setNewMessage("");
+      try {
+        // Send message to backend
+        const response = await fetch(
+          `http://localhost:8800/api/messages/${currentChat}`, // Use correct endpoint for adding a message
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageData),
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to send message: ${response.status}`);
+        }
+
+        // Emit message through socket to notify other clients
+        console.log("Emitting sendMessage:", messageData);
+        socket.emit("sendMessage", {
+          receiverId: currentChat,
+          data: messageData,
+        });
+        setNewMessage(""); // Clear message input
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
     }
   };
 
@@ -67,27 +115,36 @@ const Chat = () => {
       <div className="chat-container">
         <div className="chat-list">
           <h2>Chats</h2>
-          {chats.map((chat) => (
-            <div
-              key={chat.id}
-              onClick={() => handleChatClick(chat.id)}
-              className="chat-item"
-            >
-              {chat.name}
-            </div>
-          ))}
+          {Array.isArray(chats) && chats.length > 0 ? (
+            chats.map((chat) => (
+              <div
+                key={chat.id}
+                onClick={() => handleChatClick(chat.id)}
+                className="chat-item"
+              >
+                {chat.receiver.username}{" "}
+                {/* Displaying the username of the receiver */}
+              </div>
+            ))
+          ) : (
+            <p>No chats available</p>
+          )}
         </div>
         <div className="message-container">
           {currentChat ? (
             <>
               <h2>Messages</h2>
               <div className="message-list">
-                {messages.map((msg, index) => (
-                  <div key={index} className="message-item">
-                    <strong>{msg.senderId}: </strong>
-                    {msg.text}
-                  </div>
-                ))}
+                {Array.isArray(messages) && messages.length > 0 ? (
+                  messages.map((msg, index) => (
+                    <div key={index} className="message-item">
+                      <strong>{msg.userId}: </strong>
+                      {msg.text}
+                    </div>
+                  ))
+                ) : (
+                  <p>No messages yet</p>
+                )}
               </div>
               <input
                 type="text"

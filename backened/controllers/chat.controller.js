@@ -1,5 +1,4 @@
 import prisma from "../lib/prisma.js";
-import { ObjectId } from "mongodb";
 
 // Get all chats for the logged-in user
 export const getChats = async (req, res) => {

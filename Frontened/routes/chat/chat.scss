@@ -1,71 +1,52 @@
 // src/components/Chat.scss
 .lay {
-  margin-top: 100px;
-}
-.chat-container {
   display: flex;
   height: 100vh;
+}
 
-  .chat-list {
-    width: 30%;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-    background-color: #f8f8f8;
+.chat-container {
+  display: flex;
+  flex: 1;
+}
 
-    h2 {
-      margin-bottom: 10px;
-    }
+.chat-list {
+  width: 25%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
 
-    .chat-item {
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 4px;
+.chat-item {
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-      &:hover {
-        background-color: #e0e0e0;
-      }
-    }
-  }
+.chat-item:hover {
+  background: #f0f0f0;
+}
 
-  .message-container {
-    width: 70%;
-    padding: 10px;
+.message-container {
+  flex: 1;
+  padding: 10px;
+}
 
-    h2 {
-      margin-bottom: 10px;
-    }
+.message-list {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
 
-    .message-list {
-      height: 70%;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      background-color: #fff;
+.message-item {
+  padding: 5px;
+}
 
-      .message-item {
-        margin-bottom: 5px;
-      }
-    }
+input {
+  width: calc(100% - 60px);
+  padding: 8px;
+  margin-right: 5px;
+}
 
-    .message-input {
-      width: calc(100% - 90px); // Adjust for the button width
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-
-    .send-button {
-      padding: 10px 15px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
-  }
+button {
+  padding: 8px 10px;
 }

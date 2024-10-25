@@ -49,3 +49,24 @@ export const addMessage = async (req, res) => {
     res.status(500).json({ message: "Failed to add message!" });
   }
 };
+// Get all messages for a specific chat
+export const getMessages = async (req, res) => {
+  const chatId = req.params.chatId; // Extract chatId from request parameters
+
+  try {
+    // Fetch messages for the specified chat
+    const messages = await prisma.message.findMany({
+      where: {
+        chatId: chatId,
+      },
+      orderBy: {
+        createdAt: "asc", // Order messages by creation date
+      },
+    });
+
+    res.status(200).json(messages); // Respond with the messages
+  } catch (err) {
+    console.error("Error fetching messages:", err);
+    res.status(500).json({ message: "Failed to fetch messages!" });
+  }
+};
