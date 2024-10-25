@@ -14,7 +14,9 @@ function Navbar() {
           <img src="" alt="" />
           <span>LitedIn</span>
         </a>
-        <a href="/">Home</a>
+        <a href="/" className="btn btn-primary">
+          Home
+        </a>
         <a href="/">About Us</a>
         <a href="/" className="text-red-500">
           Contact Us

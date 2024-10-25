@@ -22,3 +22,7 @@ Remove Prop types error in Complaint box by using prop-types , install in Fronte
 "
 npm install prop-types
 "
+install socket
+"
+npm install socket.io-client
+"

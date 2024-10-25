@@ -12,10 +12,11 @@ import MakeAdmin from "../routes/makeAdmin/makeAdminPage";
 
 import AdminComplaints from "../routes/adminComplaint/AdminComplaints";
 //import ComplaintsPage from "../routes/adminComplaint/AdminComplaints";
-import Complaint from "../routes/Complaint/Complaint";
+
 import ComplaintPage from "../routes/ComplaintPage/ComplaintPage";
 import UserSearchPage from "../routes/UserSearch/UserSearch";
 import PartyPage from "../routes/PartyPage/PartyPage";
+import Chat from "../routes/chat/chat";
 
 function App() {
   const router = createBrowserRouter([
@@ -58,6 +59,10 @@ function App() {
         {
           path: "/searchParty",
           element: <PartyPage />,
+        },
+        {
+          path: "/chat",
+          element: <Chat />,
         },
       ],
     },

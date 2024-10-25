@@ -1,3 +1,4 @@
+@import "./../../src/index.scss";
 @mixin sm {
   @media (max-width: 600px) {
     @content;

@@ -1,0 +1,69 @@
+// src/components/Chat.scss
+
+.chat-container {
+  display: flex;
+  height: 100vh;
+
+  .chat-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f8f8f8;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .chat-item {
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+
+  .message-container {
+    width: 70%;
+    padding: 10px;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .message-list {
+      height: 70%;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+
+      .message-item {
+        margin-bottom: 5px;
+      }
+    }
+
+    .message-input {
+      width: calc(100% - 90px); // Adjust for the button width
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .send-button {
+      padding: 10px 15px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}
