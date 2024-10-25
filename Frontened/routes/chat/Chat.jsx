@@ -1,7 +1,7 @@
 // src/components/Chat.jsx
 
 import { useContext, useEffect, useState } from "react";
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "./../../context/SocketContext";
 import "./chat.scss"; // Import the SCSS file for styling
 
 const Chat = () => {
@@ -63,45 +63,47 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-list">
-        <h2>Chats</h2>
-        {chats.map((chat) => (
-          <div
-            key={chat.id}
-            onClick={() => handleChatClick(chat.id)}
-            className="chat-item"
-          >
-            {chat.name}
-          </div>
-        ))}
-      </div>
-      <div className="message-container">
-        {currentChat ? (
-          <>
-            <h2>Messages</h2>
-            <div className="message-list">
-              {messages.map((msg, index) => (
-                <div key={index} className="message-item">
-                  <strong>{msg.senderId}: </strong>
-                  {msg.text}
-                </div>
-              ))}
+    <div className="lay">
+      <div className="chat-container">
+        <div className="chat-list">
+          <h2>Chats</h2>
+          {chats.map((chat) => (
+            <div
+              key={chat.id}
+              onClick={() => handleChatClick(chat.id)}
+              className="chat-item"
+            >
+              {chat.name}
             </div>
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type a message..."
-              className="message-input"
-            />
-            <button onClick={handleSendMessage} className="send-button">
-              Send
-            </button>
-          </>
-        ) : (
-          <h2>Select a chat to start messaging</h2>
-        )}
+          ))}
+        </div>
+        <div className="message-container">
+          {currentChat ? (
+            <>
+              <h2>Messages</h2>
+              <div className="message-list">
+                {messages.map((msg, index) => (
+                  <div key={index} className="message-item">
+                    <strong>{msg.senderId}: </strong>
+                    {msg.text}
+                  </div>
+                ))}
+              </div>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type a message..."
+                className="message-input"
+              />
+              <button onClick={handleSendMessage} className="send-button">
+                Send
+              </button>
+            </>
+          ) : (
+            <h2>Select a chat to start messaging</h2>
+          )}
+        </div>
       </div>
     </div>
   );
