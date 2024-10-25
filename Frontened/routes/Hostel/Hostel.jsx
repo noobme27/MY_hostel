@@ -117,9 +117,7 @@ const Hostel = () => {
                       onMouseEnter={() => handleMouseEnter(cell)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      {cell === "H" && (
-                        <div className="btn btn-primary hallway"></div>
-                      )}
+                      {cell === "H" && <div className=" hallway"></div>}
                       {cell === "T" && (
                         <button
                           className="toilet toilet-button"

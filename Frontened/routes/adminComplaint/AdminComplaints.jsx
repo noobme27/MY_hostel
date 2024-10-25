@@ -66,23 +66,32 @@ const ComplaintsPage = () => {
   }
 
   return (
-    <div className="lay">
-      <div className="complaints-container">
-        <h1>Complaints</h1>
-        <ul className="complaint-list">
+    <div className="flex justify-center items-start mt-24 min-h-screen">
+      <div className="w-full max-w-2xl p-4">
+        <h1 className="text-center text-gray-800">Complaints</h1>
+        <ul className="list-none p-0">
           {complaints.map((complaint) => (
-            <li key={complaint.id} className="complaint-item">
-              <div className="complaint-details">
-                <h3>{complaint.title}</h3>
+            <li
+              key={complaint.id}
+              className="flex justify-between mb-5 border border-gray-300 rounded p-2 bg-gray-100 transition-shadow hover:shadow-lg"
+            >
+              <div className="flex-grow mr-5">
+                <h3 className="text-blue-600">{complaint.title}</h3>
                 <p>{complaint.description}</p>
-                <p>User: {complaint.user.name}</p>
+                <p className="text-gray-600">User: {complaint.user.name}</p>
               </div>
-              <div className="status-dropdown">
-                <label htmlFor={`status-${complaint.id}`}>Status:</label>
+              <div className="flex items-center">
+                <label
+                  htmlFor={`status-${complaint.id}`}
+                  className="mr-2 text-gray-800"
+                >
+                  Status:
+                </label>
                 <select
                   id={`status-${complaint.id}`}
                   value={complaint.status}
                   onChange={(e) => updateStatus(complaint.id, e.target.value)}
+                  className="dropdown"
                 >
                   <option value="PENDING">PENDING</option>
                   <option value="IN_PROGRESS">IN_PROGRESS</option>

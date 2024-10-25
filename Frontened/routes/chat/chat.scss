@@ -1,0 +1,52 @@
+// src/components/Chat.scss
+.lay {
+  display: flex;
+  height: 100vh;
+}
+
+.chat-container {
+  display: flex;
+  flex: 1;
+}
+
+.chat-list {
+  width: 25%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
+
+.chat-item {
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-item:hover {
+  background: #f0f0f0;
+}
+
+.message-container {
+  flex: 1;
+  padding: 10px;
+}
+
+.message-list {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.message-item {
+  padding: 5px;
+}
+
+input {
+  width: calc(100% - 60px);
+  padding: 8px;
+  margin-right: 5px;
+}
+
+button {
+  padding: 8px 10px;
+}
