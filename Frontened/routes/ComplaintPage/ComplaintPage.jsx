@@ -8,24 +8,31 @@ const ComplaintPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("PENDING");
-  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [complaintType, setComplaintType] = useState("");
   const [complaintDescription, setComplaintDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown open/close
 
   // Check if currentUser exists and retrieve the user ID
   const currentUserId = currentUser ? currentUser.id : null;
 
   const fetchComplaints = async () => {
+    if (!currentUserId) return; // Avoid fetching if no user is logged in
+
     try {
-      const response = await fetch("http://localhost:8800/api/complaint/get", {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:8800/api/complaint/get/${currentUserId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch complaints");
       }
       const data = await response.json();
+      console.log(data);
       setComplaints(data);
     } catch (err) {
       setError(err.message);
@@ -73,11 +80,10 @@ const ComplaintPage = () => {
 
   useEffect(() => {
     fetchComplaints();
-  }, []);
+  }, [currentUserId]); // Dependency on currentUserId to refetch if it changes
 
-  // Filter complaints by status, user ID, and search term
+  // Filter complaints by status and search term
   const filteredComplaints = complaints.filter((complaint) => {
-    const matchesUser = complaint.userId === currentUserId; // Show only user's complaints
     const matchesStatus = complaint.status === activeTab;
     const matchesSearch =
       (complaint.description &&
@@ -88,11 +94,25 @@ const ComplaintPage = () => {
         complaint.user.name &&
         complaint.user.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    return matchesUser && matchesStatus && matchesSearch;
+    return matchesStatus && matchesSearch;
   });
 
   if (loading) return <div className="loading">Loading complaints...</div>;
   if (error) return <div className="error">Error: {error}</div>;
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen((prev) => !prev); // Toggle dropdown state
+  };
+
+  const handleOptionSelect = (option) => {
+    // If the selected option is the current complaint type, deselect it
+    setComplaintType((prev) => (prev === option ? "" : option));
+    setDropdownOpen(false); // Close dropdown after selection
+  };
+
+  const handleDropdownClose = () => {
+    setDropdownOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
@@ -117,13 +137,7 @@ const ComplaintPage = () => {
             activeTab === "PENDING" ? "bg-red-100 text-red-800" : "bg-gray-200"
           }`}
         >
-          Pending (
-          {
-            complaints.filter(
-              (c) => c.status === "PENDING" && c.userId === currentUserId
-            ).length
-          }
-          )
+          Pending ({complaints.filter((c) => c.status === "PENDING").length})
         </button>
         <button
           onClick={() => setActiveTab("IN_PROGRESS")}
@@ -134,12 +148,7 @@ const ComplaintPage = () => {
           }`}
         >
           In Progress (
-          {
-            complaints.filter(
-              (c) => c.status === "IN_PROGRESS" && c.userId === currentUserId
-            ).length
-          }
-          )
+          {complaints.filter((c) => c.status === "IN_PROGRESS").length})
         </button>
         <button
           onClick={() => setActiveTab("RESOLVED")}
@@ -149,33 +158,31 @@ const ComplaintPage = () => {
               : "bg-gray-200"
           }`}
         >
-          Resolved (
-          {
-            complaints.filter(
-              (c) => c.status === "RESOLVED" && c.userId === currentUserId
-            ).length
-          }
-          )
+          Resolved ({complaints.filter((c) => c.status === "RESOLVED").length})
         </button>
       </div>
 
       {/* Complaint Form */}
       <form onSubmit={handleComplaintSubmit} className="mb-6">
         {/* Dropdown for Complaint Type */}
-        <details className="dropdown dropdown-open mb-4 w-full">
-          <summary className="select select-bordered w-full">
+        <div className="relative mb-4">
+          <button
+            onClick={handleDropdownToggle}
+            className="select select-bordered w-full flex justify-between items-center"
+          >
             {complaintType || "Select Complaint Type"}
-          </summary>
-          <ul className="dropdown-content menu p-2 shadow bg-white rounded-box w-full text-gray-700">
-            <li>
-              <a onClick={() => setComplaintType("TOILET")}>Toilet</a>
-            </li>
-            <li>
-              <a onClick={() => setComplaintType("WATER")}>Water</a>
-            </li>
-            {/* Add other complaint types as needed */}
-          </ul>
-        </details>
+            <span>{dropdownOpen ? "▲" : "▼"}</span>
+          </button>
+          {dropdownOpen && (
+            <ul className="absolute z-10 dropdown-content menu p-2 shadow bg-white rounded-box w-full text-gray-700">
+              {["TOILET", "WATER", "ELECTRICITY"].map((type) => (
+                <li key={type}>
+                  <a onClick={() => handleOptionSelect(type)}>{type}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {/* Textarea for Complaint Description */}
         <textarea
@@ -210,10 +217,12 @@ const ComplaintPage = () => {
             }`}
           >
             <div>
-              <h3 className="font-semibold">{complaint.title}</h3>
+              <h3 className="font-semibold">{complaint.category}</h3>{" "}
+              {/* Display the complaint category */}
               <p className="text-gray-600 text-sm">{complaint.description}</p>
               <p className="text-gray-500 text-xs">
-                User: {complaint.user.name}
+                User: {complaint.user ? complaint.user.username : "Unknown"}{" "}
+                {/* Use username from the user object */}
               </p>
             </div>
           </div>

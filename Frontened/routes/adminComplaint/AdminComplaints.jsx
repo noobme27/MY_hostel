@@ -131,10 +131,12 @@ const ComplaintsPage = () => {
             }`}
           >
             <div>
-              <h3 className="font-semibold">{complaint.title}</h3>
+              <h3 className="font-semibold">{complaint.category}</h3>{" "}
+              {/* Use category as title */}
               <p className="text-gray-600 text-sm">{complaint.description}</p>
               <p className="text-gray-500 text-xs">
-                User: {complaint.user.name}
+                User: {complaint.user ? complaint.user.username : "Unknown"}{" "}
+                {/* Access username correctly */}
               </p>
             </div>
 
@@ -143,14 +145,7 @@ const ComplaintsPage = () => {
               <summary className="btn btn-sm btn-outline">
                 {complaint.status}
               </summary>
-              <ul
-                className="dropdown-content menu p-2 shadow bg-white bg-opacity-100 rounded-box w-40 text-gray-700"
-                style={{
-                  backgroundColor: "#ffffff", // Full opaque white background
-                  opacity: 1, // Ensure full opacity
-                  zIndex: 10, // Ensure it sits above other elements
-                }}
-              >
+              <ul className="dropdown-content menu p-2 shadow bg-white bg-opacity-100 rounded-box w-40 text-gray-700">
                 <li>
                   <a onClick={() => updateStatus(complaint.id, "PENDING")}>
                     Pending

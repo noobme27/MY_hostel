@@ -5,56 +5,44 @@ import heroImage from "../../src/assets/avatar.png";
 import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import apiRequest from "../../lib/apiRequest.js";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function UpdateProfile() {
   const { currentUser, updateUser } = useContext(AuthContext);
-  const navigate = useNavigate(); // Initialize the navigate hook
+  const navigate = useNavigate();
 
-  // State to handle form data and file upload
+  // Initialize form data based on currentUser
   const [formData, setFormData] = useState({
-    username: currentUser.username || "",
-    email: currentUser.email || "",
-    password: "", // Add password to state for updating
+    username: currentUser?.username || "",
+    email: currentUser?.email || "",
+    password: "", // For updating the password only if needed
+    avatar: currentUser?.avatar || "",
     info: {
-      name: "", // New field for name
-      hostel: currentUser.info?.hostel || "",
-      room: currentUser.info?.room || "", // Keep it as string initially to handle input, will convert later
-      hobbies: "", // New field for hobbies
-      bio: currentUser.info?.bio || "",
-      contactNumber: currentUser.info?.contactNumber || "",
-      linkedin: currentUser.info?.linkedin || "",
-      github: currentUser.info?.github || "",
+      name: currentUser?.info?.name || "",
+      hostel: currentUser?.info?.hostel || "",
+      room: currentUser?.info?.room || "",
+      hobbies: currentUser?.info?.hobbies || "",
+      bio: currentUser?.info?.bio || "",
+      contactNumber: currentUser?.info?.contactNumber || "",
+      linkedin: currentUser?.info?.linkedin || "",
+      github: currentUser?.info?.github || "",
     },
   });
   const [profilePicture, setProfilePicture] = useState(null);
 
-  // Handle form input changes
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Update nested info state if name starts with "info."
     if (name.startsWith("info.")) {
-      const infoField = name.split(".")[1]; // Get the field name after "info."
-
-      // Convert room input to integer if the field is "room"
-      if (infoField === "room") {
-        setFormData((prevData) => ({
-          ...prevData,
-          info: {
-            ...prevData.info,
-            [infoField]: parseInt(value, 10) || "", // Convert to integer or fallback to empty string
-          },
-        }));
-      } else {
-        setFormData((prevData) => ({
-          ...prevData,
-          info: {
-            ...prevData.info,
-            [infoField]: value,
-          },
-        }));
-      }
+      const infoField = name.split(".")[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        info: {
+          ...prevData.info,
+          [infoField]: infoField === "room" ? parseInt(value, 10) || "" : value,
+        },
+      }));
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -71,33 +59,25 @@ function UpdateProfile() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted!");
 
     const updatedData = { ...formData };
 
-    // If a new profile picture is uploaded, handle the upload
     if (profilePicture) {
       const fileData = new FormData();
       fileData.append("avatar", profilePicture);
-      updatedData.avatar = profilePicture; // Attach the file to formData for the backend
+      updatedData.avatar = profilePicture;
     }
-
-    console.log("Updated data:", updatedData);
 
     try {
       const res = await apiRequest.put(
-        `/users/update/${currentUser.id}`,
+        `http://localhost:8800/api/users/update/${currentUser.id}`,
         updatedData
       );
-      console.log("Response:", res.data);
-
-      updateUser(res.data); // Update user context with the new data
-
-      // Refresh the page or navigate to the updated profile
+      updateUser(res.data);
       navigate(`/`);
-      window.location.reload(); // Force page refresh after navigation
+      window.location.reload();
     } catch (err) {
-      console.log("Error during update:", err); // Log any errors
+      console.error("Error during update:", err);
     }
   };
 
@@ -133,7 +113,7 @@ function UpdateProfile() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="name">Name</label> {/* New field for name */}
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               name="info.name"
@@ -146,7 +126,7 @@ function UpdateProfile() {
             <label>Hostel</label>
             <input
               type="text"
-              name="info.hostel" // Updated name to reflect nested structure
+              name="info.hostel"
               value={formData.info.hostel}
               onChange={handleInputChange}
             />
@@ -155,8 +135,8 @@ function UpdateProfile() {
           <div className="form-group">
             <label>Room No.</label>
             <input
-              type="text" // Keep as text to allow numeric input
-              name="info.room" // Updated name to reflect nested structure
+              type="text"
+              name="info.room"
               value={formData.info.room}
               onChange={handleInputChange}
             />
@@ -185,7 +165,7 @@ function UpdateProfile() {
           <div className="form-group">
             <label>Bio</label>
             <textarea
-              name="info.bio" // Updated name to reflect nested structure
+              name="info.bio"
               value={formData.info.bio}
               onChange={handleInputChange}
               rows="3"
@@ -196,7 +176,7 @@ function UpdateProfile() {
             <label>Contact Number</label>
             <input
               type="text"
-              name="info.contactNumber" // Updated name to reflect nested structure
+              name="info.contactNumber"
               value={formData.info.contactNumber}
               onChange={handleInputChange}
             />
@@ -206,7 +186,7 @@ function UpdateProfile() {
             <label>LinkedIn</label>
             <input
               type="url"
-              name="info.linkedin" // Updated name to reflect nested structure
+              name="info.linkedin"
               value={formData.info.linkedin}
               onChange={handleInputChange}
             />
@@ -216,14 +196,14 @@ function UpdateProfile() {
             <label>GitHub</label>
             <input
               type="url"
-              name="info.github" // Updated name to reflect nested structure
+              name="info.github"
               value={formData.info.github}
               onChange={handleInputChange}
             />
           </div>
 
           <div className="form-group">
-            <label>Hobbies</label> {/* New field for hobbies */}
+            <label>Hobbies</label>
             <input
               type="text"
               name="info.hobbies"
