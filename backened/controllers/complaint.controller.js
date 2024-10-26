@@ -11,12 +11,16 @@ export const createComplaint = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    // Basic sanitization
+    const sanitizedDescription = description.trim();
+    const sanitizedCategory = category.trim();
+
     // Create a new complaint and save to the database
     const newComplaint = await prisma.complaint.create({
       data: {
         userId,
-        description,
-        category,
+        description: sanitizedDescription,
+        category: sanitizedCategory,
         status: "PENDING", // Set initial status
       },
     });
@@ -27,7 +31,7 @@ export const createComplaint = async (req, res) => {
       complaint: newComplaint,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error creating complaint:", err);
     res.status(500).json({ message: "Failed to create complaint" });
   }
 };
