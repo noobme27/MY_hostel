@@ -1,7 +1,7 @@
 import daisyui from "daisyui";
-
+const withMT = require("@material-tailwind/react/utils/withMT");
 /** @type {import('tailwindcss').Config} */
-export default {
+export default withMT({
   content: [
     "./src/**/*.{js,jsx,ts,tsx,vue}", // This covers all relevant files inside the src directory
 
@@ -11,4 +11,4 @@ export default {
     extend: {},
   },
   plugins: [daisyui], // Use daisyui as an ES6 module
-};
+});

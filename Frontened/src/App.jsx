@@ -18,6 +18,8 @@ import UserSearchPage from "../routes/UserSearch/UserSearch";
 import PartyPage from "../routes/PartyPage/PartyPage";
 import Chat from "../routes/chat/chat";
 
+import ProfilePage from "../routes/profilePage/profilePage";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -78,11 +80,11 @@ function App() {
       path: "/",
       element: <RequireAuth />,
       children: [
-        /* {
+        {
           path: "/profile",
           element: <ProfilePage />,
-          loader: profilePageLoader,
-        }, */
+          // loader: profilePageLoader,
+        }, 
         {
           path: "update",
           element: <UpdateProfile />,
