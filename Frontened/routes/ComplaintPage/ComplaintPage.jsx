@@ -32,6 +32,7 @@ const ComplaintPage = () => {
         throw new Error("Failed to fetch complaints");
       }
       const data = await response.json();
+      console.log(data);
       setComplaints(data);
     } catch (err) {
       setError(err.message);
@@ -216,10 +217,12 @@ const ComplaintPage = () => {
             }`}
           >
             <div>
-              <h3 className="font-semibold">{complaint.title}</h3>
+              <h3 className="font-semibold">{complaint.category}</h3>{" "}
+              {/* Display the complaint category */}
               <p className="text-gray-600 text-sm">{complaint.description}</p>
               <p className="text-gray-500 text-xs">
-                User: {complaint.user.name}
+                User: {complaint.user ? complaint.user.username : "Unknown"}{" "}
+                {/* Use username from the user object */}
               </p>
             </div>
           </div>
