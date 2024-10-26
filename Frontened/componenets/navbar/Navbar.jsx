@@ -14,11 +14,11 @@ function Navbar() {
           <img src="" alt="" />
           <span>LitedIn</span>
         </a>
-        <a href="/" className="btn btn-primary">
+        <a href="/" className="">
           Home
         </a>
         <a href="/">About Us</a>
-        <a href="/" className="text-red-500">
+        <a href="/" className="">
           Contact Us
         </a>
       </div>
