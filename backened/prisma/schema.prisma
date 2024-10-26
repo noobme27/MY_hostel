@@ -41,6 +41,7 @@ model Info {
 model Complaint {
   id          String            @id @default(auto()) @map("_id") @db.ObjectId
   userId      String            @db.ObjectId
+  userName    String? // New field for user name
   description String
   category    ComplaintCategory
   status      ComplaintStatus   @default(PENDING)

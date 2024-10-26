@@ -52,6 +52,25 @@ export const getComplaints = async (req, res) => {
   }
 };
 
+// get user complaints
+export const getUserComplaints = async (req, res) => {
+  const userId = req.userId; // Assuming you set userId in your verifyToken middleware
+
+  try {
+    const complaints = await prisma.complaint.findMany({
+      where: { userId }, // Filter complaints by the user ID
+      include: {
+        user: true, // Include user information with each complaint
+      },
+    });
+
+    res.status(200).json(complaints);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch complaints" });
+  }
+};
+
 // Update complaint status
 export const updateComplaintStatus = async (req, res) => {
   const { id } = req.params; // Get complaint ID from URL parameters
