@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./partyPage.scss";
 
 const PartyPage = () => {
@@ -13,6 +13,7 @@ const PartyPage = () => {
   const [searchType, setSearchType] = useState("title");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [authToken, setAuthToken] = useState(null); // State for storing the auth token
 
   useEffect(() => {
     const fetchParties = async () => {
@@ -21,6 +22,7 @@ const PartyPage = () => {
         if (!response.ok) throw new Error("Failed to fetch parties");
 
         const data = await response.json();
+        console.log(data);
         setParties(data);
         setFilteredParties(data);
       } catch (err) {
@@ -32,14 +34,85 @@ const PartyPage = () => {
     };
     fetchParties();
   }, []);
+  // Retrieve the token from cookies (or wherever you store it)
+  useEffect(() => {
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
+
+    if (token) {
+      setAuthToken(token);
+    }
+  }, []);
+
+  // Handle party creation
 
   const handleCreateParty = async () => {
-    // Your existing party creation logic
+    try {
+      const response = await fetch("http://localhost:8800/api/party/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Include credentials (cookies)
+        body: JSON.stringify(newParty), // Send the new party data
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create party");
+      }
+
+      const data = await response.json();
+      setParties((prevParties) => [...prevParties, data]);
+      setFilteredParties((prevFiltered) => [...prevFiltered, data]); // Update filtered parties
+      setNewParty({ title: "", description: "", capacity: 0 }); // Reset the form
+    } catch (err) {
+      setError(err.message); // Set the error message
+      console.error("Error creating party:", err);
+    }
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  // Handle party joining
+
   const handleJoinParty = async (partyId) => {
-    // Your existing join party logic
+    try {
+      const response = await fetch(
+        `http://localhost:8800/api/party/join/${partyId}`,
+        {
+          method: "POST",
+          credentials: "include", // Include credentials (cookies)
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ partyId }), // Send the party ID in the body
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error joining party:", errorData);
+        throw new Error("Failed to join party");
+      }
+
+      const data = await response.json();
+      console.log("Success:", data);
+
+      // Show success alert
+      alert("You have successfully joined this party!");
+
+      // Refresh the page to show updated participant count
+      window.location.reload();
+    } catch (error) {
+      console.error("Error joining party:", error);
+    }
   };
+
+  // Handle search/filtering
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
@@ -133,7 +206,7 @@ const PartyPage = () => {
                 </h3>
                 <p className="text-gray-600">{party.description}</p>
                 <p className="text-gray-500 text-sm">
-                  {party.attendees.length}/{party.capacity} attending
+                  {(party.attendees || []).length}/{party.capacity} attending
                 </p>
                 <button
                   className="btn btn-sm bg-yellow-500 text-white mt-2"
