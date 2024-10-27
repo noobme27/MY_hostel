@@ -2,11 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  //padding-left: 1000px;
 }
-
 .map_container {
   position: relative;
   margin: 0 auto;
+  width: 80%; // Adjust width as needed for your layout
+  //max-width: 80px;
 
   .zoom-buttons {
     display: flex;

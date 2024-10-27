@@ -12,14 +12,14 @@ $debug: false;
 
   .textContainer {
     flex: 3;
-    padding: 20px;
+    padding: 1%;
 
     .wrapper {
-      padding-right: 10px;
+      padding-right: 1%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 50px;
+      gap: 5%;
       height: 100%;
 
       @include lg {
@@ -255,14 +255,11 @@ $debug: false;
     width: 100%;
   }
 
-
-
   // .subtitle, .time {
   //   font-size: 12px;
   //   line-height: 16px;
   //   color: #c6c5c6;
   // }
-
 
   // .time {
   //   font-size: 12px;
@@ -301,19 +298,17 @@ $debug: false;
     transform: translateY(0);
   }
 
-
-
-  #item-2:checked ~ .player #test  {
+  #item-2:checked ~ .player #test {
     transform: translateY(-20px);
   }
 
-  #item-3:checked ~ .player #test  {
+  #item-3:checked ~ .player #test {
     transform: translateY(-40px);
   }
   // #item-4:checked ~ .player #test  {
   //   transform: translateY(-60px);
   // }
-//
+  //
 
   .lockroom {
     display: inline-block;
@@ -328,7 +323,7 @@ $debug: false;
     font-weight: 600;
     font-size: 2em;
 
-    padding: 8px 6px;
+    padding: 1% 0.8%;
 
     color: $bgColor;
 

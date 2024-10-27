@@ -13,14 +13,15 @@ const Hostel = () => {
     top: 0,
     left: 0,
   });
+  const [selectedFloor, setSelectedFloor] = useState("ground"); // Default floor
 
   useEffect(() => {
     const fetchLayoutAndUsers = async () => {
       try {
-        const [layoutResponse, usersResponse] = await Promise.all([
-          fetch("http://localhost:8800/api/room-layout/Vyas"),
-          fetch("http://localhost:8800/api/users"),
-        ]);
+        const layoutResponse = await fetch(
+          `http://localhost:8800/api/room-layout/Vyas/${selectedFloor}`
+        );
+        const usersResponse = await fetch("http://localhost:8800/api/users");
 
         if (!layoutResponse.ok || !usersResponse.ok) {
           throw new Error("Failed to fetch data");
@@ -37,7 +38,7 @@ const Hostel = () => {
     };
 
     fetchLayoutAndUsers();
-  }, []);
+  }, [selectedFloor]); // Fetch data whenever selectedFloor changes
 
   const handleZoomIn = () => {
     setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 2));
@@ -77,14 +78,20 @@ const Hostel = () => {
   const handleComplaintClick = (event) => {
     const rect = event.target.getBoundingClientRect();
     setComplaintPosition({
-      top: rect.bottom + window.scrollY, // Position just below the button
-      left: rect.left + window.scrollX, // Align with the button
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
     });
     setShowComplaint(true);
   };
 
+  const handleFloorChange = (floor) => {
+    setSelectedFloor(floor);
+  };
+
   return (
     <div className="parent-container">
+      {/* Floor selection dropdown using DaisyUI */}
+
       <div className="map_container">
         <div className="zoom-buttons">
           <button className="zoom-button" onClick={handleZoomIn}>
@@ -93,6 +100,18 @@ const Hostel = () => {
           <button className="zoom-button" onClick={handleZoomOut}>
             Zoom Out
           </button>
+
+          <details className="dropdown">
+            <summary className="btn m-1">Select Floor</summary>
+            <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              <li>
+                <a onClick={() => handleFloorChange("ground")}>Ground Floor</a>
+              </li>
+              <li>
+                <a onClick={() => handleFloorChange("first")}>First Floor</a>
+              </li>
+            </ul>
+          </details>
         </div>
         {error && <div className="error-message">{error}</div>}
         <div
@@ -117,7 +136,7 @@ const Hostel = () => {
                       onMouseEnter={() => handleMouseEnter(cell)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      {cell === "H" && <div className=" hallway"></div>}
+                      {cell === "H" && <div className="hallway"></div>}
                       {cell === "T" && (
                         <button
                           className="toilet toilet-button"
@@ -132,7 +151,6 @@ const Hostel = () => {
                       )}
                       {cell === "S" && <div className="stairs"></div>}
                       {cell === "EN" && <div className="entrance"></div>}
-
                       {cell === "CR" && <div className="common-room"></div>}
                       {cell !== "H" &&
                         cell !== "E" &&

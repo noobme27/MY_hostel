@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client"; // Import Prisma Client
 const prisma = new PrismaClient();
 
 // Function to generate room layout
-const generateRoomLayout = () => {
+const generateRoomLayoutGround = () => {
   const rows = 31; // Number of rows
   const cols = 36; // Number of columns
   const layout = Array.from({ length: rows }, () => Array(cols).fill(0)); // Create an empty matrix filled with 0
@@ -106,6 +106,7 @@ const generateRoomLayout = () => {
       } else if (col === 34 && row > 9 && row < 15) {
         layout[row][col] = 2140 + row;
       }
+
       // empty for the rest
       else {
         layout[row][col] = "E";
@@ -137,9 +138,170 @@ const generateRoomLayout = () => {
 };
 
 // Function to get room layout and associated users
-export const getRoomLayout = async (req, res) => {
+export const getRoomLayoutGround = async (req, res) => {
   try {
-    const layout = generateRoomLayout(); // Generate the layout
+    const layout = generateRoomLayoutGround(); // Generate the layout
+
+    // Fetch users and their associated room info
+    const users = await prisma.user.findMany({
+      include: {
+        info: true, // Include related room info
+      },
+    });
+
+    // Associate users with their rooms in the layout
+    const response = {
+      layout, // Room layout matrix
+      users, // User data with room info from MongoDB
+    };
+
+    res.status(200).json(response); // Send layout and users data
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to generate room layout" });
+  } finally {
+    await prisma.$disconnect(); // Disconnect Prisma Client
+  }
+};
+
+// Function to generate room layout
+const generateRoomLayoutFirst = () => {
+  const rows = 31; // Number of rows
+  const cols = 36; // Number of columns
+  const layout = Array.from({ length: rows }, () => Array(cols).fill(0)); // Create an empty matrix filled with 0
+
+  // room = 1, hall = "H";
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // top - top
+      if (row === 1 && col > 5 && col < 13) {
+        layout[row][col] = 4113 + (col - 5) * 2; // 3115 - 3127
+      } else if (row === 1 && col > 18 && col < 26) {
+        layout[row][col] = 4125 + (col - 17) * 2; // 3129 - 3141
+      } else if (row === 1 && col > 25 && col < 28) {
+        layout[row][col] = 4124 + (col - 17) * 2; // 3144 - 3142
+      } else if (row === 1 && col > 6 && col < 19) {
+        layout[row][col] = "T";
+      } else if (row === 1 && col > 3 && col < 6) {
+        layout[row][col] = "S";
+      } else if (row === 2 && col > 1 && col < 34) {
+        layout[row][col] = "H";
+      }
+      // top-bottom
+      else if (row === 3 && col > 6 && col < 13) {
+        layout[row][col] = 4114 + (col - 6) * 2; // 3116 - 3126
+      } else if (row === 3 && col > 19 && col < 26) {
+        layout[row][col] = 4128 + (col - 19) * 2; // 3130 - 3140
+      }
+
+      // left - left
+      else if (col === 1 && row > 3 && row < 9) {
+        layout[row][col] = 4116 - row; // 3108-3112
+      } else if (col === 1 && row > 9 && row < 17) {
+        layout[row][col] = 4117 - row; // 3107-3101
+      } else if (col === 2 && row > 1 && row < 21) {
+        layout[row][col] = "H";
+      }
+      // left-right
+      else if (col === 3 && row > 3 && row < 9) {
+        layout[row][col] = 3192 - row; // 1188-1184
+      } else if (col === 3 && row > 9 && row < 15) {
+        layout[row][col] = 3193 - row; // 1183-1179
+      }
+      // bottom -left - top
+      else if (row === 17 && col > 1 && col < 33) {
+        layout[row][col] = "H";
+      } else if (row === 18 && col > 3 && col < 9) {
+        layout[row][col] = 3182 - col;
+      } else if (row === 18 && col > 9 && col < 16) {
+        layout[row][col] = 3183 - col;
+      }
+      // bottom -left - bottom
+      else if (row === 20 && col > 1 && col < 33) {
+        layout[row][col] = "H";
+      } else if (row === 19 && col > 3 && col < 9) {
+        layout[row][col] = 3101 + col - 4;
+      } else if (row === 19 && col > 9 && col < 16) {
+        layout[row][col] = 3100 + col - 4;
+      } else if (row === 19 && col > 15 && col < 19) {
+        layout[row][col] = "EN";
+      }
+      // middle - left
+      else if (col === 15 && row > 2 && row < 18) {
+        layout[row][col] = "H";
+      } else if (col === 16 && row > 3 && row < 10) {
+        layout[row][col] = 3156 + row - 4;
+      } else if (col === 16 && row > 10 && row < 18) {
+        layout[row][col] = 3156 + row - 4;
+      }
+      // middle - right
+      else if (col === 18 && row > 2 && row < 18) {
+        layout[row][col] = "H";
+      } else if (col === 17 && row > 3 && row < 10) {
+        layout[row][col] = 3159 - row;
+      } else if (col === 17 && row > 10 && row < 18) {
+        layout[row][col] = 3160 - row;
+      }
+      // bottom -left - bottom
+      else if (row === 19 && col > 19 && col < 26) {
+        layout[row][col] = 3101 + col - 9;
+      } else if (row === 19 && col > 26 && col < 32) {
+        layout[row][col] = 3100 + col - 9;
+      }
+      // bottom -left - top
+      else if (row === 18 && col > 19 && col < 26) {
+        layout[row][col] = 3163 - col;
+      } else if (row === 18 && col > 26 && col < 32) {
+        layout[row][col] = 3164 - col;
+      }
+      // right -left
+      else if (col === 33 && row > 2 && row < 21) {
+        layout[row][col] = "H";
+      } else if (col === 32 && row > 3 && row < 9) {
+        layout[row][col] = 3123 + row - 4;
+      } else if (col === 32 && row > 9 && row < 15) {
+        layout[row][col] = 3122 + row - 4;
+      }
+      // right -right
+      else if (col === 34 && row > 3 && row < 9) {
+        layout[row][col] = 4141 + row;
+      } else if (col === 34 && row > 9 && row < 15) {
+        layout[row][col] = 4140 + row;
+      }
+      // empty for the rest
+      else {
+        layout[row][col] = "E";
+      }
+    }
+  }
+
+  // manual entry for rooms (changed from 1XXX to 3XXX and 2XXX to 4XXX)
+  layout[1][13] = 4128;
+  layout[1][2] = 4123;
+  layout[1][3] = 4114;
+
+  // manual entry for amenities (no changes needed for these)
+  layout[9][1] = "W";
+  layout[15][3] = "S";
+  layout[9][3] = "T";
+  layout[10][16] = "T";
+  layout[1][28] = "S";
+  layout[19][9] = "T";
+  layout[18][9] = "W";
+  layout[10][17] = "W";
+  layout[18][26] = "W";
+  layout[19][26] = "T";
+  layout[9][34] = "W";
+  layout[9][32] = "T";
+  layout[18][16] = "CR";
+
+  return layout;
+};
+
+// Function to get room layout and associated users
+export const getRoomLayoutFirst = async (req, res) => {
+  try {
+    const layout = generateRoomLayoutFirst(); // Generate the layout
 
     // Fetch users and their associated room info
     const users = await prisma.user.findMany({
