@@ -175,11 +175,11 @@ const generateRoomLayoutFirst = () => {
     for (let col = 0; col < cols; col++) {
       // top - top
       if (row === 1 && col > 5 && col < 13) {
-        layout[row][col] = 3113 + (col - 5) * 2; // 3115 - 3127
+        layout[row][col] = 4113 + (col - 5) * 2; // 3115 - 3127
       } else if (row === 1 && col > 18 && col < 26) {
-        layout[row][col] = 3125 + (col - 17) * 2; // 3129 - 3141
+        layout[row][col] = 4125 + (col - 17) * 2; // 3129 - 3141
       } else if (row === 1 && col > 25 && col < 28) {
-        layout[row][col] = 3124 + (col - 17) * 2; // 3144 - 3142
+        layout[row][col] = 4124 + (col - 17) * 2; // 3144 - 3142
       } else if (row === 1 && col > 6 && col < 19) {
         layout[row][col] = "T";
       } else if (row === 1 && col > 3 && col < 6) {
@@ -189,40 +189,40 @@ const generateRoomLayoutFirst = () => {
       }
       // top-bottom
       else if (row === 3 && col > 6 && col < 13) {
-        layout[row][col] = 3114 + (col - 6) * 2; // 3116 - 3126
+        layout[row][col] = 4114 + (col - 6) * 2; // 3116 - 3126
       } else if (row === 3 && col > 19 && col < 26) {
-        layout[row][col] = 3128 + (col - 19) * 2; // 3130 - 3140
+        layout[row][col] = 4128 + (col - 19) * 2; // 3130 - 3140
       }
 
       // left - left
       else if (col === 1 && row > 3 && row < 9) {
-        layout[row][col] = 3116 - row; // 3108-3112
+        layout[row][col] = 4116 - row; // 3108-3112
       } else if (col === 1 && row > 9 && row < 17) {
-        layout[row][col] = 3117 - row; // 3107-3101
+        layout[row][col] = 4117 - row; // 3107-3101
       } else if (col === 2 && row > 1 && row < 21) {
         layout[row][col] = "H";
       }
       // left-right
       else if (col === 3 && row > 3 && row < 9) {
-        layout[row][col] = 1192 - row; // 1188-1184
+        layout[row][col] = 3192 - row; // 1188-1184
       } else if (col === 3 && row > 9 && row < 15) {
-        layout[row][col] = 1193 - row; // 1183-1179
+        layout[row][col] = 3193 - row; // 1183-1179
       }
       // bottom -left - top
       else if (row === 17 && col > 1 && col < 33) {
         layout[row][col] = "H";
       } else if (row === 18 && col > 3 && col < 9) {
-        layout[row][col] = 1182 - col;
+        layout[row][col] = 3182 - col;
       } else if (row === 18 && col > 9 && col < 16) {
-        layout[row][col] = 1183 - col;
+        layout[row][col] = 3183 - col;
       }
       // bottom -left - bottom
       else if (row === 20 && col > 1 && col < 33) {
         layout[row][col] = "H";
       } else if (row === 19 && col > 3 && col < 9) {
-        layout[row][col] = 1101 + col - 4;
+        layout[row][col] = 3101 + col - 4;
       } else if (row === 19 && col > 9 && col < 16) {
-        layout[row][col] = 1100 + col - 4;
+        layout[row][col] = 3100 + col - 4;
       } else if (row === 19 && col > 15 && col < 19) {
         layout[row][col] = "EN";
       }
@@ -230,43 +230,43 @@ const generateRoomLayoutFirst = () => {
       else if (col === 15 && row > 2 && row < 18) {
         layout[row][col] = "H";
       } else if (col === 16 && row > 3 && row < 10) {
-        layout[row][col] = 1156 + row - 4;
+        layout[row][col] = 3156 + row - 4;
       } else if (col === 16 && row > 10 && row < 18) {
-        layout[row][col] = 1156 + row - 4;
+        layout[row][col] = 3156 + row - 4;
       }
       // middle - right
       else if (col === 18 && row > 2 && row < 18) {
         layout[row][col] = "H";
       } else if (col === 17 && row > 3 && row < 10) {
-        layout[row][col] = 1159 - row;
+        layout[row][col] = 3159 - row;
       } else if (col === 17 && row > 10 && row < 18) {
-        layout[row][col] = 1160 - row;
+        layout[row][col] = 3160 - row;
       }
       // bottom -left - bottom
       else if (row === 19 && col > 19 && col < 26) {
-        layout[row][col] = 1101 + col - 9;
+        layout[row][col] = 3101 + col - 9;
       } else if (row === 19 && col > 26 && col < 32) {
-        layout[row][col] = 1100 + col - 9;
+        layout[row][col] = 3100 + col - 9;
       }
       // bottom -left - top
       else if (row === 18 && col > 19 && col < 26) {
-        layout[row][col] = 1163 - col;
+        layout[row][col] = 3163 - col;
       } else if (row === 18 && col > 26 && col < 32) {
-        layout[row][col] = 1164 - col;
+        layout[row][col] = 3164 - col;
       }
       // right -left
       else if (col === 33 && row > 2 && row < 21) {
         layout[row][col] = "H";
       } else if (col === 32 && row > 3 && row < 9) {
-        layout[row][col] = 1123 + row - 4;
+        layout[row][col] = 3123 + row - 4;
       } else if (col === 32 && row > 9 && row < 15) {
-        layout[row][col] = 1122 + row - 4;
+        layout[row][col] = 3122 + row - 4;
       }
       // right -right
       else if (col === 34 && row > 3 && row < 9) {
-        layout[row][col] = 2141 + row;
+        layout[row][col] = 4141 + row;
       } else if (col === 34 && row > 9 && row < 15) {
-        layout[row][col] = 2140 + row;
+        layout[row][col] = 4140 + row;
       }
       // empty for the rest
       else {
@@ -276,9 +276,9 @@ const generateRoomLayoutFirst = () => {
   }
 
   // manual entry for rooms (changed from 1XXX to 3XXX and 2XXX to 4XXX)
-  layout[1][13] = 3128;
-  layout[1][2] = 3123;
-  layout[1][3] = 3114;
+  layout[1][13] = 4128;
+  layout[1][2] = 4123;
+  layout[1][3] = 4114;
 
   // manual entry for amenities (no changes needed for these)
   layout[9][1] = "W";
