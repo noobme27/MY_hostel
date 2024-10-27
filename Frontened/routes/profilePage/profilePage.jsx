@@ -3,13 +3,20 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import "./profilePage.scss";
 import { useNavigate } from "react-router-dom";
 import defaultAvatar from "../../src/assets/avatar.png"; // Default avatar image
-
+import defaultCoverpage from "../../src/assets/bits profile page.jpg";
 function ProfilePage() {
   const { currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   if (!currentUser) {
     return <div>Loading...</div>; // or a message to indicate loading
   }
-
+  const handleUpdateClick = () => {
+    navigate("/update");
+  };
+  const handleLogout = () => {
+    logout(); // Call the logout function from the context
+    navigate("/login"); // Redirect to the login page (or your desired route)
+  };
   // Sample complaints data
   const complaints = [
     { id: 1, title: "Internet Issue", description: "Slow internet speed in room." },
@@ -20,16 +27,23 @@ function ProfilePage() {
   return (
     <div className="profile-page">
       <div className="profile-sidebar">
-        <div className="profile-header">
+      <div className="profile-header">
+        <div className="avatar-container">
+          <div className="avatar-background">
+          <img src={defaultCoverpage} alt="Profile Avatar"/>
+          </div> {/* Just a div for the background */}
           <div className="avatar">
             <img src={currentUser.avatar || defaultAvatar} alt="Profile Avatar" />
           </div>
-          <h2>{currentUser.username}</h2>
-          <p className="bio">{currentUser.info?.bio}</p>
-          <div className="follow-info">
-            <span>{currentUser.info?.followers || 0} followers</span> · <span>{currentUser.info?.connections || 0} connections</span>
-          </div>
         </div>
+        <h2>{currentUser.username}</h2>
+        <p className="bio">{currentUser.info?.bio}</p>
+        <div className="follow-info">
+          <span>{currentUser.info?.followers || 0} followers</span> · <span>{currentUser.info?.connections || 0} connections</span>
+        </div>
+      </div>
+
+
         <div className="profile-info">
           <h3>Profile Information</h3>
           <div className="info-item">
@@ -56,7 +70,14 @@ function ProfilePage() {
           <div className="info-item">
             <strong>Hobbies:</strong> {currentUser.info?.hobbies}
           </div>
-          <button className="update-button">Update Profile</button>
+          <div class="button-container">
+          <button className="update-button" onClick={handleUpdateClick}>
+            Update Profile
+          </button>
+          <button className="logout-button" onClick={handleLogout} >
+            Logout
+          </button>
+          </div>
         </div>
       </div>
       <div className="complaints-section">
