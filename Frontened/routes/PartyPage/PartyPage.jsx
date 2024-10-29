@@ -129,13 +129,13 @@ const PartyPage = () => {
   };
 
   return (
-    <div className="party-page min-h-screen p-6 bg-gray-100 text-black flex gap-8">
+    <div className="party-page min-h-screen p-6 bg-accent-content text-black flex gap-8">
       {/* Create Party Section on the Left */}
-      <div className="bg-white p-6 rounded-lg shadow-md w-1/3 max-w-lg">
-        <h2 className="text-2xl font-bold text-yellow-600 mb-4">
+      <div className="bg-blue p-6 rounded-lg  shadow-md w-1/3 max-w-lg h-full">
+        <h2 className="text-2xl bg-white font-bold text-yellow-600 mb-4 ">
           Create a Party
         </h2>
-        <div className="form-control space-y-4">
+        <div className="form-control bg-white space-y-4">
           <input
             type="text"
             placeholder="Party Title"
