@@ -65,7 +65,7 @@ function HomePage() {
                     <div className="ag-courses-item_bg"></div>
                     <Link to={"/hostel"}>
                       <div className="ag-courses-item_title">
-                        View Your Bhawan
+                        View Your Bhawans
                       </div>
                     </Link>
                   </a>
