@@ -1,0 +1,46 @@
+.header09 {
+  position: relative;
+  padding: 6rem 0;
+  color: #ffffff;
+  background: #f45d01;
+
+  .mbr-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0.5;
+  }
+
+  .container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .mbr-section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+    }
+
+    .mbr-text {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mbr-section-btn {
+      text-align: center;
+
+      .btn {
+        margin: 0 0.5rem;
+        color: #ffffff;
+        background-color: #d78654;
+        border: none;
+
+        &:hover {
+          background-color: #ffffff;
+          color: #e8f401;
+        }
+      }
+    }
+  }
+}
