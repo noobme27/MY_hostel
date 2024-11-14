@@ -1,0 +1,84 @@
+.people03 {
+  padding: 3rem 1rem;
+  background: #f7f7f7;
+
+  .content-head {
+    text-align: center;
+
+    .mbr-section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .mbr-section-subtitle {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .card-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    padding: 1rem 0;
+  }
+
+  .features-image {
+    flex: 0 0 auto;
+    width: 250px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    scroll-snap-align: start;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .item-wrapper {
+      padding: 1rem;
+      text-align: center;
+
+      .item-img {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 80%;
+        margin: 0 auto;
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+
+      .item-content {
+        margin-top: 1rem;
+
+        .item-title {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #333;
+        }
+
+        .item-subtitle {
+          font-size: 1rem;
+          color: #777;
+          margin: 0.25rem 0;
+        }
+
+        .mbr-text {
+          font-size: 0.9rem;
+          color: #555;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+}

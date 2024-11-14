@@ -1,0 +1,106 @@
+.contacts01 {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  background-color: #fbe1c7;
+
+  .mbr-fallback-image.disabled {
+    display: none;
+  }
+
+  .mbr-overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 1200px; // Ensure the content doesn't stretch too wide
+    margin: 0 auto;
+  }
+
+  .content-head {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .mbr-section-head {
+    margin-bottom: 3rem;
+  }
+
+  .mbr-section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .mbr-section-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 0.5rem;
+  }
+
+  /* Card Row: Flexbox Layout for Cards */
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  /* Card Styling */
+  .card-item {
+    background: #fff;
+    padding: 2.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%; // Full width by default
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .item-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .text-wrapper {
+      text-align: left; // Align text to the left
+      color: #000; // Make text black
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #000; // Ensure the title is also black
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (min-width: 768px) {
+    .card-item {
+      width: calc(50% - 2rem); /* Two cards per row */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .card-item {
+      width: 100%; /* One card per row */
+    }
+  }
+}

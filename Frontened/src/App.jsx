@@ -19,6 +19,7 @@ import PartyPage from "../routes/PartyPage/PartyPage";
 import Chat from "../routes/chat/chat";
 
 import ProfilePage from "../routes/profilePage/profilePage";
+import HomePage2 from "../routes/homePage/homePage2";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,9 +27,13 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-        {
+        /* {
           path: "",
           element: <HomePage />,
+        }, */
+        {
+          path: "",
+          element: <HomePage2 />,
         },
         {
           path: "hostel",
@@ -84,7 +89,7 @@ function App() {
           path: "/profile",
           element: <ProfilePage />,
           // loader: profilePageLoader,
-        }, 
+        },
         {
           path: "update",
           element: <UpdateProfile />,
