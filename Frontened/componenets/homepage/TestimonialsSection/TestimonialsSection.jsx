@@ -44,7 +44,7 @@ const TestimonialsSection = () => {
   return (
     <section className="testimonials-section">
       <h3 className="section-title">Buzz</h3>
-      <div className="row">
+      <div className="rows">
         {testimonialsData.map((testimonial, index) => (
           <div
             key={index}

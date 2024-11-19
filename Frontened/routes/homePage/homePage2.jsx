@@ -9,6 +9,7 @@ import AccordionSection from "../../componenets/homepage/AccordionSection/Accord
 import HostelMates from "../../componenets/homepage/hostelMates/HostelMates";
 import ContactForm from "../../componenets/homepage/contactForm/contactForm";
 import ContactUs from "../../componenets/homepage/ContactUs/Contact";
+import CourseItems from "../../componenets/homepage/CourseItems/CourseItems";
 
 function HomePage2() {
   const { currentUser } = useContext(AuthContext);
@@ -33,12 +34,12 @@ function HomePage2() {
           </div>
         </div>
       </section>
-
-      <HeaderSection />
-      <CardsSection />
-
-      <TestimonialsSection />
       <HostelMates />
+      <HeaderSection />
+
+      <CourseItems />
+      <TestimonialsSection />
+
       <AccordionSection />
       <ContactForm />
       <ContactUs />

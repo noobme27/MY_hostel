@@ -2,54 +2,38 @@
   display: flex;
   gap: 2rem;
   padding: 2rem;
-  background-color: #f7f7f7;
+  background-color: #f8fafc; /* Light background for the page */
+  min-height: 100vh; /* Ensure the page takes the full height */
 
   .create-party-form {
-    background-color: #fff;
+    background-color: #ffffff; /* White background for the form */
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 30%;
-
-    h2 {
-      color: #333;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-control {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      input,
-      textarea,
-      button {
-        padding: 0.75rem;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        font-size: 1rem;
-      }
-
-      button {
-        background-color: #4caf50;
-        color: #fff;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #43a047;
-        }
-      }
-    }
+    position: fixed; /* Fix it at the top */
+    top: 2rem; /* Adjust the distance from the top of the screen */
+    left: 2rem; /* Adjust the distance from the left */
+    z-index: 10; /* Ensure it stays on top of other content */
+    height: auto; /* Allow it to grow in height based on content */
+    max-height: calc(
+      100vh - 4rem
+    ); /* Ensure the form doesn't overflow the viewport */
+    overflow-y: auto; /* Allow scrolling within the form */
   }
 
   .available-parties {
     width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 35%; /* Adjust left padding to create space for the fixed form */
 
     h2 {
-      color: #333;
+      color: #3b82f6; /* Blue for the title */
       font-size: 1.5rem;
       margin-bottom: 1rem;
+      font-weight: bold;
     }
 
     .search-bar {
@@ -60,7 +44,7 @@
       select,
       input {
         padding: 0.5rem;
-        border: 1px solid #ccc;
+        border: 1px solid #d1d5db;
         border-radius: 4px;
       }
     }
@@ -71,31 +55,33 @@
       gap: 1rem;
 
       .party-card {
-        background-color: #fff;
+        background-color: #ffffff; /* White background for each party card */
         padding: 1rem;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s ease;
 
         h3 {
           font-size: 1.25rem;
-          color: #4caf50;
+          color: #3b82f6; /* Blue for the card title */
         }
 
         p {
-          color: #555;
+          color: #4b5563; /* Soothing dark gray for description */
         }
 
         button {
-          background-color: #4caf50;
-          color: #fff;
+          background-color: #3b82f6;
+          color: white;
           border: none;
           padding: 0.5rem 1rem;
           border-radius: 4px;
           cursor: pointer;
           margin-top: 0.5rem;
+          transition: background-color 0.2s ease;
 
           &:hover {
-            background-color: #43a047;
+            background-color: #2563eb;
           }
         }
 
@@ -103,11 +89,12 @@
           margin-top: 0.5rem;
           summary {
             cursor: pointer;
-            color: #333;
+            color: #3b82f6; /* Blue for summary */
             font-weight: 500;
           }
+
           .dropdown-content {
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             padding: 0.5rem;
             border-radius: 4px;
             margin-top: 0.5rem;

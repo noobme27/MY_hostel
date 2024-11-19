@@ -45,7 +45,7 @@ export const updateUser = async (req, res) => {
     // Fetch existing user and its info
     const existingUser = await prisma.user.findUnique({
       where: { id },
-      include: { info: true },
+      include: { info: true }, // Ensure info is included
     });
 
     if (!existingUser) {
@@ -55,49 +55,49 @@ export const updateUser = async (req, res) => {
     // Prepare data for the user update
     const updateData = {
       ...inputs,
-      ...(updatedPassword && { password: updatedPassword }),
-      ...(avatar && { avatar }),
+      ...(updatedPassword ? { password: updatedPassword } : {}),
+      ...(avatar ? { avatar } : {}),
     };
 
-    const infoData = {
-      name: info.name,
-      hostel: info.hostel,
-      room: info.room,
-      hobbies: info.hobbies,
-      bio: info.bio,
-      contactNumber: info.contactNumber,
-      linkedin: info.linkedin,
-      github: info.github,
-    };
+    const infoData = info
+      ? {
+          name: info.name || null,
+          hostel: info.hostel || null,
+          room: info.room || null,
+          hobbies: info.hobbies || null,
+          bio: info.bio || null,
+          contactNumber: info.contactNumber || null,
+          linkedin: info.linkedin || null,
+          github: info.github || null,
+        }
+      : {};
 
-    // Handle upsert logic for `info` field
-    if (existingUser.info && existingUser.info.length > 0) {
+    // Handle upsert logic for the `info` field
+    if (existingUser.info && existingUser.info.id) {
+      // If info exists, update it
       updateData.info = {
-        upsert: {
-          where: { id: existingUser.info[0].id },
-          create: infoData,
-          update: infoData,
-        },
+        update: infoData, // Update the existing info
       };
     } else {
+      // If no info exists, create a new info record
       updateData.info = {
-        create: infoData,
+        create: infoData, // Do not specify userId manually; Prisma will do it based on the relation
       };
     }
 
-    // Execute update
+    // Execute the update operation for the user
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: updateData,
-      include: { info: true }, // Return the updated info
+      data: updateData, // The update data including user and info
+      include: { info: true }, // Return the updated info relation
     });
 
     // Exclude the password from the response
     const { password: _, ...userWithoutPassword } = updatedUser;
-    res.status(200).json(userWithoutPassword);
+    res.status(200).json(userWithoutPassword); // Return the updated user without password
   } catch (err) {
-    console.error("Error updating user:", err); // Log the error
-    console.error("Request body:", req.body); // Log the request body for further inspection
+    console.error("Error updating user:", err.message); // Log the error
+    console.error("Request body:", JSON.stringify(req.body, null, 2)); // Log the request body for further inspection
     res
       .status(500)
       .json({ message: "Failed to update user", error: err.message });

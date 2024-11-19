@@ -29,13 +29,13 @@ const ContactForm = () => {
         </div>
 
         {/* Form */}
-        <div className="row justify-content-center">
+        <div className="rows justify-content-center">
           <div className="col-lg-8 mx-auto">
             <form onSubmit={handleSubmit} className="form-with-styler">
               {formAlert && (
                 <div className="alert alert-success">{formAlert}</div>
               )}
-              <div className="row dragArea">
+              <div className="rows dragArea">
                 <div className="col-md-6 col-sm-12 form-group mb-3">
                   <input
                     type="text"

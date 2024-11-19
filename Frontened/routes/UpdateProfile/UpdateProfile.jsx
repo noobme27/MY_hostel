@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./updateProfile.scss";
-
+import UploadWidget from "../../componenets/uploadWidget/UploadWidget.jsx";
 import heroImage from "../../src/assets/avatar.png";
 import { FaEdit } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext.jsx";
@@ -10,8 +10,7 @@ import { useNavigate } from "react-router-dom";
 function UpdateProfile() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  // Initialize form data based on currentUser
+  const [avatar, setAvatar] = useState(currentUser.avatar);
   const [formData, setFormData] = useState({
     username: currentUser?.username || "",
     email: currentUser?.email || "",
@@ -54,30 +53,40 @@ function UpdateProfile() {
   // Handle file input change
   const handleFileChange = (e) => {
     setProfilePicture(e.target.files[0]);
+    setProfilePicture(file);
+  };
+
+  // Prevent form submission when clicking the file input or upload button
+  const handleUploadClick = (e) => {
+    e.preventDefault(); // Prevents the form submission when the upload button is clicked
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedData = { ...formData };
-
+    // Create FormData object
+    const fileData = new FormData();
     if (profilePicture) {
-      const fileData = new FormData();
       fileData.append("avatar", profilePicture);
-      updatedData.avatar = profilePicture;
     }
+    fileData.append("formData", JSON.stringify({ ...formData }));
 
     try {
       const res = await apiRequest.put(
         `http://localhost:8800/api/users/update/${currentUser.id}`,
-        updatedData
+        fileData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Inform the server it's multipart data
+          },
+        }
       );
       updateUser(res.data);
       navigate(`/`);
       window.location.reload();
     } catch (err) {
-      console.error("Error during update:", err);
+      console.error("Error during update:", err.response?.data || err.message);
     }
   };
 
@@ -88,10 +97,21 @@ function UpdateProfile() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="image-wrapper">
-              <img src={heroImage || currentUser.avatar} alt="Hero" />
-              <label htmlFor="file-upload" className="edit-btn">
-                <FaEdit /> Edit
+              <img src={avatar || heroImage} alt="Hero" />
+              {/* Use a label to trigger the upload */}
+              <label className="edit-btn" onClick={handleUploadClick}>
+                <UploadWidget
+                  uwConfig={{
+                    cloudName: "dv3ubjbgt",
+                    uploadPreset: "LitedIn",
+                    multiple: false,
+                    maxImageFileSize: 2000000,
+                    folder: "avatars",
+                  }}
+                  setAvatar={setAvatar}
+                />
               </label>
+              {/* Hidden file input */}
               <input
                 id="file-upload"
                 type="file"

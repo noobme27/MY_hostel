@@ -1,4 +1,4 @@
-.parent-container {
+/* .parent-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -180,5 +180,237 @@
         }
       }
     }
+  }
+} */
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px;
+  background-color: #f4f7fa; // Light background to create contrast
+}
+
+.map_container {
+  position: relative;
+  margin: 0 auto;
+  width: 100%; // Keep original width
+  max-width: 1200px; // Keep max width for large screens
+  padding: 10px; // Maintain original padding
+  background-color: #fff; // White background for map area
+  border-radius: 8px; // Rounded corners for a softer look
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+
+  .zoom-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px; // Adjust gap to maintain consistency
+    margin-bottom: 15px;
+    margin-top: 10px;
+
+    .zoom-button {
+      padding: 12px 18px;
+      background-color: #007bff; // Primary color (blue)
+      color: white;
+      border: none;
+      border-radius: 8px; // Rounded button corners
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: #0056b3; // Darker blue on hover
+        transform: scale(1.05); // Slight zoom effect
+      }
+
+      &:active {
+        transform: scale(0.95); // Active state for click feedback
+      }
+    }
+  }
+
+  .dropdown {
+    margin-left: 10px;
+    .btn {
+      font-size: 14px;
+      padding: 8px 16px;
+      background-color: #f2f2f2;
+      color: #333;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .menu {
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      .menu-item {
+        padding: 12px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+  .scroll-container {
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .room-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; // Reduced gap to maintain original layout
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 5px; // Reduced gap for cells to fit better
+
+      .cell {
+        width: 24px; // Keep original width
+        height: 24px; // Keep original height
+        padding: 2px;
+        position: relative;
+        border-radius: 6px; // Slight rounding for each cell
+        transition: background-color 0.3s, transform 0.3s;
+
+        &.room {
+          background-color: #1ec120; // Default green for rooms
+          font-size: 8px; // Maintain original font size
+          color: white;
+          text-align: left;
+          font-weight: bold;
+
+          &:hover {
+            background-color: #28a745; // Darker green for hover
+            transform: scale(1.1);
+          }
+        }
+
+        &.hallway {
+          background-color: #f0e68c; // Light yellow for hallway
+        }
+
+        &.stairs {
+          background-color: #add8e6; // Light blue for stairs
+        }
+
+        &.entrance {
+          background-color: #90ee90; // Light green for entrance
+        }
+
+        &.common-room {
+          background-color: #d3d3d3; // Light grey for common rooms
+        }
+
+        &.empty {
+          background-color: #fff; // White for empty cells
+        }
+
+        .info-box {
+          position: absolute;
+          top: 45px;
+          left: 45px;
+          width: 220px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          padding: 15px;
+          z-index: 10;
+
+          .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+          }
+
+          .user-info {
+            font-size: 14px;
+            color: #333;
+
+            h3 {
+              margin: 5px 0;
+              font-size: 16px;
+              font-weight: bold;
+            }
+
+            p {
+              margin: 3px 0;
+              font-size: 14px;
+              color: #555;
+            }
+
+            .social-links {
+              margin-top: 10px;
+
+              a {
+                margin-right: 15px;
+                text-decoration: none;
+                color: #0077b5; // LinkedIn blue
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.error-message {
+  color: #ff6f61; // Error message color (red)
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.room-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  //background-color: #28a745; // Green for room buttons
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    //background-color: #218838; // Darker green on hover
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95); // Button click effect
+  }
+}
+
+.toilet-button,
+.water-button {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.toilet-button {
+  background-color: #ff6f61; // Red for toilets
+  &:hover {
+    background-color: #ff4d4d;
+  }
+}
+
+.water-button {
+  background-color: #1e90ff; // Blue for water
+  &:hover {
+    background-color: #1c75d8;
   }
 }

@@ -20,6 +20,7 @@ import Chat from "../routes/chat/chat";
 
 import ProfilePage from "../routes/profilePage/profilePage";
 import HomePage2 from "../routes/homePage/homePage2";
+import ProfileLayout from "../routes/ProfileLayout/profileLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -82,17 +83,34 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/",
-      element: <RequireAuth />,
+      path: "/profile",
+      element: <RequireAuth />, // Protect the profile routes
       children: [
         {
-          path: "/profile",
-          element: <ProfilePage />,
-          // loader: profilePageLoader,
-        },
-        {
-          path: "update",
-          element: <UpdateProfile />,
+          path: "",
+          element: <ProfileLayout />, // Use ProfileLayout as the layout for profile routes
+          children: [
+            {
+              index: true, // Default route for `/profile`
+              element: <ProfilePage />,
+            },
+            {
+              path: "/profile/update", // Nested route for `/profile/update`
+              element: <UpdateProfile />,
+            },
+            {
+              path: "/profile/complaints", // Nested route for `/profile/complaints`
+              element: <ComplaintPage />,
+            },
+            {
+              path: "/profile/searchParty", // Nested route for `/profile/parties`
+              element: <PartyPage />,
+            },
+            {
+              path: "/profile/messages", // Nested route for `/profile/messages`
+              element: <Chat />,
+            },
+          ],
         },
       ],
     },

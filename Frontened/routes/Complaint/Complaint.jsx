@@ -28,7 +28,7 @@ const Complaint = ({ onClose, position }) => {
             description: complaintDescription,
             category: complaintType,
           }),
-          credentials: "include", // Send cookies
+          credentials: "include",
         }
       );
 
@@ -54,10 +54,8 @@ const Complaint = ({ onClose, position }) => {
     <div
       className="complaint-box"
       style={{
-        position: "absolute",
         top: position.top,
         left: position.left,
-        zIndex: 9999,
       }}
     >
       <h2>Register Complaint</h2>
@@ -83,16 +81,19 @@ const Complaint = ({ onClose, position }) => {
           {isSubmitting ? "Submitting..." : "Submit Complaint"}
         </button>
       </form>
-      <button onClick={onClose}>Cancel</button>
+      <button className="cancel-button" onClick={onClose}>
+        Cancel
+      </button>
     </div>
   );
 };
+
 Complaint.propTypes = {
-  onClose: PropTypes.func.isRequired, // onClose should be a required function
+  onClose: PropTypes.func.isRequired,
   position: PropTypes.shape({
-    top: PropTypes.number.isRequired, // Ensure top is a required number
-    left: PropTypes.number.isRequired, // Ensure left is a required number
-  }).isRequired, // position should be a required object with top and left
+    top: PropTypes.number.isRequired,
+    left: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default Complaint;
