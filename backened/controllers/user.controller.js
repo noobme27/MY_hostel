@@ -28,76 +28,74 @@ export const updateUser = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId; // Assuming `req.userId` is set after authentication
 
-  // Authorization check
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not authorized" });
   }
 
-  const { password, avatar, info, ...inputs } = req.body;
+  const { password, info, ...inputs } = req.body;
   let updatedPassword = null;
 
+  // Check if a file was uploaded and set avatarPath accordingly
+  console.log(req.file); // Log to check if the file is attached
+  let avatarPath = req.file ? `/uploads/avatars/${req.file.filename}` : null;
+
   try {
-    // Hash the password if it's being updated
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
-    // Fetch existing user and its info
     const existingUser = await prisma.user.findUnique({
       where: { id },
-      include: { info: true }, // Ensure info is included
+      include: { info: true },
     });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Prepare data for the user update
     const updateData = {
-      ...inputs,
-      ...(updatedPassword ? { password: updatedPassword } : {}),
-      ...(avatar ? { avatar } : {}),
+      username: inputs.username,
+      email: inputs.email,
+      avatar: avatarPath, // Only set if file is present
+      info: {
+        upsert: {
+          where: {
+            id: existingUser.info?.length ? existingUser.info[0].id : "",
+          },
+          create: {
+            name: info?.name || "",
+            hostel: info?.hostel || "",
+            room: info?.room ? parseInt(info.room, 10) : null,
+            hobbies: info?.hobbies || "",
+            bio: info?.bio || "",
+            contactNumber: info?.contactNumber || "",
+            linkedin: info?.linkedin || "",
+            github: info?.github || "",
+          },
+          update: {
+            name: info?.name || "",
+            hostel: info?.hostel || "",
+            room: info?.room ? parseInt(info.room, 10) : null,
+            hobbies: info?.hobbies || "",
+            bio: info?.bio || "",
+            contactNumber: info?.contactNumber || "",
+            linkedin: info?.linkedin || "",
+            github: info?.github || "",
+          },
+        },
+      },
     };
 
-    const infoData = info
-      ? {
-          name: info.name || null,
-          hostel: info.hostel || null,
-          room: info.room || null,
-          hobbies: info.hobbies || null,
-          bio: info.bio || null,
-          contactNumber: info.contactNumber || null,
-          linkedin: info.linkedin || null,
-          github: info.github || null,
-        }
-      : {};
-
-    // Handle upsert logic for the `info` field
-    if (existingUser.info && existingUser.info.id) {
-      // If info exists, update it
-      updateData.info = {
-        update: infoData, // Update the existing info
-      };
-    } else {
-      // If no info exists, create a new info record
-      updateData.info = {
-        create: infoData, // Do not specify userId manually; Prisma will do it based on the relation
-      };
-    }
-
-    // Execute the update operation for the user
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: updateData, // The update data including user and info
-      include: { info: true }, // Return the updated info relation
+      data: updateData,
+      include: { info: true },
     });
 
-    // Exclude the password from the response
     const { password: _, ...userWithoutPassword } = updatedUser;
-    res.status(200).json(userWithoutPassword); // Return the updated user without password
+    res.status(200).json(userWithoutPassword);
   } catch (err) {
-    console.error("Error updating user:", err.message); // Log the error
-    console.error("Request body:", JSON.stringify(req.body, null, 2)); // Log the request body for further inspection
+    console.error("Error updating user:", err);
     res
       .status(500)
       .json({ message: "Failed to update user", error: err.message });

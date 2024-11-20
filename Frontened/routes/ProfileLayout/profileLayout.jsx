@@ -49,7 +49,7 @@ function ProfileLayout() {
             Your Parties
           </NavLink>
           <NavLink
-            to="/messages"
+            to="/profile/messages"
             className={({ isActive }) =>
               isActive
                 ? "profile-layout-nav-link active"
