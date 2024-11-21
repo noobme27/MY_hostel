@@ -28,21 +28,22 @@ export const updateUser = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId; // Assuming `req.userId` is set after authentication
 
-  // Authorization check
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not authorized" });
   }
 
-  const { password, avatar, info, ...inputs } = req.body;
+  const { password, info, ...inputs } = req.body;
   let updatedPassword = null;
 
+  // Check if a file was uploaded and set avatarPath accordingly
+  console.log(req.file); // Log to check if the file is attached
+  let avatarPath = req.file ? `/uploads/avatars/${req.file.filename}` : null;
+
   try {
-    // Hash the password if it's being updated
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
-    // Fetch existing user and its info
     const existingUser = await prisma.user.findUnique({
       where: { id },
       include: { info: true },
@@ -52,52 +53,49 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Prepare data for the user update
     const updateData = {
-      ...inputs,
-      ...(updatedPassword && { password: updatedPassword }),
-      ...(avatar && { avatar }),
-    };
-
-    const infoData = {
-      name: info.name,
-      hostel: info.hostel,
-      room: info.room,
-      hobbies: info.hobbies,
-      bio: info.bio,
-      contactNumber: info.contactNumber,
-      linkedin: info.linkedin,
-      github: info.github,
-    };
-
-    // Handle upsert logic for `info` field
-    if (existingUser.info && existingUser.info.length > 0) {
-      updateData.info = {
+      username: inputs.username,
+      email: inputs.email,
+      avatar: avatarPath, // Only set if file is present
+      info: {
         upsert: {
-          where: { id: existingUser.info[0].id },
-          create: infoData,
-          update: infoData,
+          where: {
+            id: existingUser.info?.length ? existingUser.info[0].id : "",
+          },
+          create: {
+            name: info?.name || "",
+            hostel: info?.hostel || "",
+            room: info?.room ? parseInt(info.room, 10) : null,
+            hobbies: info?.hobbies || "",
+            bio: info?.bio || "",
+            contactNumber: info?.contactNumber || "",
+            linkedin: info?.linkedin || "",
+            github: info?.github || "",
+          },
+          update: {
+            name: info?.name || "",
+            hostel: info?.hostel || "",
+            room: info?.room ? parseInt(info.room, 10) : null,
+            hobbies: info?.hobbies || "",
+            bio: info?.bio || "",
+            contactNumber: info?.contactNumber || "",
+            linkedin: info?.linkedin || "",
+            github: info?.github || "",
+          },
         },
-      };
-    } else {
-      updateData.info = {
-        create: infoData,
-      };
-    }
+      },
+    };
 
-    // Execute update
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
-      include: { info: true }, // Return the updated info
+      include: { info: true },
     });
 
-    // Exclude the password from the response
     const { password: _, ...userWithoutPassword } = updatedUser;
     res.status(200).json(userWithoutPassword);
   } catch (err) {
-    console.error("Error updating user:", err); // Log the error
-    console.error("Request body:", req.body); // Log the request body for further inspection
+    console.error("Error updating user:", err);
     res
       .status(500)
       .json({ message: "Failed to update user", error: err.message });

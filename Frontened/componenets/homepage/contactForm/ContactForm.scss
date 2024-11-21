@@ -3,6 +3,8 @@
   padding-bottom: 6rem;
   background-color: #edefeb;
   position: relative;
+  display: flex;
+  justify-content: center;
 
   // Center the container and limit form width
   .container {
@@ -66,7 +68,7 @@
       }
     }
 
-    .row {
+    .rows {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;

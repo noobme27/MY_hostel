@@ -1,156 +1,153 @@
 .parent-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  //padding-left: 1000px;
+  padding: 20px;
+  background-color: #f4f7fa; // Light background to create contrast
 }
+
 .map_container {
   position: relative;
   margin: 0 auto;
-  width: 80%; // Adjust width as needed for your layout
-  //max-width: 80px;
+  width: 100%; // Keep original width
+  max-width: 1200px; // Keep max width for large screens
+  padding: 10px; // Maintain original padding
+  background-color: #fff; // White background for map area
+  border-radius: 8px; // Rounded corners for a softer look
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
 
   .zoom-buttons {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 10px;
-    margin-top: 10%;
+    gap: 5px; // Adjust gap to maintain consistency
+    margin-bottom: 15px;
+    margin-top: 10px;
 
     .zoom-button {
-      padding: 10px 15px;
-      background-color: #007bff;
+      padding: 12px 18px;
+      background-color: #007bff; // Primary color (blue)
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px; // Rounded button corners
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; // Darker blue on hover
+        transform: scale(1.05); // Slight zoom effect
+      }
+
+      &:active {
+        transform: scale(0.95); // Active state for click feedback
+      }
+    }
+  }
+
+  .dropdown {
+    margin-left: 10px;
+    .btn {
+      font-size: 14px;
+      padding: 8px 16px;
+      background-color: #f2f2f2;
+      color: #333;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .menu {
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      .menu-item {
+        padding: 12px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        &:hover {
+          background-color: #f0f0f0;
+        }
       }
     }
   }
 
   .scroll-container {
-    overflow: scroll;
+    overflow: hidden;
+    margin-top: 20px;
   }
 
   .room-layout {
     display: flex;
     flex-direction: column;
+    gap: 10px; // Reduced gap to maintain original layout
 
     .row {
       display: flex;
+      justify-content: center;
+      gap: 5px; // Reduced gap for cells to fit better
 
       .cell {
-        width: 24px;
-        height: 24px;
+        width: 24px; // Keep original width
+        height: 24px; // Keep original height
         padding: 2px;
         position: relative;
+        border-radius: 6px; // Slight rounding for each cell
+        transition: background-color 0.3s, transform 0.3s;
 
         &.room {
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color 0.3s;
+          background-color: #1ec120; // Default green for rooms
+          font-size: 8px; // Maintain original font size
+          color: white;
+          text-align: left;
+          font-weight: bold;
 
-          .room-button {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-color: #1ec120;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 7px;
-            font-weight: bold;
-            line-height: 5px;
-            transition: background-color 0.3s, transform 0.2s;
-
-            &:hover {
-              background-color: #0056b3;
-              transform: scale(1.05);
-            }
-
-            &:active {
-              transform: scale(0.95);
-            }
-          }
-        }
-
-        &.toilet {
-          .toilet-button {
-            width: 100%;
-            height: 100%;
-            background-color: #ff6f61; // Red color for toilet button
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-              background-color: #ff4d4d;
-            }
-          }
-        }
-
-        &.water {
-          .water-button {
-            width: 100%;
-            height: 100%;
-            background-color: #1e90ff; // Blue color for water button
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-              background-color: #1c75d8;
-            }
+          &:hover {
+            background-color: #28a745; // Darker green for hover
+            transform: scale(1.1);
           }
         }
 
         &.hallway {
-          background-color: #f0e68c;
-          font-size: 9px;
+          background-color: #f0e68c; // Light yellow for hallway
         }
 
         &.stairs {
-          background-color: #add8e6;
+          background-color: #add8e6; // Light blue for stairs
         }
 
         &.entrance {
-          background-color: #90ee90;
+          background-color: #90ee90; // Light green for entrance
         }
 
         &.common-room {
-          background-color: #d3d3d3;
+          background-color: #d3d3d3; // Light grey for common rooms
         }
 
         &.empty {
-          background-color: #fff;
+          background-color: #fff; // White for empty cells
         }
 
-        .info-box {
+        .room-info-panel {
           position: absolute;
           top: 24px;
           left: 24px;
           width: 200px;
-          background-color: white;
+          background-color: #df6262; /* Solid color with no transparency */
           border: 1px solid #ccc;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust shadow as needed */
           padding: 10px;
-          z-index: 10;
-          overflow: auto;
+          z-index: 9999;
+          overflow: hidden;
+          pointer-events: auto;
+          opacity: 1 !important; /* Ensure full opacity */
+          outline: 2px dashed black; /* Debug outline, can be removed */
 
           .profile-pic {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            background: #fff; /* Explicit background for the image area */
           }
 
           .user-info {
@@ -169,7 +166,7 @@
               a {
                 margin-right: 10px;
                 text-decoration: none;
-                color: #0077b5; // LinkedIn blue
+                color: #0077b5; /* LinkedIn blue */
 
                 &:hover {
                   text-decoration: underline;
@@ -180,5 +177,99 @@
         }
       }
     }
+  }
+}
+.room-info-panel {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 200px;
+  background-color: #df6262; /* Solid color with no transparency */
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust shadow as needed */
+  padding: 10px;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: auto;
+  opacity: 1 !important; /* Ensure full opacity */
+  outline: 2px dashed black; /* Debug outline, can be removed */
+
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fff; /* Explicit background for the image area */
+  }
+
+  .user-info {
+    h3 {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .social-links {
+      margin-top: 5px;
+
+      a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #0077b5; /* LinkedIn blue */
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+.error-message {
+  color: #ff6f61; // Error message color (red)
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.room-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  //background-color: #28a745; // Green for room buttons
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    //background-color: #218838; // Darker green on hover
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95); // Button click effect
+  }
+}
+
+.toilet-button,
+.water-button {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.toilet-button {
+  background-color: #ff6f61; // Red for toilets
+  &:hover {
+    background-color: #ff4d4d;
+  }
+}
+
+.water-button {
+  background-color: #1e90ff; // Blue for water
+  &:hover {
+    background-color: #1c75d8;
   }
 }

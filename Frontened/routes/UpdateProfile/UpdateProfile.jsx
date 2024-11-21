@@ -60,18 +60,28 @@ function UpdateProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedData = { ...formData };
-
-    if (profilePicture) {
-      const fileData = new FormData();
-      fileData.append("avatar", profilePicture);
-      updatedData.avatar = profilePicture;
+    const formDataObj = new FormData();
+    formDataObj.append("username", formData.username);
+    formDataObj.append("email", formData.email);
+    if (formData.password) {
+      formDataObj.append("password", formData.password);
     }
+    if (profilePicture) {
+      formDataObj.append("avatar", profilePicture);
+    }
+    Object.entries(formData.info).forEach(([key, value]) => {
+      formDataObj.append(`info.${key}`, value);
+    });
 
     try {
       const res = await apiRequest.put(
         `http://localhost:8800/api/users/update/${currentUser.id}`,
-        updatedData
+        formDataObj,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       updateUser(res.data);
       navigate(`/`);
