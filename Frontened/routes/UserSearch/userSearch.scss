@@ -1,37 +1,111 @@
 .user-search-page {
   padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-
-  h1 {
-    text-align: center;
-  }
-
-  input {
+  display: flex;
+  flex-direction: row;
+  .left-side {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    overflow-y: hidden;
+
+    h1 {
+      text-align: center;
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .select,
+    .input {
+      padding: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .user-list {
+      max-height: 400px; // Limit the height for scrolling
+      overflow-y: auto;
+
+      li {
+        padding: 15px;
+        margin: 10px 0;
+        background: #f9f9f9;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background: #e0e0e0;
+        }
+        &.bg-blue-100 {
+          background: rgb(217, 234, 250);
+          border: solid;
+        }
+
+        .user-card {
+          display: flex;
+          align-items: center;
+
+          .user-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
   }
 
-  .user-list {
-    list-style: none;
-    padding: 0;
+  .right-side {
+    width: 100%;
+    max-width: 500px;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-    li {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin-bottom: 10px;
+    .user-details {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+    }
 
-      h2 {
-        margin: 0;
-      }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
 
+    .user-info {
       p {
-        margin: 5px 0;
+        font-size: 1rem;
+        margin-bottom: 10px;
+
+        .inline {
+          display: inline;
+        }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .left-side,
+    .right-side {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .right-side {
+      margin-top: 20px;
+      border-left: none;
     }
   }
 }

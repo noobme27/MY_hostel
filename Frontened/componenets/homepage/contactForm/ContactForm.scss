@@ -1,0 +1,106 @@
+.contact-form-section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  background-color: #edefeb;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  // Center the container and limit form width
+  .container {
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  // Heading styles (section title and subtitle)
+  .content-head {
+    margin-bottom: 2rem; // Space between title and form
+    text-align: center;
+
+    .mbr-section-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .mbr-section-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+  }
+
+  // Form styles
+  .form-with-styler {
+    max-width: 60%; // Restrict form width to 60% of the container
+    margin: auto;
+    text-align: center;
+
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      .form-control {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        border-radius: 2rem; // Rounded corners
+        width: 100%;
+        box-sizing: border-box;
+
+        &:hover {
+          border-color: rgb(180, 155, 10);
+          outline: none;
+          // box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
+        }
+        &:focus {
+          border-color: #333;
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
+        }
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+      }
+    }
+
+    .rows {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+
+      // Two inputs side by side (50% width each)
+      .col-md-6 {
+        flex: 1 1 45%; // Adjusts width to 50% when there are two inputs
+      }
+
+      // Full-width message box below
+      .col-12 {
+        flex: 1 1 100%;
+      }
+    }
+
+    // Button styling
+    .btn {
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      border: none;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+
+      width: 100%; // Full width on smaller screens
+      max-width: 50%; // Limit button width on larger screens
+    }
+  }
+}

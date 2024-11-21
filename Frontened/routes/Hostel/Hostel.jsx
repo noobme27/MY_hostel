@@ -164,7 +164,7 @@ const Hostel = () => {
 
                       {hoveredRoom === cell && info && (
                         <div
-                          className="info-box"
+                          className="room-info-panel"
                           aria-labelledby={`info-${cell}`}
                         >
                           <img

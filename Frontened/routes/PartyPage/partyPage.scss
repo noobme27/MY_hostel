@@ -1,103 +1,115 @@
-// Global variables for colors, fonts, etc.
-$primary-color: #4caf50;
-$secondary-color: #fff;
-$background-color: #f9f9f9;
-$font-family: "Arial", sans-serif;
-$button-hover-color: darken($primary-color, 10%);
-$border-radius: 8px;
-$padding: 1rem;
-
-.lay {
-  margin-top: 100px;
-}
-.party-container {
-  background-color: $background-color;
-  font-family: $font-family;
+.party-page {
+  display: flex;
+  gap: 2rem;
   padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  background-color: #f8fafc; /* Light background for the page */
+  min-height: 100vh; /* Ensure the page takes the full height */
 
-  h1 {
-    color: $primary-color;
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-
-  // Form styling
   .create-party-form {
-    background-color: $secondary-color;
-    padding: $padding;
-    border-radius: $border-radius;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      border-radius: $border-radius;
-      font-size: 1rem;
-    }
-
-    input[type="number"] {
-      max-width: 100px;
-    }
-
-    button {
-      background-color: $primary-color;
-      color: $secondary-color;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: $border-radius;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: $button-hover-color;
-      }
-    }
+    background-color: #ffffff; /* White background for the form */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    position: fixed; /* Fix it at the top */
+    top: 2rem; /* Adjust the distance from the top of the screen */
+    left: 2rem; /* Adjust the distance from the left */
+    z-index: 10; /* Ensure it stays on top of other content */
+    height: auto; /* Allow it to grow in height based on content */
+    max-height: calc(
+      100vh - 4rem
+    ); /* Ensure the form doesn't overflow the viewport */
+    overflow-y: auto; /* Allow scrolling within the form */
   }
 
-  // Party List styling
-  .party-list {
-    list-style: none;
-    padding: 0;
+  .available-parties {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 35%; /* Adjust left padding to create space for the fixed form */
 
-    li {
-      background-color: $secondary-color;
-      margin-bottom: 1.5rem;
-      padding: $padding;
-      border-radius: $border-radius;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    h2 {
+      color: #3b82f6; /* Blue for the title */
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
 
-      h2 {
-        font-size: 1.5rem;
-        color: $primary-color;
-        margin-bottom: 0.5rem;
+    .search-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      select,
+      input {
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
       }
+    }
 
-      p {
-        margin: 0.5rem 0;
-        font-size: 1rem;
-        color: #333;
-      }
+    .party-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
 
-      button {
-        background-color: $primary-color;
-        color: $secondary-color;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: $border-radius;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
+      .party-card {
+        background-color: #ffffff; /* White background for each party card */
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s ease;
 
-        &:hover {
-          background-color: $button-hover-color;
+        h3 {
+          font-size: 1.25rem;
+          color: #3b82f6; /* Blue for the card title */
+        }
+
+        p {
+          color: #4b5563; /* Soothing dark gray for description */
+        }
+
+        button {
+          background-color: #3b82f6;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-top: 0.5rem;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #2563eb;
+          }
+        }
+
+        details {
+          margin-top: 0.5rem;
+          summary {
+            cursor: pointer;
+            color: #3b82f6; /* Blue for summary */
+            font-weight: 500;
+          }
+
+          .dropdown-content {
+            background-color: #ffffff;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            ul {
+              list-style: none;
+              padding: 0;
+
+              li {
+                padding: 0.5rem;
+                color: #333;
+              }
+            }
+          }
         }
       }
     }

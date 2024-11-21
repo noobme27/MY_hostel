@@ -34,8 +34,8 @@ model Info {
   contactNumber String? // Added
   linkedin      String? // Added
   github        String? // Added
-  userId        String? @db.ObjectId
-  user          User?   @relation("UserInfo", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userId        String  @db.ObjectId
+  user          User    @relation("UserInfo", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Complaint {

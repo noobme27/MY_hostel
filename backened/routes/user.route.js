@@ -1,23 +1,23 @@
 import express from "express";
-
-const router = express.Router();
-import { verifyToken } from "../middleware/verifyToken.js";
+import { verifyToken } from "../middleware/verifyToken.js"; // Token verification middleware
+import upload from "../middleware/multer.js"; // Multer setup for file uploads
 import {
   deleteUser,
   getUsers,
   getUser,
   updateUser,
-  savePost,
-  profilePosts,
-  getNotificationNumber,
-} from "../controllers/user.controller.js";
+} from "../controllers/user.controller.js"; // Controller functions
 
-router.get("/", getUsers);
-router.get("/:id", verifyToken, getUser);
-router.put("/update/:id", verifyToken, updateUser);
+const router = express.Router();
+
+// Routes
+router.get("/", getUsers); // Get all users
+router.get("/:id", verifyToken, getUser); // Get a specific user by ID
+
+// Update user profile (with avatar upload support)
+router.put("/update/:id", verifyToken, upload.single("avatar"), updateUser);
+
+// Delete a user by ID
 router.delete("/:id", verifyToken, deleteUser);
-//router.post("/save", verifyToken, savePost);
-//router.get("/profilePosts", verifyToken, profilePosts);
-//router.get("/notification", verifyToken, getNotificationNumber);
 
 export default router;
