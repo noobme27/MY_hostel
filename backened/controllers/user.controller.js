@@ -69,48 +69,45 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Assuming the first Info record is the one to update (or create if none exists)
+    const infoId = existingUser.info?.[0]?.id;
+
     const sanitizedInfo = {
-      name: info?.name || existingUser?.info?.name || "",
-      hostel: info?.hostel || existingUser?.info?.hostel || "",
+      name: info?.name || existingUser?.info?.[0]?.name || "",
+      hostel: info?.hostel || existingUser?.info?.[0]?.hostel || "",
       room: info?.room
         ? parseInt(info.room, 10)
-        : existingUser?.info?.room || null,
-      hobbies: info?.hobbies || existingUser?.info?.hobbies || "",
-      bio: info?.bio || existingUser?.info?.bio || "",
+        : existingUser?.info?.[0]?.room || null,
+      hobbies: info?.hobbies || existingUser?.info?.[0]?.hobbies || "",
+      bio: info?.bio || existingUser?.info?.[0]?.bio || "",
       contactNumber:
-        info?.contactNumber || existingUser?.info?.contactNumber || "",
-      linkedin: info?.linkedin || existingUser?.info?.linkedin || "",
-      github: info?.github || existingUser?.info?.github || "",
+        info?.contactNumber || existingUser?.info?.[0]?.contactNumber || "",
+      linkedin: info?.linkedin || existingUser?.info?.[0]?.linkedin || "",
+      github: info?.github || existingUser?.info?.[0]?.github || "",
     };
 
     console.log("Sanitized Info:", sanitizedInfo); // Debugging
-
-    const infoId = existingUser.info ? existingUser.info.id : null;
 
     const updateData = {
       username: inputs.username || existingUser.username,
       email: inputs.email || existingUser.email,
       avatar: avatarPath || existingUser.avatar,
       ...(updatedPassword && { password: updatedPassword }),
-      ...(infoId
+      info: existingUser.info.length
         ? {
-            info: {
-              upsert: {
-                where: { id: infoId },
-                create: sanitizedInfo,
-                update: sanitizedInfo,
-              },
+            update: {
+              where: { id: infoId }, // Use the `id` of the `Info` record to update
+              data: sanitizedInfo,
             },
           }
         : {
-            info: {
-              create: sanitizedInfo,
-            },
-          }),
+            create: sanitizedInfo, // Create a new `Info` if none exists
+          },
     };
 
     console.log("Update Data:", updateData); // Debugging
 
+    // Update the user and their info
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
