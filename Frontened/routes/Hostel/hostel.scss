@@ -10,6 +10,7 @@
 .map_container {
   position: relative;
   margin: 0 auto;
+
   width: 100%; // Keep original width
   max-width: 1200px; // Keep max width for large screens
   padding: 10px; // Maintain original padding
@@ -79,13 +80,16 @@
 
   .room-layout {
     display: flex;
+    justify-content: center;
+    //align-items: center;
     flex-direction: column;
     gap: 10px; // Reduced gap to maintain original layout
 
     .row {
       display: flex;
       justify-content: center;
-      gap: 5px; // Reduced gap for cells to fit better
+      align-items: center;
+      gap: 9px; // Reduced gap for cells to fit better
 
       .cell {
         width: 24px; // Keep original width
@@ -185,6 +189,7 @@
     }
   }
 }
+
 .room-info-panel {
   position: absolute;
   top: 24px;
