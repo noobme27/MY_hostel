@@ -18,6 +18,10 @@ function HomePage2() {
   return (
     <>
       <section className="homePage">
+        <video autoPlay muted loop className="background-video">
+          <source src="./../../src/assets/pilani_bg.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <div className="overlay"></div>
         <div className="content-container">
           <h1 className="title">Welcome Home</h1>
@@ -36,10 +40,8 @@ function HomePage2() {
       </section>
       <HostelMates />
       <HeaderSection />
-
       <CourseItems />
       <TestimonialsSection />
-
       <AccordionSection />
       <ContactForm />
       <ContactUs />

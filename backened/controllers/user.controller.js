@@ -33,35 +33,47 @@ export const updateUser = async (req, res) => {
   }
 
   const { password, info, ...inputs } = req.body;
-  let updatedPassword = null;
+
+  // Set default for avatarPath
+  let avatarPath = null;
 
   // Check if a file was uploaded and set avatarPath accordingly
-  console.log(req.file); // Log to check if the file is attached
-  let avatarPath = req.file ? `/uploads/avatars/${req.file.filename}` : null;
+  if (req.file) {
+    avatarPath = `/uploads/avatars/${req.file.filename}`;
+  }
 
   try {
+    // Handle password update if provided
+    let updatedPassword = null;
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
+    // Retrieve existing user details
     const existingUser = await prisma.user.findUnique({
       where: { id },
-      include: { info: true },
+      include: { info: true }, // Include user info for upsert operation
     });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Check if info exists, and prepare ID for upsert
+    const infoId =
+      existingUser.info && existingUser.info.length > 0
+        ? existingUser.info[0].id
+        : undefined;
+
+    // Build the updateData object
     const updateData = {
-      username: inputs.username,
-      email: inputs.email,
-      avatar: avatarPath, // Only set if file is present
+      username: inputs.username || existingUser.username,
+      email: inputs.email || existingUser.email,
+      avatar: avatarPath || existingUser.avatar, // Preserve existing avatar if no new file uploaded
+      ...(updatedPassword && { password: updatedPassword }), // Only include password if updated
       info: {
         upsert: {
-          where: {
-            id: existingUser.info?.length ? existingUser.info[0].id : "",
-          },
+          where: { id: infoId || undefined },
           create: {
             name: info?.name || "",
             hostel: info?.hostel || "",
@@ -86,12 +98,17 @@ export const updateUser = async (req, res) => {
       },
     };
 
+    // Log the update data for debugging
+    console.log("Update Data:", updateData);
+
+    // Perform the update
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
       include: { info: true },
     });
 
+    // Omit password from response
     const { password: _, ...userWithoutPassword } = updatedUser;
     res.status(200).json(userWithoutPassword);
   } catch (err) {
@@ -196,5 +213,30 @@ export const getNotificationNumber = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get profile posts!" });
+  }
+};
+export const getUserWithAvatar = async (req, res) => {
+  const { id } = req.params; // Get the id from params
+
+  // Ensure that the id is a valid ObjectId string
+  if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Construct the avatar URL
+    const avatarUrl = `http://localhost:8800${user.avatar}`;
+    res.status(200).json({ ...user, avatar: avatarUrl });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to get user with avatar!" });
   }
 };
