@@ -23,92 +23,100 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: "Failed to get user!" });
   }
 };
+const transformDotNotationKeys = (body) => {
+  const info = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (key.startsWith("info.")) {
+      const subKey = key.split(".")[1]; // Extract the key after "info."
+      info[subKey] = value;
+    }
+  }
+  return info;
+};
 
 export const updateUser = async (req, res) => {
   const id = req.params.id;
-  const tokenUserId = req.userId; // Assuming `req.userId` is set after authentication
+  const tokenUserId = req.userId;
 
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not authorized" });
   }
 
-  const { password, info, ...inputs } = req.body;
-
-  // Set default for avatarPath
+  const { password, ...inputs } = req.body;
   let avatarPath = null;
 
-  // Check if a file was uploaded and set avatarPath accordingly
   if (req.file) {
     avatarPath = `/uploads/avatars/${req.file.filename}`;
   }
 
   try {
-    // Handle password update if provided
+    console.log("Request Body:", req.body); // Debugging
+
+    // Transform dot-notation keys into a nested `info` object
+    const info = transformDotNotationKeys(req.body);
+
     let updatedPassword = null;
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
-    // Retrieve existing user details
     const existingUser = await prisma.user.findUnique({
       where: { id },
-      include: { info: true }, // Include user info for upsert operation
+      include: { info: true },
     });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if info exists, and prepare ID for upsert
-    const infoId =
-      existingUser.info && existingUser.info.length > 0
-        ? existingUser.info[0].id
-        : undefined;
+    const sanitizedInfo = {
+      name: info?.name || existingUser?.info?.name || "",
+      hostel: info?.hostel || existingUser?.info?.hostel || "",
+      room: info?.room
+        ? parseInt(info.room, 10)
+        : existingUser?.info?.room || null,
+      hobbies: info?.hobbies || existingUser?.info?.hobbies || "",
+      bio: info?.bio || existingUser?.info?.bio || "",
+      contactNumber:
+        info?.contactNumber || existingUser?.info?.contactNumber || "",
+      linkedin: info?.linkedin || existingUser?.info?.linkedin || "",
+      github: info?.github || existingUser?.info?.github || "",
+    };
 
-    // Build the updateData object
+    console.log("Sanitized Info:", sanitizedInfo); // Debugging
+
+    const infoId = existingUser.info ? existingUser.info.id : null;
+
     const updateData = {
       username: inputs.username || existingUser.username,
       email: inputs.email || existingUser.email,
-      avatar: avatarPath || existingUser.avatar, // Preserve existing avatar if no new file uploaded
-      ...(updatedPassword && { password: updatedPassword }), // Only include password if updated
-      info: {
-        upsert: {
-          where: { id: infoId || undefined },
-          create: {
-            name: info?.name || "",
-            hostel: info?.hostel || "",
-            room: info?.room ? parseInt(info.room, 10) : null,
-            hobbies: info?.hobbies || "",
-            bio: info?.bio || "",
-            contactNumber: info?.contactNumber || "",
-            linkedin: info?.linkedin || "",
-            github: info?.github || "",
-          },
-          update: {
-            name: info?.name || "",
-            hostel: info?.hostel || "",
-            room: info?.room ? parseInt(info.room, 10) : null,
-            hobbies: info?.hobbies || "",
-            bio: info?.bio || "",
-            contactNumber: info?.contactNumber || "",
-            linkedin: info?.linkedin || "",
-            github: info?.github || "",
-          },
-        },
-      },
+      avatar: avatarPath || existingUser.avatar,
+      ...(updatedPassword && { password: updatedPassword }),
+      ...(infoId
+        ? {
+            info: {
+              upsert: {
+                where: { id: infoId },
+                create: sanitizedInfo,
+                update: sanitizedInfo,
+              },
+            },
+          }
+        : {
+            info: {
+              create: sanitizedInfo,
+            },
+          }),
     };
 
-    // Log the update data for debugging
-    console.log("Update Data:", updateData);
+    console.log("Update Data:", updateData); // Debugging
 
-    // Perform the update
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
       include: { info: true },
     });
 
-    // Omit password from response
     const { password: _, ...userWithoutPassword } = updatedUser;
     res.status(200).json(userWithoutPassword);
   } catch (err) {
