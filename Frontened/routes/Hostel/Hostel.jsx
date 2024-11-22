@@ -162,7 +162,7 @@ const Hostel = () => {
                           <button className="room-button room">{cell}</button>
                         )}
 
-                      {hoveredRoom === cell && info && (
+                      {hoveredRoom === cell && info && info.length > 0 && (
                         <div
                           className="room-info-panel"
                           aria-labelledby={`info-${cell}`}

@@ -91,7 +91,7 @@
         width: 24px; // Keep original width
         height: 24px; // Keep original height
         padding: 2px;
-        position: relative;
+        position: relative; // Ensure positioning context for info panel
         border-radius: 6px; // Slight rounding for each cell
         transition: background-color 0.3s, transform 0.3s;
 
@@ -101,47 +101,53 @@
           color: white;
           text-align: left;
           font-weight: bold;
-
+          //z-index: -1;
           &:hover {
             background-color: #28a745; // Darker green for hover
             transform: scale(1.1);
+            z-index: 1;
           }
         }
 
         &.hallway {
-          background-color: #f0e68c; // Light yellow for hallway
+          background-color: #f0e68c;
+          z-index: -1; // Light yellow for hallway
         }
 
         &.stairs {
-          background-color: #add8e6; // Light blue for stairs
+          background-color: #add8e6;
+          z-index: -1; // Light blue for stairs
         }
 
         &.entrance {
-          background-color: #90ee90; // Light green for entrance
+          background-color: #90ee90;
+          z-index: -1; // Light green for entrance
         }
 
         &.common-room {
-          background-color: #d3d3d3; // Light grey for common rooms
+          background-color: #d3d3d3;
+          z-index: -1; // Light grey for common rooms
         }
 
         &.empty {
-          background-color: #fff; // White for empty cells
+          background-color: #fff;
+          z-index: -1; // White for empty cells
         }
 
         .room-info-panel {
           position: absolute;
-          top: 24px;
-          left: 24px;
+          top: 0; // Position it correctly within the parent
+          left: 0; // Position it correctly within the parent
           width: 200px;
-          background-color: #df6262; /* Solid color with no transparency */
-          border: 1px solid #ccc;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust shadow as needed */
+          background-color: #e2cece; /* Solid color with no transparency */
+          //border: 1px solid #ccc;
+          // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust shadow as needed */
           padding: 10px;
-          z-index: 9999;
+          z-index: 9999; // Ensure it's above other elements
           overflow: hidden;
           pointer-events: auto;
-          opacity: 1 !important; /* Ensure full opacity */
-          outline: 2px dashed black; /* Debug outline, can be removed */
+          //opacity: 1 !important; /* Ensure full opacity */
+          //outline: 2px dashed black; /* Debug outline, can be removed */
 
           .profile-pic {
             width: 50px;

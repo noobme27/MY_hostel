@@ -92,8 +92,8 @@ function UpdateProfile() {
         }
       );
       updateUser(res.data);
-      // navigate(`/`);
-      // window.location.reload();
+      navigate(`/`);
+      window.location.reload();
     } catch (err) {
       console.error("Error during update:", err);
     }
