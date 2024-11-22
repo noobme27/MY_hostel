@@ -51,9 +51,17 @@ function UpdateProfile() {
     }
   };
 
-  // Handle file input change
+  // Handle file input change and preview the image
   const handleFileChange = (e) => {
-    setProfilePicture(e.target.files[0]);
+    const file = e.target.files[0];
+    setProfilePicture(file);
+
+    // Create a local URL for the selected image to update the preview dynamically
+    const imageUrl = URL.createObjectURL(file);
+    setFormData((prevData) => ({
+      ...prevData,
+      avatar: imageUrl, // Update avatar field with the image URL
+    }));
   };
 
   // Handle form submission
@@ -67,7 +75,7 @@ function UpdateProfile() {
       formDataObj.append("password", formData.password);
     }
     if (profilePicture) {
-      formDataObj.append("avatar", profilePicture);
+      formDataObj.append("avatar", profilePicture); // Send the profile picture to the backend
     }
     Object.entries(formData.info).forEach(([key, value]) => {
       formDataObj.append(`info.${key}`, value);
@@ -98,7 +106,14 @@ function UpdateProfile() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="image-wrapper">
-              <img src={heroImage || currentUser.avatar} alt="Hero" />
+              <img
+                src={
+                  profilePicture
+                    ? URL.createObjectURL(profilePicture)
+                    : heroImage || currentUser.avatar
+                }
+                alt="Hero"
+              />
               <label htmlFor="file-upload" className="edit-btn">
                 <FaEdit /> Edit
               </label>
