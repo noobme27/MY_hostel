@@ -6,6 +6,7 @@ import {
   getUsers,
   getUser,
   updateUser,
+  getUserWithAvatar,
 } from "../controllers/user.controller.js"; // Controller functions
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.put("/update/:id", verifyToken, upload.single("avatar"), updateUser);
 
 // Delete a user by ID
 router.delete("/:id", verifyToken, deleteUser);
+router.get("/with-avatar/:id", verifyToken, getUserWithAvatar);
 
 export default router;

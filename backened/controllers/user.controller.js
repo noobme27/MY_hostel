@@ -23,23 +23,39 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: "Failed to get user!" });
   }
 };
+const transformDotNotationKeys = (body) => {
+  const info = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (key.startsWith("info.")) {
+      const subKey = key.split(".")[1]; // Extract the key after "info."
+      info[subKey] = value;
+    }
+  }
+  return info;
+};
 
 export const updateUser = async (req, res) => {
   const id = req.params.id;
-  const tokenUserId = req.userId; // Assuming `req.userId` is set after authentication
+  const tokenUserId = req.userId;
 
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not authorized" });
   }
 
-  const { password, info, ...inputs } = req.body;
-  let updatedPassword = null;
+  const { password, ...inputs } = req.body;
+  let avatarPath = null;
 
-  // Check if a file was uploaded and set avatarPath accordingly
-  console.log(req.file); // Log to check if the file is attached
-  let avatarPath = req.file ? `/uploads/avatars/${req.file.filename}` : null;
+  if (req.file) {
+    avatarPath = `/uploads/avatars/${req.file.filename}`;
+  }
 
   try {
+    console.log("Request Body:", req.body); // Debugging
+
+    // Transform dot-notation keys into a nested `info` object
+    const info = transformDotNotationKeys(req.body);
+
+    let updatedPassword = null;
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
@@ -53,39 +69,45 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const updateData = {
-      username: inputs.username,
-      email: inputs.email,
-      avatar: avatarPath, // Only set if file is present
-      info: {
-        upsert: {
-          where: {
-            id: existingUser.info?.length ? existingUser.info[0].id : "",
-          },
-          create: {
-            name: info?.name || "",
-            hostel: info?.hostel || "",
-            room: info?.room ? parseInt(info.room, 10) : null,
-            hobbies: info?.hobbies || "",
-            bio: info?.bio || "",
-            contactNumber: info?.contactNumber || "",
-            linkedin: info?.linkedin || "",
-            github: info?.github || "",
-          },
-          update: {
-            name: info?.name || "",
-            hostel: info?.hostel || "",
-            room: info?.room ? parseInt(info.room, 10) : null,
-            hobbies: info?.hobbies || "",
-            bio: info?.bio || "",
-            contactNumber: info?.contactNumber || "",
-            linkedin: info?.linkedin || "",
-            github: info?.github || "",
-          },
-        },
-      },
+    // Assuming the first Info record is the one to update (or create if none exists)
+    const infoId = existingUser.info?.[0]?.id;
+
+    const sanitizedInfo = {
+      name: info?.name || existingUser?.info?.[0]?.name || "",
+      hostel: info?.hostel || existingUser?.info?.[0]?.hostel || "",
+      room: info?.room
+        ? parseInt(info.room, 10)
+        : existingUser?.info?.[0]?.room || null,
+      hobbies: info?.hobbies || existingUser?.info?.[0]?.hobbies || "",
+      bio: info?.bio || existingUser?.info?.[0]?.bio || "",
+      contactNumber:
+        info?.contactNumber || existingUser?.info?.[0]?.contactNumber || "",
+      linkedin: info?.linkedin || existingUser?.info?.[0]?.linkedin || "",
+      github: info?.github || existingUser?.info?.[0]?.github || "",
     };
 
+    console.log("Sanitized Info:", sanitizedInfo); // Debugging
+
+    const updateData = {
+      username: inputs.username || existingUser.username,
+      email: inputs.email || existingUser.email,
+      avatar: avatarPath || existingUser.avatar,
+      ...(updatedPassword && { password: updatedPassword }),
+      info: existingUser.info.length
+        ? {
+            update: {
+              where: { id: infoId }, // Use the `id` of the `Info` record to update
+              data: sanitizedInfo,
+            },
+          }
+        : {
+            create: sanitizedInfo, // Create a new `Info` if none exists
+          },
+    };
+
+    console.log("Update Data:", updateData); // Debugging
+
+    // Update the user and their info
     const updatedUser = await prisma.user.update({
       where: { id },
       data: updateData,
@@ -196,5 +218,30 @@ export const getNotificationNumber = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get profile posts!" });
+  }
+};
+export const getUserWithAvatar = async (req, res) => {
+  const { id } = req.params; // Get the id from params
+
+  // Ensure that the id is a valid ObjectId string
+  if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Construct the avatar URL
+    const avatarUrl = `http://localhost:8800${user.avatar}`;
+    res.status(200).json({ ...user, avatar: avatarUrl });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to get user with avatar!" });
   }
 };

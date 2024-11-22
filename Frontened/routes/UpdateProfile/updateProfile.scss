@@ -45,16 +45,17 @@
 
         .edit-btn {
           position: absolute;
-          bottom: 10px;
-          right: 10px;
-          //height: 50%;
-          //  background-color: rgba(32, 14, 193, 0.6);
+          bottom: 25px;
+          right: 20px;
+          height: 15%;
+          width: 20%;
+          background-color: rgba(32, 14, 193, 0.6);
           color: white;
           padding: 0px 5px;
           border-radius: 5px;
           display: flex;
           align-items: center;
-          font-size: 6px;
+          font-size: 20px;
           cursor: pointer;
           transition: background-color 0.3s ease;
 

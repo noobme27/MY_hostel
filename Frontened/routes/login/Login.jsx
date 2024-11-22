@@ -1,6 +1,6 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import videoBg from "./../../src/assets/bg.mp4";
+import videoBg from "./../../src/assets/bg_rotunda.mp4";
 import { useContext, useState } from "react";
 
 import apiRequest from "../../lib/apiRequest.js";
