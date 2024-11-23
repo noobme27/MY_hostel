@@ -3,16 +3,14 @@ import prisma from "./../lib/prisma.js";
 // Create a new party
 
 export const createParty = async (req, res) => {
-  const { title, description, capacity } = req.body; // Use 'capacity' here
+  const { title, description, capacity } = req.body; // Validate capacity
 
-  // Validate capacity
   if (!capacity || capacity <= 0) {
-    return res
-      .status(400)
-      .json({
-        message: "Capacity is required and must be a positive integer.",
-      });
+    return res.status(400).json({
+      message: "Capacity is required and must be a positive integer.",
+    });
   }
+
   try {
     const creatorId = req.user.id; // Make sure this is correctly set in your middleware
 
@@ -20,7 +18,7 @@ export const createParty = async (req, res) => {
       data: {
         title,
         description,
-        capacity, // Pass the correct field here
+        capacity,
         creatorId,
       },
     });
@@ -37,12 +35,16 @@ export const getParties = async (req, res) => {
   try {
     const parties = await prisma.party.findMany({
       include: {
-        attendees: true,
-        creator: true, // Optional relation handling
+        attendees: {
+          include: {
+            user: true, // Include user details of attendees
+          },
+        },
+        creator: true, // Include creator details
       },
     });
 
-    res.status(200).json(parties);
+    res.status(200).json(parties); // Send the full party data, including attendees
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch parties" });
@@ -51,8 +53,8 @@ export const getParties = async (req, res) => {
 
 // Join a party
 export const joinParty = async (req, res) => {
-  const partyId = req.params.id; // Get partyId from the URL parameters
-  const userId = req.user.id; // User from token
+  const partyId = req.params.id; // Get partyId from URL params
+  const userId = req.user.id; // User ID from token
 
   try {
     // Check if the party exists and its capacity
@@ -81,5 +83,25 @@ export const joinParty = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to join party" });
+  }
+};
+
+// Fetch parties a user is attending
+export const getUserAttendedParties = async (req, res) => {
+  const userId = req.user.id; // Assuming user ID is available in req.user
+
+  try {
+    // Fetch party attendance for the user
+    const attendedParties = await prisma.partyAttendance.findMany({
+      where: { userId },
+      include: {
+        party: true, // Include party details
+      },
+    });
+
+    res.status(200).json(attendedParties.map((attendance) => attendance.party)); // Return only the party details
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch attended parties" });
   }
 };

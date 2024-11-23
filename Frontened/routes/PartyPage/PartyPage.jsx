@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./partyPage.scss";
+import axios from "axios";
 
 const PartyPage = () => {
   const [parties, setParties] = useState([]);
@@ -14,6 +15,7 @@ const PartyPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [authToken, setAuthToken] = useState(null); // State for storing the auth token
+  const [attendeeAvatars, setAttendeeAvatars] = useState({}); // Store avatars of attendees
 
   useEffect(() => {
     const fetchParties = async () => {
@@ -22,9 +24,29 @@ const PartyPage = () => {
         if (!response.ok) throw new Error("Failed to fetch parties");
 
         const data = await response.json();
-        console.log(data);
+        console.log("Fetched parties:", data); // Log fetched data
+
         setParties(data);
         setFilteredParties(data);
+
+        // Fetch avatar for each attendee
+        const avatars = {};
+        for (const party of data) {
+          for (const attendee of party.attendees || []) {
+            if (attendee.user.id) {
+              try {
+                const avatarResponse = await axios.get(
+                  `http://localhost:8800/api/users/with-avatar/${attendee.user.id}`,
+                  { withCredentials: true }
+                );
+                avatars[attendee.user.id] = avatarResponse.data.avatar;
+              } catch (error) {
+                console.error("Error fetching avatar for attendee:", error);
+              }
+            }
+          }
+        }
+        setAttendeeAvatars(avatars);
       } catch (err) {
         console.error("Error fetching parties:", err);
         setError(err.message);
@@ -214,19 +236,35 @@ const PartyPage = () => {
                 </button>
 
                 {/* Attendee Dropdown */}
-                <details className="dropdown mt-2">
+                {/* Attendee Dropdown */}
+                <details className="dropdown mt-2 party-attendees-dropdown">
                   <summary className="btn btn-sm btn-outline text-black">
                     View Attendees
                   </summary>
                   <div className="dropdown-content bg-gray-50 p-4 shadow-lg w-full rounded-lg">
                     {party.attendees && party.attendees.length > 0 ? (
                       <ul className="list-disc list-inside space-y-1 text-black">
-                        {party.attendees.map((attendee) => (
-                          <li key={attendee.id}>{attendee.name}</li>
-                        ))}
+                        {party.attendees.map((attendee) => {
+                          const avatar = attendeeAvatars[attendee.user.id];
+                          return (
+                            <li
+                              key={attendee.user.id}
+                              className="flex items-center gap-2"
+                            >
+                              {avatar && (
+                                <img
+                                  src={`${avatar}`}
+                                  alt="Avatar"
+                                  className="w-8 h-8 rounded-full"
+                                />
+                              )}
+                              <span>{attendee.user.username}</span>
+                            </li>
+                          );
+                        })}
                       </ul>
                     ) : (
-                      <p className="text-gray-500">No attendees yet.</p>
+                      <p>No attendees yet</p>
                     )}
                   </div>
                 </details>

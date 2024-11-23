@@ -4,34 +4,29 @@ import "./testimonialsSection.scss";
 const TestimonialsSection = () => {
   const testimonialsData = [
     {
-      name: "Sneha Patel",
+      name: "Hitansh Tanna",
       text: "Litedin made finding my friends super easy!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1692558588242-57cec1e32bba.jpeg",
+      imgSrc: "./../../../src/assets/tanna.jpeg",
     },
     {
-      name: "Karan Mehta",
+      name: "Vasu Sharma",
       text: "Finally, a way to connect with my hostel mates!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1497485692312-a26e1cc30f1d.jpeg",
+      imgSrc: "./../../../src/assets/vasu.jpg",
     },
     {
-      name: "Riya Singh",
+      name: "Kushal Loya",
       text: "The complaint feature is a lifesaver!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1676385901160-a86dc9ccdfe1.jpeg",
+      imgSrc: "./../../../src/assets/loya.jpg",
     },
     {
-      name: "Amit Kumar",
+      name: "Aditya Singh",
       text: "I love the vibrant community here!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1509988892867-8bf3ee9e3afa.jpeg",
+      imgSrc: "./../../../src/assets/muthia.jpeg",
     },
     {
-      name: "Neha Joshi",
+      name: "Saksham Sandhu",
       text: "Finding my roomie was a breeze!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1677520338280-664ae23816eb.jpeg",
+      imgSrc: "./../../../src/assets/sandhu.jpeg",
     },
     {
       name: "Raj Verma",
