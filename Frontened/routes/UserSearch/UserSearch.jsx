@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  FaSearch,
   FaUserAlt,
   FaMapMarkerAlt,
   FaUniversity,
@@ -17,6 +16,7 @@ const UserSearchPage = () => {
   const [searchType, setSearchType] = useState("name");
   const [selectedUser, setSelectedUser] = useState(null);
 
+  // Fetch users from the database
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:8800/api/users");
@@ -38,6 +38,7 @@ const UserSearchPage = () => {
     fetchUsers();
   }, []);
 
+  // Filter users based on search input
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
@@ -67,6 +68,7 @@ const UserSearchPage = () => {
     setFilteredUsers(filtered);
   };
 
+  // Handle user selection
   const handleUserSelect = (user) => {
     setSelectedUser(user);
   };
@@ -124,7 +126,7 @@ const UserSearchPage = () => {
             <h2 className="text-2xl font-semibold mb-4">
               {selectedUser.info[0]?.name || "Unknown User"}
             </h2>
-            <div className="user-info">
+            <div className="user-info mb-6">
               <p>
                 <FaMapMarkerAlt className="inline mr-2" />
                 <strong>Room:</strong> {selectedUser.info[0]?.room || "N/A"}
@@ -143,12 +145,27 @@ const UserSearchPage = () => {
                 <FaMapMarkerAlt className="inline mr-2" />
                 <strong>Hostel:</strong> {selectedUser.info[0]?.hostel || "N/A"}
               </p>
+              <p>
+                <FaUserAlt className="inline mr-2" />
+                <strong>Contact:</strong>{" "}
+                {selectedUser.info[0]?.contactNumber || "N/A"}
+              </p>
             </div>
+
+            {/* WhatsApp Button */}
+            {selectedUser.info[0]?.contactNumber && (
+              <a
+                href={`https://wa.me/${selectedUser.info[0]?.contactNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Open WhatsApp
+              </a>
+            )}
           </div>
         ) : (
-          <div className="text-center text-lg">
-            Select a user to see details
-          </div>
+          <div className="text-center">Select a user to view details.</div>
         )}
       </div>
     </div>
