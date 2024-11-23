@@ -103,7 +103,8 @@
             ul {
               list-style: none;
               padding: 0;
-
+              z-index: 999; /* Ensure dropdown content is above other elements */
+              position: relative; /* Ensure it positions correctly in the flow */
               li {
                 padding: 0.5rem;
                 color: #333;
@@ -114,4 +115,18 @@
       }
     }
   }
+}
+.party-attendees-dropdown {
+  position: relative;
+  z-index: 10; /* Ensures dropdown is on top */
+}
+
+.dropdown-content {
+  position: absolute; /* Ensures it's positioned within the dropdown */
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Keeps it under the details summary */
 }
