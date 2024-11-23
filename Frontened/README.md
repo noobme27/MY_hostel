@@ -11,6 +11,10 @@ npx prisma db push
 console-ninja node --env-file .env --watch app.js (if the env wasnt there in first place use this )
 nodemon node --watch app.js (to run)
 
+## new
+
+nmp i multer
+
 install in Frontened
 npm i axios
 npm install prop-types
