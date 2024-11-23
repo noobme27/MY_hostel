@@ -4,32 +4,28 @@ import "./hostelMates.scss";
 const HostelMates = () => {
   const [cards, setCards] = useState([
     {
-      name: "Rahul Sharma",
-      subtitle: "Computer Science",
-      description: "Solutions",
-      image:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1692558588242-57cec1e32bba.jpeg",
+      name: "Tanay Gupta",
+      subtitle: "Chemical",
+      description: "Deutsche Bank",
+      image: "./../../../src/assets/dopa.jpeg",
     },
     {
-      name: "Ananya Gupta",
-      subtitle: "Electrical Engineering",
-      description: "Sphere Innovations",
-      image:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1497485692312-a26e1cc30f1d.jpeg",
+      name: "Radhika Aggarwal",
+      subtitle: "Chemical",
+      description: "MBB Labs",
+      image: "./../../../src/assets/radhika.jpeg",
     },
     {
-      name: "Vikram Singh",
+      name: "Raghav Sharma",
       subtitle: "Mechanical Engineering",
       description: "Biz TechnoWorks",
-      image:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1676385901160-a86dc9ccdfe1.jpeg",
+      image: "./../../../src/assets/raghav.jpeg",
     },
     {
-      name: "Riya Verma",
+      name: "Bhanu Pratap",
       subtitle: "Civil Engineering",
       description: "Biz TechnoWorks",
-      image:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1509988892867-8bf3ee9e3afa.jpeg",
+      image: "./../../../src/assets/bhanu.jpeg",
     },
   ]);
 
