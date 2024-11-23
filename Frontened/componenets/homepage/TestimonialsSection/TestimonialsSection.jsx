@@ -29,10 +29,9 @@ const TestimonialsSection = () => {
       imgSrc: "./../../../src/assets/sandhu.jpeg",
     },
     {
-      name: "Raj Verma",
+      name: "YashWardhan Singh",
       text: "Best platform for hostel life at BITS!",
-      imgSrc:
-        "https://r.mobirisesite.com/874700/assets/images/photo-1586185018558-ea8f4b4c514f.jpeg",
+      imgSrc: "./../../../src/assets/yash.jpeg",
     },
   ];
 
