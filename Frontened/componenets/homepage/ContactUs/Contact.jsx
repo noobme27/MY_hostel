@@ -72,9 +72,9 @@ const ContactUs = () => {
             <div className="item-wrapper">
               <div className="text-wrapper">
                 <h6 className="card-title mb-3">
-                  <b>Working Hours</b>
+                  <b>Support Hours</b>
                 </h6>
-                <p>Mon-Fri: 9am - 5pm</p>
+                <p>Every day between 5-7pm</p>
               </div>
             </div>
           </div>

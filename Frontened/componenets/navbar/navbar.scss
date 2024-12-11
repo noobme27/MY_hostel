@@ -28,6 +28,7 @@ nav {
 
   a {
     transition: all 0.2s ease;
+    cursor: pointer;
 
     @include sm {
       display: none;

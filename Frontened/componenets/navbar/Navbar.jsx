@@ -28,6 +28,12 @@ function Navbar() {
       fetchUserData();
     }
   }, [currentUser, userAvatar]); // Only trigger if currentUser or avatar changes
+  const handleScrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav>
@@ -36,9 +42,9 @@ function Navbar() {
           <img src="./../../src/assets/enhanced_hd_image.png" alt="" />
           <span>LitedIn</span>
         </a>
-        <a href="/">Home</a>
-        <a href="/">About Us</a>
-        <a href="/">Contact Us</a>
+        <a onClick={() => handleScrollTo("join-us")}>Join Us</a>
+        <a onClick={() => handleScrollTo("develops-info")}>About Us</a>
+        <a onClick={() => handleScrollTo("contact-us")}>Contact Us</a>
       </div>
       <div className="right">
         {currentUser ? (
@@ -70,9 +76,9 @@ function Navbar() {
           />
         </div>
         <div className={open ? "menu active" : "menu"}>
-          <a href="/">Home</a>
-          <a href="/">About</a>
-          <a href="/">Contact</a>
+          <a onClick={() => handleScrollTo("join-us")}>Join Us</a>
+          <a onClick={() => handleScrollTo("develops-info")}>About Us</a>
+          <a onClick={() => handleScrollTo("contact-us")}>Contact Us</a>
           <a href="/">Agents</a>
           <a href="/login">Sign in</a>
           <a href="/register">Sign up</a>

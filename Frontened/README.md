@@ -16,6 +16,7 @@ nodemon node --watch app.js (to run)
 nmp i multer
 
 install in Frontened
+npm i axios prop-types socket.io-client @material-tailwind/react
 npm i axios
 npm install prop-types
 npm install socket.io-client
