@@ -123,7 +123,27 @@ export const updateUser = async (req, res) => {
       .json({ message: "Failed to update user", error: err.message });
   }
 };
+export const getUserInfo = async (req, res) => {
+  const id = req.params.id;
 
+  try {
+    // Fetch user details and include the related `info`
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: { info: true }, // Include the `info` relation
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Respond with the user data, including `info`
+    res.status(200).json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Failed to get user" });
+  }
+};
 export const deleteUser = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;
