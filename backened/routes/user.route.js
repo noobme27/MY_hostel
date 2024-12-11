@@ -7,6 +7,7 @@ import {
   getUser,
   updateUser,
   getUserWithAvatar,
+  getUserInfo,
 } from "../controllers/user.controller.js"; // Controller functions
 
 const router = express.Router();
@@ -14,6 +15,7 @@ const router = express.Router();
 // Routes
 router.get("/", getUsers); // Get all users
 router.get("/:id", verifyToken, getUser); // Get a specific user by ID
+router.get("/info/:id", verifyToken, getUserInfo);
 
 // Update user profile (with avatar upload support)
 router.put("/update/:id", verifyToken, upload.single("avatar"), updateUser);
