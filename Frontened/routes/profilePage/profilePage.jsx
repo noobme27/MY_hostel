@@ -12,6 +12,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const avatarUrl = `http://localhost:8800${userDetails.avatar}`;
 
   const handleLogout = async () => {
     try {
@@ -44,6 +45,7 @@ function ProfilePage() {
         if (Array.isArray(data.info) && data.info.length > 0) {
           data.info = data.info[0]; // Get the first item if it's an array
         }
+        console.log("User Avatar:", userDetails.avatar);
 
         setUserDetails(data);
       } catch (error) {
@@ -76,7 +78,7 @@ function ProfilePage() {
             </div>
             <div className="avatar">
               <img
-                src={userDetails.avatar || defaultAvatar}
+                src={userDetails.avatar ? avatarUrl : defaultAvatar}
                 alt="Profile Avatar"
               />
             </div>
