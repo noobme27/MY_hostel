@@ -29,9 +29,9 @@ const TestimonialsSection = () => {
       imgSrc: "./../../../src/assets/sandhu.jpeg",
     },
     {
-      name: "YashWardhan Singh",
+      name: "Yashvardhan Singh",
       text: "Best platform for hostel life at BITS!",
-      imgSrc: "./../../../src/assets/yash.jpeg",
+      imgSrc: "./../../../src/assets/yash2.jpeg",
     },
   ];
 
