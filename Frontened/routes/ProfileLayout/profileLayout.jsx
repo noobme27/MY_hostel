@@ -48,7 +48,7 @@ function ProfileLayout() {
           >
             Your Parties
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/profile/messages"
             className={({ isActive }) =>
               isActive
@@ -57,7 +57,7 @@ function ProfileLayout() {
             }
           >
             Messages Received
-          </NavLink>
+          </NavLink> */}
         </nav>
       </div>
 
