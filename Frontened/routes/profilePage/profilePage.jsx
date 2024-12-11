@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import defaultAvatar from "../../src/assets/avatar.png";
@@ -10,16 +10,13 @@ import apiRequest from "../../lib/apiRequest.js";
 function ProfilePage() {
   const { currentUser } = useContext(AuthContext); // Access the current user from context
   const navigate = useNavigate();
+  const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!currentUser) {
-    return <div>Loading...</div>; // Show loading if user data is not available
-  }
-
-  // Define the logout function
   const handleLogout = async () => {
     try {
-      await apiRequest.post(`http://localhost:8800/api/auth/logout`); // Adjust the endpoint path if needed
-      navigate("/login"); // Redirect to the login page after successful logout
+      await apiRequest.post(`http://localhost:8800/api/auth/logout`);
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
       alert("Failed to log out. Please try again.");
@@ -29,6 +26,45 @@ function ProfilePage() {
   const handleUpdateClick = () => {
     navigate("/update");
   };
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8800/api/users/info/${currentUser.id}`,
+          { withCredentials: true }
+        );
+        console.log("API Response:", response.data); // Ensure the response is what we expect
+        const data = response.data;
+
+        // Debug log to inspect the structure of data
+        console.log("Data Info:", data.info);
+
+        // Handle the `info` array
+        if (Array.isArray(data.info) && data.info.length > 0) {
+          data.info = data.info[0]; // Get the first item if it's an array
+        }
+
+        setUserDetails(data);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (currentUser && currentUser.id) {
+      fetchUserDetails();
+    }
+  }, [currentUser]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!userDetails) {
+    return <div>Error loading user details.</div>;
+  }
 
   return (
     <div className="profile-page">
@@ -40,58 +76,58 @@ function ProfilePage() {
             </div>
             <div className="avatar">
               <img
-                src={currentUser.avatar || defaultAvatar}
+                src={userDetails.avatar || defaultAvatar}
                 alt="Profile Avatar"
               />
             </div>
           </div>
-          <h2>{currentUser.username}</h2>
-          <p className="bio">{currentUser.info?.bio}</p>
+          <h2>{userDetails.username}</h2>
+          <p className="bio">{userDetails.info?.bio}</p>
           <div className="follow-info">
-            <span>{currentUser.info?.followers || 0} followers</span> ·{" "}
-            <span>{currentUser.info?.connections || 0} connections</span>
+            <span>{userDetails.info?.followers || 0} followers</span> ·{" "}
+            <span>{userDetails.info?.connections || 0} connections</span>
           </div>
         </div>
 
         <div className="profile-info">
           <h3>Profile Information</h3>
           <div className="info-item">
-            <strong>Name:</strong> {currentUser.info?.name}
+            <strong>Name:</strong> {userDetails.info?.name}
           </div>
           <div className="info-item">
-            <strong>Email:</strong> {currentUser.email}
+            <strong>Email:</strong> {userDetails.email}
           </div>
           <div className="info-item">
-            <strong>Hostel:</strong> {currentUser.info?.hostel}
+            <strong>Hostel:</strong> {userDetails.info?.hostel}
           </div>
           <div className="info-item">
-            <strong>Room No.:</strong> {currentUser.info?.room}
+            <strong>Room No.:</strong> {userDetails.info?.room}
           </div>
           <div className="info-item">
-            <strong>Contact Number:</strong> {currentUser.info?.contactNumber}
+            <strong>Contact Number:</strong> {userDetails.info?.contactNumber}
           </div>
           <div className="info-item">
             <strong>LinkedIn:</strong>{" "}
             <a
-              href={currentUser.info?.linkedin}
+              href={userDetails.info?.linkedin}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {currentUser.info?.linkedin}
+              {userDetails.info?.linkedin}
             </a>
           </div>
           <div className="info-item">
             <strong>GitHub:</strong>{" "}
             <a
-              href={currentUser.info?.github}
+              href={userDetails.info?.github}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {currentUser.info?.github}
+              {userDetails.info?.github}
             </a>
           </div>
           <div className="info-item">
-            <strong>Hobbies:</strong> {currentUser.info?.hobbies}
+            <strong>Hobbies:</strong> {userDetails.info?.hobbies}
           </div>
           <div className="button-container">
             <button className="update-button" onClick={handleUpdateClick}>
