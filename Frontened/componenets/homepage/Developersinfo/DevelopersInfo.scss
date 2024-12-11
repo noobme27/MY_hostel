@@ -1,11 +1,12 @@
 .developers-container {
+  padding-top: 60px;
   text-align: center; /* Center the title */
   // margin-bottom: 30px; /* Add space below the title */
   background-color: #edefeb;
   .title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #333;
+    color: #000;
     margin-bottom: 20px; /* Space between the title and cards */
     
   }
@@ -14,27 +15,32 @@
 
 .profile-card {
   background-color: #edefeb;
-  color: #fff;
+  color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
   font-family: Arial, sans-serif;
-  gap: 30px;
+  gap: 50px;
 
   .profile-info {
     display: flex;
-    background: linear-gradient(135deg, #ff7f7f, #f4aa01);
+    // background: linear-gradient(135deg, #ff7f7f, #f4aa01);
     // background: #f4aa01;
+    background: #fff9e6;
+    align-items: center; /* Center items vertically */
+
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
 
     .profile-image {
+      padding-left : 20px;
+      padding-bottom: 80px;
       img {
         border-radius: 50%;
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         object-fit: cover;
         margin-right: 20px;
       }
@@ -48,7 +54,7 @@
         font-weight: 600;
         margin-bottom: 10px;
         .name {
-          color: #333;
+          color: #0a66c2;
         }
       }
 
@@ -78,7 +84,7 @@
         gap: 15px;
 
         a {
-          color: #fff;
+          color: #000;
           text-decoration: none;
           font-weight: 600;
           &:hover {

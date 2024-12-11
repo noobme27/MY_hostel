@@ -40,13 +40,22 @@ function HomePage2() {
         </div>
       </section>
       <HostelMates />
-      <HeaderSection />
-      <CourseItems />
+      <div id ="join-us">
+         <HeaderSection />
+         <CourseItems />
+      </div>
+      
+      
       <TestimonialsSection />
       <AccordionSection />
       {/* <ContactForm /> */}
-      <DevelopersInfo/>
-      <ContactUs />
+      <div id="develops-info">
+        <DevelopersInfo/>
+      </div>
+     <div id ="contact-us">
+         <ContactUs />
+      </div>
+     
     </>
   );
 }
