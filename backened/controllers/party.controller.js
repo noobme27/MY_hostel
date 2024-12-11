@@ -12,8 +12,7 @@ export const createParty = async (req, res) => {
   }
 
   try {
-    const creatorId = req.user.id; // Make sure this is correctly set in your middleware
-
+    const creatorId = req.user.id;
     const newParty = await prisma.party.create({
       data: {
         title,

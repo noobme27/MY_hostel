@@ -1,7 +1,7 @@
 .contact-form-section {
   padding-top: 6rem;
   padding-bottom: 6rem;
-  background-color: #edefeb;
+  background-color: #ffffff;
   position: relative;
   display: flex;
   justify-content: center;
@@ -49,9 +49,10 @@
         border-radius: 2rem; // Rounded corners
         width: 100%;
         box-sizing: border-box;
+        border-color: #263c48;
 
         &:hover {
-          border-color: rgb(180, 155, 10);
+          border-color: rgb(231, 226, 200);
           outline: none;
           // box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
         }
@@ -87,7 +88,7 @@
 
     // Button styling
     .btn {
-      background-color: #007bff;
+      background-color: #0056d2;
       color: #fff;
       padding: 0.75rem 1.5rem;
       border-radius: 5px;
