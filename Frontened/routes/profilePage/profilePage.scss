@@ -1,13 +1,14 @@
 .profile-page {
   display: flex;
   height: 100vh;
-  //padding: 20px;
-  // background-color: #f0f2f5;
+  background-color: #f7f7f7;
+  padding: 20px;
+  justify-content: center;
 
   .profile-sidebar {
     width: 100%;
-    padding: 20px;
-    background: #ffffff;
+    padding: 30px;
+    background: #fff;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -16,71 +17,49 @@
     margin-right: 20px;
 
     .profile-header {
-      align-items: center; /* Align items to the center */
-      text-align: left; /* Ensure text aligns to the left */
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      width: 100%;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
-      position: relative; /* Position relative for absolutely positioned child elements */
 
       .avatar-container {
         position: relative;
-        margin: 0 auto 10px; /* Center the container */
-
-        .avatar-background {
-          position: absolute;
-          top: 0; /* Start from the top */
-          left: 0; /* Start from the left */
-          right: 0; /* Extend to the right */
-          bottom: 0; /* Extend to the bottom */
-          background-size: cover; /* Cover the entire area */
-          background-position: center; /* Center the image */
-          border-radius: 5px; /* Optional: makes it circular */
-          z-index: 1; /* Ensure it's behind the avatar */
-          overflow: hidden;
-        }
-
+        margin-bottom: 10px;
         .avatar {
-          width: 120px; // Increase size if needed
+          width: 120px;
           height: 120px;
           border-radius: 50%;
           overflow: hidden;
-          z-index: 1;
           img {
-            object-fit: cover;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            object-fit: cover;
           }
         }
       }
 
       h2 {
         font-size: 24px;
-        color: #333;
         margin: 10px 0;
       }
 
       .bio {
         font-size: 16px;
-        color: #555;
         margin-bottom: 10px;
       }
 
       .follow-info {
         font-size: 14px;
-        color: #666;
+        margin-bottom: 10px;
       }
     }
 
     .profile-info {
       width: 100%;
-
       h3 {
         font-size: 20px;
         color: #333;
@@ -89,7 +68,6 @@
 
       .info-item {
         font-size: 16px;
-        color: #444;
         margin: 10px 0;
         display: flex;
         justify-content: space-between;
@@ -107,63 +85,28 @@
           }
         }
       }
+
       .button-container {
-        display: flex; /* Set the container to flex */
-        justify-content: space-between; /* Space the buttons */
-        margin-top: 15px; /* Optional: Add margin for spacing */
-      }
-      .update-button,
-      .logout-button {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        padding: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 8px;
-        margin-top: 15px;
-        cursor: pointer;
-        transition: background-color 0.3s;
+        gap: 15px;
 
-        &:hover {
-          background-color: #0056b3;
+        .update-button,
+        .logout-button {
+          padding: 12px;
+          font-size: 16px;
+          color: white;
+          background-color: #007bff;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #0056b3;
+          }
         }
-      }
-    }
-  }
-
-  .complaints-section {
-    width: 30%;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-    h3 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 15px;
-    }
-
-    .complaint-item {
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-      h4 {
-        font-size: 18px;
-        color: #333;
-        margin-bottom: 5px;
-      }
-
-      p {
-        font-size: 16px;
-        color: #666;
-        margin: 0;
       }
     }
   }

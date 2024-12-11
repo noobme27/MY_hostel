@@ -12,7 +12,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const avatarUrl = `http://localhost:8800${userDetails.avatar}`;
+  const avatarUrl = `http://localhost:8800${userDetails?.avatar}`;
 
   const handleLogout = async () => {
     try {
@@ -35,18 +35,12 @@ function ProfilePage() {
           `http://localhost:8800/api/users/info/${currentUser.id}`,
           { withCredentials: true }
         );
-        console.log("API Response:", response.data); // Ensure the response is what we expect
+        console.log("API Response:", response.data);
         const data = response.data;
 
-        // Debug log to inspect the structure of data
-        console.log("Data Info:", data.info);
-
-        // Handle the `info` array
         if (Array.isArray(data.info) && data.info.length > 0) {
           data.info = data.info[0]; // Get the first item if it's an array
         }
-        console.log("User Avatar:", userDetails.avatar);
-
         setUserDetails(data);
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -73,9 +67,6 @@ function ProfilePage() {
       <div className="profile-sidebar">
         <div className="profile-header">
           <div className="avatar-container">
-            <div className="avatar-background">
-              <img src={defaultCoverpage} alt="Profile Cover" />
-            </div>
             <div className="avatar">
               <img
                 src={userDetails.avatar ? avatarUrl : defaultAvatar}
