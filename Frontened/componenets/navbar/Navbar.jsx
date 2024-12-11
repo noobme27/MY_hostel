@@ -33,6 +33,7 @@ function Navbar() {
     <nav>
       <div className="left">
         <a href="/" className="logo">
+          <img src="./../../src/assets/enhanced_hd_image.png" alt="" />
           <span>LitedIn</span>
         </a>
         <a href="/">Home</a>
