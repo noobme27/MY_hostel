@@ -10,6 +10,7 @@ import HostelMates from "../../componenets/homepage/hostelMates/HostelMates";
 import ContactForm from "../../componenets/homepage/contactForm/contactForm";
 import ContactUs from "../../componenets/homepage/ContactUs/Contact";
 import CourseItems from "../../componenets/homepage/CourseItems/CourseItems";
+import DevelopersInfo from "../../componenets/homepage/Developersinfo/developersInfo";
 
 function HomePage2() {
   const { currentUser } = useContext(AuthContext);
@@ -43,7 +44,8 @@ function HomePage2() {
       <CourseItems />
       <TestimonialsSection />
       <AccordionSection />
-      <ContactForm />
+      {/* <ContactForm /> */}
+      <DevelopersInfo/>
       <ContactUs />
     </>
   );

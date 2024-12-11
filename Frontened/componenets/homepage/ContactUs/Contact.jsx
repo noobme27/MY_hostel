@@ -35,7 +35,7 @@ const ContactUs = () => {
                 </h6>
                 <p>
                   <a href="tel:+91-123-456-7890" className="text-black mb-3">
-                    +91-123-456-7890
+                    +91-9205102348/+91-9455506704
                   </a>
                 </p>
               </div>
