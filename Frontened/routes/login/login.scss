@@ -1,30 +1,51 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@300;400;500;600;800&display=swap');
+
 
 .login {
   display: flex;
+  margin: 0;
+  padding: 0;
   justify-content: center; // Center horizontally
   align-items: center; // Center vertically
   width: 100%;
-  height: 100vh; // Ensure the container takes the full viewport height
+  height: 100%; // Ensure the container takes the full viewport height
   font-family: "Montserrat", sans-serif;
+  position: relative;
+
 }
 
-video {
+// video {
+//   width: 100%;
+//   height: 100vh;
+//   object-fit: cover; // Ensures the video covers the entire background
+//   position: absolute; // Video stays in the background
+//   z-index: -1; // Video should be behind the form
+// }
+.imgbg{
   width: 100%;
-  height: 100vh;
-  object-fit: cover; // Ensures the video covers the entire background
+  height: 100%;
+  overflow: auto;
+  // object-fit: contain; // Ensures the video covers the entire background
   position: absolute; // Video stays in the background
   z-index: -1; // Video should be behind the form
+  // top: 0;
+  // left: 0;
+  // display: block;
 }
 
 .overlay {
-  position: absolute;
+  // position: absolute;
+  position: relative;
+  display: inline-block;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 150); // Semi-transparent overlay
+  background-color: rgba(0, 0, 0, 0.6); // Semi-transparent overlay
   z-index: 1; // Overlay above video
+
 }
 
 .formContainer {
@@ -35,12 +56,39 @@ video {
   justify-content: center;
   padding: 20px;
 
+  .welcome-text {
+    font-size: 3rem; /* Adjust the size as needed */
+    font-weight: bold; /* Makes it stand out */
+    text-align: center; /* Centers the text horizontally */
+    margin-bottom: 20px; /* Adds spacing below the heading */
+    color: #000; /* Adjust to match your theme */
+    font-family: "Open Sans", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .inlogo {
+      width: 50px;
+      height: 50px;
+      margin-left: 5px;
+      object-fit: contain;
+      border-radius: 20%;
+    }
+  }
+  
+  // .logo {
+  //   width: 50px; /* Adjust size as needed */
+  //   height: 50px; /* Maintain proportions */
+  //   object-fit: contain; /* Ensures the image doesn’t get distorted */
+  //   border-radius: 8px; /* Optional: Add rounded corners */
+  //   margin: 10px; /* Optional: Add spacing */
+  // }
+  
   form {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.1); // Light semi-transparent background
+    background: rgb(255, 255, 255,0.05); // Light semi-transparent background
     border-radius: 20px;
     backdrop-filter: blur(
       15px
@@ -78,20 +126,27 @@ video {
         }
       }
     }
+    
 
+    .inputlogin {
+      width: 300px; /* Set a fixed width for the container */
+      margin: 0 auto; /* Center the container horizontally */
+    }
     input {
-      padding: 10px;
+      width: 100%;
+      padding: 15px;
       border: 1px solid gray;
       border-radius: 10px;
       outline: none; // Remove default outline on focus
       transition: border-color 0.3s; // Smooth border transition
-
+      margin-bottom: 15px;
       &:focus {
         border-color: teal; // Change border color on focus
       }
     }
 
     button {
+      width: 100%;
       padding: 15px;
       border-radius: 5px;
       border: none;
