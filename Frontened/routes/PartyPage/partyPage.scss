@@ -2,7 +2,7 @@
   display: flex;
   gap: 2rem;
   padding: 2rem;
-  background-color: #f8fafc; /* Light background for the page */
+  background-color: #edf8ff; /* Light background for the page */
   min-height: 100vh; /* Ensure the page takes the full height */
 
   .create-party-form {
@@ -115,6 +115,12 @@
       }
     }
   }
+}
+.buton {
+  background-color: #00bcd4;
+}
+.heads {
+  color: #2f4c4f;
 }
 .party-attendees-dropdown {
   position: relative;
