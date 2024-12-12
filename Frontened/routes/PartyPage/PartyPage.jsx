@@ -152,7 +152,7 @@ const PartyPage = () => {
     <div className="party-page min-h-screen p-6 bg-accent-content text-black flex gap-8">
       {/* Create Party Section on the Left */}
       <div className="bg-blue p-6 rounded-lg shadow-md w-1/3 max-w-lg h-full">
-        <h2 className="text-2xl text-blue-600 font-bold mb-4">
+        <h2 className="text-2xl heads text-blue-600 font-bold mb-4">
           Create a Party
         </h2>
         <div className="form-control bg-blue space-y-4">
@@ -183,7 +183,7 @@ const PartyPage = () => {
             }
           />
           <button
-            className="btn bg-blue-500 text-white w-full"
+            className="btn buton text-white w-full"
             onClick={handleCreateParty}
           >
             Create Party
@@ -193,7 +193,7 @@ const PartyPage = () => {
 
       {/* Available Parties Section on the Right */}
       <div className="w-2/3">
-        <h2 className="text-2xl font-bold text-blue-600 mb-4">
+        <h2 className="text-2xl heads font-bold text-blue-600 mb-4">
           Available Parties
         </h2>
 
@@ -229,7 +229,7 @@ const PartyPage = () => {
                   {(party.attendees || []).length}/{party.capacity} attending
                 </p>
                 <button
-                  className="btn btn-sm bg-blue-500 text-white mt-2"
+                  className="btn btn-sm buton text-white mt-2"
                   onClick={() => handleJoinParty(party.id)}
                 >
                   Join
