@@ -1,17 +1,17 @@
 .profile-layout {
   display: flex;
   height: 100vh;
-  background-color: #f5f7fa; /* Lighter background for the entire layout */
+  background-color: #f3f4f6; /* Lighter background for the entire layout */
 }
 
 /* Sidebar Styling */
 .profile-layout-sidebar {
   flex: 0 0 280px; /* Increase width slightly for better sidebar space */
-  background-color: #fff; /* White background for the sidebar */
+  background-color: #f3f4f6; /* White background for the sidebar */
   overflow-y: auto;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); /* Softer and more noticeable shadow */
+  //box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); /* Softer and more noticeable shadow */
   padding: 20px 10px; /* Padding for better spacing */
-  border-right: 1px solid #e0e0e0; /* Subtle border between sidebar and content */
+  //border-right: 1px solid #e0e0e0; /* Subtle border between sidebar and content */
 }
 
 /* Sidebar Navigation Styling */
@@ -20,6 +20,7 @@
   flex-direction: column;
   gap: 1rem;
   width: 250px;
+  background-color: #e3f2fd;
 }
 
 /* Individual NavLink Styling */
@@ -33,13 +34,13 @@
   font-weight: 500;
 
   &:hover {
-    background-color: #007bff !important;
+    background-color: #00bcd4 !important;
     color: #fff !important;
     transform: scale(1.05);
   }
 
   &.active {
-    background-color: #007bff !important;
+    background-color: #00bcd4 !important;
     color: #fff !important;
     font-weight: 600;
     // border-left: 4px solid !important;
