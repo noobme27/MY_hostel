@@ -56,7 +56,7 @@ function Navbar() {
             />
             <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
-              <div className="notification">3</div>
+              {/* <div className="notification">3</div> */}
               <span>Profile</span>
             </Link>
           </div>

@@ -16,12 +16,17 @@ const HeaderSection = () => {
               Connect, complain, and conquer your hostel life!
             </p>
             <div className="mbr-section-btn">
-              <Link to="/get-started" className="btn btn-primary">
+              <Link to="/profile/update" className="btn btn-primary">
                 Get Started
               </Link>
-              <Link to="/learn-more" className="btn btn-secondary">
+              <a
+                href="https://github.com/noobme27/MY_hostel"
+                className="btn btn-secondary"
+                target="_blank" // Optional: opens the link in a new tab
+                rel="noopener noreferrer" // Recommended for security when using target="_blank"
+              >
                 Learn More
-              </Link>
+              </a>
             </div>
           </div>
         </div>
