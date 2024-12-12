@@ -33,29 +33,27 @@ function HomePage2() {
             <Link to="/searchParty" className="btn btn-primary">
               Explore Now
             </Link>
-            <Link to="/update" className="btn btn-primary">
+            <Link to="/profile/update" className="btn btn-primary">
               Select Your Room
             </Link>
           </div>
         </div>
       </section>
       <HostelMates />
-      <div id ="join-us">
-         <HeaderSection />
-         <CourseItems />
+      <div id="join-us">
+        <HeaderSection />
+        <CourseItems />
       </div>
-      
-      
+
       <TestimonialsSection />
       <AccordionSection />
       {/* <ContactForm /> */}
       <div id="develops-info">
-        <DevelopersInfo/>
+        <DevelopersInfo />
       </div>
-     <div id ="contact-us">
-         <ContactUs />
+      <div id="contact-us">
+        <ContactUs />
       </div>
-     
     </>
   );
 }
