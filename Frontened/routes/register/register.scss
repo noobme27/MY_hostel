@@ -37,10 +37,28 @@ video {
   .spn {
     color: black;
   }
+  .welcome-text {
+    font-size: 3rem; /* Adjust the size as needed */
+    font-weight: bold; /* Makes it stand out */
+    text-align: center; /* Centers the text horizontally */
+    margin-bottom: 20px; /* Adds spacing below the heading */
+    color: #000; /* Adjust to match your theme */
+    font-family: "Open Sans", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .inlogo {
+      width: 50px;
+      height: 50px;
+      margin-left: 5px;
+      object-fit: contain;
+      border-radius: 20%;
+    }
+  }
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
     padding: 40px;
     background: rgba(255, 255, 255, 0.1); // Light semi-transparent background
     border-radius: 20px;
@@ -87,7 +105,6 @@ video {
       border-radius: 10px;
       outline: none; // Remove default outline on focus
       transition: border-color 0.3s; // Smooth border transition
-
       &:focus {
         border-color: teal; // Change border color on focus
       }
