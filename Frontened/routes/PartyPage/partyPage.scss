@@ -126,7 +126,12 @@
   position: relative;
   z-index: 10; /* Ensures dropdown is on top */
 }
-
+.create {
+  background-color: #ffffff;
+}
+.lsts {
+  background-color: #ffffff;
+}
 .dropdown-content {
   position: absolute; /* Ensures it's positioned within the dropdown */
   background-color: #ffffff;
