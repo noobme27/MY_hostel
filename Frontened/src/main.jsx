@@ -4,14 +4,12 @@ import App from "./App.jsx";
 
 import "./index.scss";
 import { AuthContextProvider } from "../context/AuthContext.jsx";
-import { SocketContextProvider } from "../context/SocketContext.jsx";
+//import { SocketContextProvider } from "../context/SocketContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthContextProvider>
-      <SocketContextProvider>
-        <App />
-      </SocketContextProvider>
+      <App />
     </AuthContextProvider>
   </StrictMode>
 );
