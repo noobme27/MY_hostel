@@ -1,9 +1,9 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import videoBg from "./../../src/assets/bg_rotunda.mp4";
-import imgBg from "./../../src/assets/signup.png";
+import videoBg from "./../../src/assets/bg_short_login_1.mp4";
+import imgBg from "../../src/assets/bg_2.png";
 import { useContext, useState } from "react";
-import inlogo from "./../../src/assets/in logo.png"
+import inlogo from "./../../src/assets/in logo.png";
 
 import apiRequest from "../../lib/apiRequest.js";
 import { AuthContext } from "../../context/AuthContext.jsx";
@@ -42,17 +42,18 @@ function Login() {
   return (
     <div className="login">
       <div className="overlay">
-        {/* <img src={imgBg} className="imgbg"/> */}
-          <video className="video" src={videoBg} autoPlay loop muted />
+        {/* <img src={imgBg} className="imgbg" /> */}
+        <video className="video" src={videoBg} autoPlay loop muted />
         <div className="formContainer">
           <form onSubmit={handleSubmit}>
-          <h1 className="welcome-text">Lited
-            <img src= {inlogo} alt="Logo" className="inlogo" />
-          </h1>
+            <h1 className="welcome-text">
+              Lited
+              <img src={inlogo} alt="Logo" className="inlogo" />
+            </h1>
             <div className="inputlogin">
-            <input name="username" type="text" placeholder="Username" />
-            <input name="password" type="password" placeholder="Password" />
-            <button disabled={isLoading}>Login</button>
+              <input name="username" type="text" placeholder="Username" />
+              <input name="password" type="password" placeholder="Password" />
+              <button disabled={isLoading}>Login</button>
             </div>
             {error && <span>{error}</span>}
             <Link to="/register">{"Don't"} you have an account?</Link>

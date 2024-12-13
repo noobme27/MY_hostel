@@ -151,8 +151,8 @@ const PartyPage = () => {
   return (
     <div className="party-page min-h-screen p-6 bg-accent-content text-black flex gap-8">
       {/* Create Party Section on the Left */}
-      <div className="bg-blue p-6 rounded-lg shadow-md w-1/3 max-w-lg h-full">
-        <h2 className="text-2xl heads text-blue-600 font-bold mb-4">
+      <div className="bg-blue p-6 create rounded-lg shadow-md w-1/3 max-w-lg h-full">
+        <h2 className="text-2xl heads  text-blue-600 font-bold mb-4">
           Create a Party
         </h2>
         <div className="form-control bg-blue space-y-4">
@@ -204,7 +204,7 @@ const PartyPage = () => {
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
           >
-            <option value="title">Search by Title</option>
+            <option value="title w-full">Search by Title</option>
             <option value="description">Search by Description</option>
           </select>
           <input
@@ -219,8 +219,8 @@ const PartyPage = () => {
         {/* Party Listings */}
         <div className="space-y-4">
           {filteredParties.map((party) => (
-            <div key={party.id} className="card bg-white shadow-lg rounded-lg">
-              <div className="card-body">
+            <div key={party.id} className="card  bg-white shadow-lg rounded-lg">
+              <div className="card-body lsts">
                 <h3 className="card-title text-lg font-semibold text-black">
                   {party.title}
                 </h3>
