@@ -76,10 +76,10 @@ function ProfilePage() {
           </div>
           <h2>{userDetails.username}</h2>
           <p className="bio">{userDetails.info?.bio}</p>
-          <div className="follow-info">
+          {/* <div className="follow-info">
             <span>{userDetails.info?.followers || 0} followers</span> ·{" "}
             <span>{userDetails.info?.connections || 0} connections</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="profile-info">
