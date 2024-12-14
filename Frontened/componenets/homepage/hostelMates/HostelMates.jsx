@@ -1,31 +1,37 @@
 import { useState } from "react";
 import "./hostelMates.scss";
 
+// Import images directly
+import img1 from "./assets/dopa.jpeg";
+import img2 from "./assets/radhika.jpeg";
+import img3 from "./assets/raghav.jpeg";
+import img4 from "./assets/bhanu.jpeg";
+
 const HostelMates = () => {
   const [cards, setCards] = useState([
     {
       name: "Tanay Gupta",
       subtitle: "Chemical",
       description: "Deutsche Bank",
-      image: "./../../../src/assets/dopa.jpeg",
+      image: img1,
     },
     {
       name: "Radhika Aggarwal",
       subtitle: "Chemical",
       description: "MBB Labs",
-      image: "./../../../src/assets/radhika.jpeg",
+      image: img2,
     },
     {
       name: "Raghav Sharma",
       subtitle: "Mechanical Engineering",
       description: "Biz TechnoWorks",
-      image: "./../../../src/assets/raghav.jpeg",
+      image: img3,
     },
     {
       name: "Bhanu Pratap",
       subtitle: "Civil Engineering",
       description: "Biz TechnoWorks",
-      image: "./../../../src/assets/bhanu.jpeg",
+      image: img4,
     },
   ]);
 

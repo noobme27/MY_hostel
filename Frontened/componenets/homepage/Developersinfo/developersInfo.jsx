@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom"; // Import Link for internal navigation
 import "./DevelopersInfo.scss";
 import apoorv from "./assets/20231226_175040.jpg";
 import dhruv from "./assets/pfp.jpg";

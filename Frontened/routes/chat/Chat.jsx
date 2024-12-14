@@ -14,9 +14,12 @@ const Chat = () => {
     const fetchChats = async () => {
       try {
         console.log("Fetching chats..."); // Log when fetching starts
-        const response = await fetch("http://localhost:8800/api/chats", {
-          credentials: "include",
-        });
+        const response = await fetch(
+          "https://backened-7u3h.onrender.com/api/chats",
+          {
+            credentials: "include",
+          }
+        );
 
         if (response.status === 401) {
           console.warn("Unauthorized. Redirecting to login.");
@@ -57,7 +60,7 @@ const Chat = () => {
     try {
       // Fetch messages for the selected chat
       const response = await fetch(
-        `http://localhost:8800/api/messages/${chatId}`,
+        `https://backened-7u3h.onrender.com/api/messages/${chatId}`,
         {
           credentials: "include", // Ensure credentials are included in the request
         }
@@ -84,7 +87,7 @@ const Chat = () => {
       try {
         // Send message to backend
         const response = await fetch(
-          `http://localhost:8800/api/messages/${currentChat}`, // Use correct endpoint for adding a message
+          `https://backened-7u3h.onrender.com/api/messages/${currentChat}`, // Use correct endpoint for adding a message
           {
             method: "POST",
             headers: {

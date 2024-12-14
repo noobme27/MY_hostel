@@ -1,6 +1,6 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import videoBg from "./../../src/assets/bg_short_login_1.mp4";
+import videoBg from "./assets/bg_short_login_1.mp4";
 import imgBg from "../../src/assets/bg_2.png";
 import { useContext, useState } from "react";
 import inlogo from "./../../src/assets/in logo.png";

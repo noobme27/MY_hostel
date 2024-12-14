@@ -83,7 +83,7 @@ function UpdateProfile() {
 
     try {
       const res = await apiRequest.put(
-        `http://localhost:8800/api/users/update/${currentUser.id}`,
+        `https://backened-7u3h.onrender.com/api/users/update/${currentUser.id}`,
         formDataObj,
         {
           headers: {

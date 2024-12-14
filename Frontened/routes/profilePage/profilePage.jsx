@@ -12,11 +12,13 @@ function ProfilePage() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const avatarUrl = `http://localhost:8800${userDetails?.avatar}`;
+  const avatarUrl = `https://backened-7u3h.onrender.com${userDetails?.avatar}`;
 
   const handleLogout = async () => {
     try {
-      await apiRequest.post(`http://localhost:8800/api/auth/logout`);
+      await apiRequest.post(
+        `https://backened-7u3h.onrender.com/api/auth/logout`
+      );
       navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -32,7 +34,7 @@ function ProfilePage() {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8800/api/users/info/${currentUser.id}`,
+          `https://backened-7u3h.onrender.com/api/users/info/${currentUser.id}`,
           { withCredentials: true }
         );
         console.log("API Response:", response.data);

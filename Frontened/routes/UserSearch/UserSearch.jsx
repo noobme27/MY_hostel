@@ -19,7 +19,9 @@ const UserSearchPage = () => {
   // Fetch users from the database
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:8800/api/users");
+      const response = await fetch(
+        "https://backened-7u3h.onrender.com/api/users"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }

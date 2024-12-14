@@ -1,37 +1,45 @@
 // src/components/TestimonialsSection.js
 import "./testimonialsSection.scss";
 
+// Import images directly
+import img1 from "./assets/tanna.jpeg";
+import img2 from "./assets/vasu.jpg";
+import img3 from "./assets/loya.jpg";
+import img4 from "./assets/muthia.jpeg";
+import img5 from "./assets/sandhu.jpeg";
+import img6 from "./assets/yash2.jpeg";
+
 const TestimonialsSection = () => {
   const testimonialsData = [
     {
       name: "Hitansh Tanna",
       text: "Litedin made finding my friends super easy!",
-      imgSrc: "./../../../src/assets/tanna.jpeg",
+      imgSrc: img1,
     },
     {
       name: "Vasu Sharma",
       text: "Finally, a way to connect with my hostel mates!",
-      imgSrc: "./../../../src/assets/vasu.jpg",
+      imgSrc: img2,
     },
     {
       name: "Kushal Loya",
       text: "The complaint feature is a lifesaver!",
-      imgSrc: "./../../../src/assets/loya.jpg",
+      imgSrc: img3,
     },
     {
       name: "Aditya Singh",
       text: "I love the vibrant community here!",
-      imgSrc: "./../../../src/assets/muthia.jpeg",
+      imgSrc: img4,
     },
     {
       name: "Saksham Sandhu",
       text: "Finding my roomie was a breeze!",
-      imgSrc: "./../../../src/assets/sandhu.jpeg",
+      imgSrc: img5,
     },
     {
       name: "Yashvardhan Singh",
       text: "Best platform for hostel life at BITS!",
-      imgSrc: "./../../../src/assets/yash2.jpeg",
+      imgSrc: img6,
     },
   ];
 

@@ -58,6 +58,8 @@ export const login = async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         maxAge: age, // Cookie expires in 7 days
+        secure: true,
+        sameSite: "None",
         // secure: true, // Uncomment this in production (when using HTTPS)
       })
       .status(200)
@@ -69,8 +71,16 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token").status(200).json({ message: "logout successful" }); // removes the token from the backened
+  res
+    .clearCookie("token", {
+      httpOnly: true,
+      secure: true, // Matches the secure setting in login
+      sameSite: "None", // Matches the sameSite setting in login
+    })
+    .status(200)
+    .json({ message: "logout successful" });
 };
+
 export const makeAdmin = async (req, res) => {
   const { userId } = req.body; // Get the user ID from the request body
 

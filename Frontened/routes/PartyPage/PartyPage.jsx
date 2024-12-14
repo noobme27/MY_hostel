@@ -20,7 +20,9 @@ const PartyPage = () => {
   useEffect(() => {
     const fetchParties = async () => {
       try {
-        const response = await fetch("http://localhost:8800/api/party/all");
+        const response = await fetch(
+          "https://backened-7u3h.onrender.com/api/party/all"
+        );
         if (!response.ok) throw new Error("Failed to fetch parties");
 
         const data = await response.json();
@@ -36,7 +38,7 @@ const PartyPage = () => {
             if (attendee.user.id) {
               try {
                 const avatarResponse = await axios.get(
-                  `http://localhost:8800/api/users/with-avatar/${attendee.user.id}`,
+                  `https://backened-7u3h.onrender.com/api/users/with-avatar/${attendee.user.id}`,
                   { withCredentials: true }
                 );
                 avatars[attendee.user.id] = avatarResponse.data.avatar;
@@ -72,14 +74,17 @@ const PartyPage = () => {
   // Handle party creation
   const handleCreateParty = async () => {
     try {
-      const response = await fetch("http://localhost:8800/api/party/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Include credentials (cookies)
-        body: JSON.stringify(newParty), // Send the new party data
-      });
+      const response = await fetch(
+        "https://backened-7u3h.onrender.com/api/party/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Include credentials (cookies)
+          body: JSON.stringify(newParty), // Send the new party data
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -103,7 +108,7 @@ const PartyPage = () => {
   const handleJoinParty = async (partyId) => {
     try {
       const response = await fetch(
-        `http://localhost:8800/api/party/join/${partyId}`,
+        `https://backened-7u3h.onrender.com/api/party/join/${partyId}`,
         {
           method: "POST",
           credentials: "include", // Include credentials (cookies)

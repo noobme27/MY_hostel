@@ -10,10 +10,13 @@ const ComplaintsPage = () => {
 
   const fetchComplaints = async () => {
     try {
-      const response = await fetch("http://localhost:8800/api/complaint/get", {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://backened-7u3h.onrender.com/api/complaint/get",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch complaints");
       }
@@ -29,7 +32,7 @@ const ComplaintsPage = () => {
   const updateStatus = async (id, status) => {
     try {
       const response = await fetch(
-        `http://localhost:8800/api/complaint/${id}/update`,
+        `https://backened-7u3h.onrender.com/api/complaint/${id}/update`,
         {
           method: "POST",
           headers: {

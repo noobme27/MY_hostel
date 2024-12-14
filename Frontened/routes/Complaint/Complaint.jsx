@@ -18,7 +18,7 @@ const Complaint = ({ onClose, position }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8800/api/complaint/create",
+        "https://backened-7u3h.onrender.com/api/complaint/create",
         {
           method: "POST",
           headers: {

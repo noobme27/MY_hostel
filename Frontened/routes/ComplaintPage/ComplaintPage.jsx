@@ -22,7 +22,7 @@ const ComplaintPage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8800/api/complaint/get/${currentUserId}`,
+        `https://backened-7u3h.onrender.com/api/complaint/get/${currentUserId}`,
         {
           method: "GET",
           credentials: "include",
@@ -47,7 +47,7 @@ const ComplaintPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8800/api/complaint/create",
+        "https://backened-7u3h.onrender.com/api/complaint/create",
         {
           method: "POST",
           headers: {

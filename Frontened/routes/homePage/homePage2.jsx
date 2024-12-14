@@ -11,6 +11,7 @@ import ContactForm from "../../componenets/homepage/contactForm/contactForm";
 import ContactUs from "../../componenets/homepage/ContactUs/Contact";
 import CourseItems from "../../componenets/homepage/CourseItems/CourseItems";
 import DevelopersInfo from "../../componenets/homepage/Developersinfo/developersInfo";
+import videoBg from "./assets/pilani_bg.mp4";
 
 function HomePage2() {
   const { currentUser } = useContext(AuthContext);
@@ -20,7 +21,7 @@ function HomePage2() {
     <>
       <section className="homePage">
         <video autoPlay muted loop className="background-video">
-          <source src="./../../src/assets/pilani_bg.mp4" type="video/mp4" />
+          <source src={videoBg} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="overlay"></div>

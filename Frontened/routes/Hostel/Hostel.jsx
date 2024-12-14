@@ -20,9 +20,11 @@ const Hostel = () => {
     const fetchLayoutAndUsers = async () => {
       try {
         const layoutResponse = await fetch(
-          `http://localhost:8800/api/room-layout/Vyas/${selectedFloor}`
+          `https://backened-7u3h.onrender.com/api/room-layout/Vyas/${selectedFloor}`
         );
-        const usersResponse = await fetch("http://localhost:8800/api/users");
+        const usersResponse = await fetch(
+          "https://backened-7u3h.onrender.com/api/users"
+        );
 
         if (!layoutResponse.ok || !usersResponse.ok) {
           throw new Error("Failed to fetch data");
@@ -69,7 +71,7 @@ const Hostel = () => {
   const fetchUserAvatar = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8800/api/users/with-avatar/${userId}`,
+        `https://backened-7u3h.onrender.com/api/users/with-avatar/${userId}`,
         { withCredentials: true }
       );
       return response.data.avatar || "../../src/assets/avatar.png"; // Default fallback image

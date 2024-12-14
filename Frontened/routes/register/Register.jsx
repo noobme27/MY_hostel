@@ -1,7 +1,7 @@
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
-import videoBg from "./../../src/assets/bg_rotunda.mp4";
-import inlogo from "./../../src/assets/in logo.png"
+import videoBg from "./assets/bg_short_login_1.mp4";
+import inlogo from "./assets/in logojp.jpg";
 import { useState } from "react";
 import apiRequest from "../../lib/apiRequest";
 
@@ -39,9 +39,10 @@ function Register() {
         <video className="video" src={videoBg} autoPlay loop muted />
         <div className="formContainer">
           <form onSubmit={handleSubmit}>
-          <h1 className="welcome-text">Lited
-            <img src= {inlogo} alt="Logo" className="inlogo" />
-          </h1>
+            <h1 className="welcome-text">
+              Lited
+              <img src={inlogo} alt="Logo" className="inlogo" />
+            </h1>
             {/* <div className="social-icons">
               <a href="#" className="icon">
                 <span className="material-icons">email</span>
