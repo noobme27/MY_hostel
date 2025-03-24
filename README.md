@@ -21,7 +21,7 @@ LitedIn is an interactive web platform designed to enhance hostel life by stream
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/LitedIn.git
+    git clone https://github.com/noobme27/MY_hostel.git
     cd LitedIn
     ```
 
